@@ -23,7 +23,8 @@ Microbial community structure and diversity, and population structure are fundam
 
 ## Schedule
 The course will be held in Viikki at the Faculty of Agriculture and Forestry, University of Helsinki.  
-Place: __Info Centre Korona, room Info4, 1st Floor__
+Place: __Biocenter 1, room 1401, 1st Floor__
+Due to COVID-19 the doors of Biocenter 1 are closed. Please call the porter to open the door (02941 59000).
 
 
 ### Monday  
