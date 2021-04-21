@@ -24,20 +24,20 @@ QC for the raw data (takes few min, depending on the allocation). Go to your own
 
 QC does not require lot of memory and can be run on the interactive nodes using `sinteractive`.   
 
-# activate the biokit environment and open interactive node
+Activate the biokit environment and open interactive node
 ```
 module load biokit
 sinteractive
 ```
 
-# Run fastqc
+## Run fastqc
 
 Run fastqc to the files stored in the RAWDATA folder. What does the -o flag refer to?
 ```
 fastqc /scratch/project_2001499/RAWDATA/*fastq.gz -o FASTQC/
 ```
 
-# Then combine the reports in FASTQC folder with multiqc 
+## Then combine the reports in FASTQC folder with multiqc 
 ```
 multiqc FASTQC/* -o FASTQC --interactive
 
@@ -52,7 +52,7 @@ __What kind of trimming do you think should be done?__
 For trimming we have a array script that runs `cutadapt` for each file in the `RAWDATA`folder located at `/scratch/project_2001499`.    
 Go to your folder folder and copy the array script from `/scratch/project_2001499/SBATCH_SCRIPTS`. Check the script for example with command `less`. The adapter sequences that you want to trim after `-a` and `-A`. What is the difference with `-a` and `-A`? And what is specified with option `-p` or `-o`? And how about `-m`and `-j`? You can find the answers from Cutadapt [manual](http://cutadapt.readthedocs.io).
 
-Then we need to submit our jos to the SLURM system. Make sure to submit it from your own folder. More about CSC batch jobs here: https://research.csc.fi/taito-batch-jobs.  
+Then we need to submit our jos to the SLURM system. Make sure to submit it from your own folder. More about CSC batch jobs here: https://docs.csc.fi/computing/running/creating-job-scripts-puhti/.  
 
 `sbatch scripts/cut_batch.sh`  
 
@@ -79,7 +79,7 @@ Then make a new folder (`FASTQC`) for the QC files of the trimmed data.
 Run FASTQC and MultiQC again as you did before trimming.  
 
 
-# run QC on the trimmed reads
+## run QC on the trimmed reads
 ```
 fastqc ./*.fastq -o FASTQC/ -t 4
 multiqc ./ --interactive
