@@ -1,13 +1,34 @@
----
-title: "A tutorial on genome-resolved metagenomics"
-excerpt: "Extracting population genomes from millions of short metagenomic reads"
-tags: [anvi'o, binning, infant gut]
----
-#  Metagenome analysis of 10 infant gut metagenomes
+## Assembly
+We will assemble all 4 samples indivially and use [Megahit assembler](https://github.com/voutcn/megahit) for the job. *In addition, we will use MetaQuast to get some statistics about our assembly.  *
 
-## Genome-resolved metagenomics
+Megahit is an ultra fast assembly tool for metagenomics data. It is installed to CSC and be loaded with following command:
 
-* Tom Delmont, Antti Karkman, Jenni Hultman *
+```
+module load biokit
+```
+
+Assembling metagenomic data can be very resource demanding and we need to do it as a batch job. 
+
+Copy the  script called MEGAHIT.sh from the SBATCH folder to your own directory and submit the batch job as previously.
+
+What do the following flags mean?
+
+--min-contig-len 1000
+--k-min 27 
+--k-max 127 
+--k-step 10 
+--memory 0.8 
+--num-cpu-threads 8
+
+
+
+
+
+
+
+
+
+
 
 This tutorial describes a way to extract and curate population genomes from millions of short metagenomic reads using a methodology called "genome-resolved metagenomics", or simply "binning".
 
