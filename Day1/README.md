@@ -110,77 +110,27 @@ What do the following flags mean?
 --num-cpu-threads 8
 
 ## Read based analysis
-We will annotate short reads with tool called Megan (ref) against NCBInr database. This will take a while and therefore will run it already today to have the results waiting on Tuesday. Megan utilizes program called Diamond (ref) which is a fast.....MORE
+We will annotate short reads with tool called Megan (https://uni-tuebingen.de/fakultaeten/mathematisch-naturwissenschaftliche-fakultaet/fachbereiche/informatik/lehrstuehle/algorithms-in-bioinformatics/software/megan6/) and Metaxa (https://microbiology.se/software/metaxa2/).  These will take a while to run and therefore will run it already today to have the results ready on Tuesday. 
 
-Since the four samples have been sequenced really deep, we will utilize only subset of them for read based analysis. The subsampled 2 000 000 sequences represent the total community for this analysis. Tool Seqtk is used for this and running seqtk in implemented in the MEGAN.sh script you can find from the same location as before. 
+Altogether we will use four different programs for read based analysis: `seqtk`, `DIAMOND`, `MEGAN` and `METAXA`.
 
-First, a folder called MEGAN to your own folder. 
+MEGAN utilizes program called Diamond which claims to be up to 20,000 times faster than Blast to annotate  reads against the database of interest. Here we will use NCBI nr database which has been formatted for DIAMOND.
 
-Then copy MEGAN.sh to your folder. How can you check in which folder you are?
+Then we will use MEGAN to parse the annotations and get taxonomic and functional assignments.
 
-```
-/scratch/project_2001499/SBATCH_SCRIPTS/MEGAN.sh
+In addition to DIAMOND and MEGAN, we will also use another approach to get taxonomic profiles using METAXA. Metaxa runs in two steps: the first command finds rRNA genes among our reads using HMM models and then annotates them using BLAST and a reference database.
 
-```
-Launch Megan as you did for Cutadapt earlier today. We will annotate short reads with tool Diamond (ref) against NCBInr database. This will take a while and therefore will run it already todat to have the results waiting on Tuesday. 
+Since the four samples have been sequenced really deep, we will utilize only subset of them for read based analysis. The subsampled 2 000 000 sequences represent the total community for this analysis. Tool `Seqtk` is used for this. 
 
+First, make following folders to your own folder: MEGAN, RESAMPLED and METAXA. 
 
-***Jenni note, raw data for seqtk?****
-
-For annotation copy script nnnn for Diamond. The database NCBInr is somethign CSC updates so we do not need to copy it ourselves. The databases found at CSC can be listed with command xxx in Puhti. 
-
-
-# Optional
-
-## (Fairly) Fast MinHash signatures with Sourmash
-
-Go to the documentation of Sourmash and learn more about minhashes and the usage of Sourmash. https://sourmash.readthedocs.io/en/latest/
-
-Before you start, make sure you're working at Taito-shell with command `sinteractive`.
-```
-sourmash compute *R1_trimmed.fastq -k 31 --scaled 10000
-sourmash compare *.sig -o comparisons
-sourmash plot comparisons
-# annotate one
-sourmash gather 09069-B_R1_trimmed.fastq.sig /wrk/antkark/shared/genbank-d2-k31.sbt.json -o OUTPUT_sour.txt
-```
-
-## Taxonomic profiling with Metaxa2
-
-The microbial community profiling for the samples can alsp be done using a 16S/18S rRNA gene based classification software [Metaxa2](http://microbiology.se/software/metaxa2/).  
-It identifies the 16S/18S rRNA genes from the short reads using HMM models and then annotates them using BLAST and a reference database.
-We will run Metaxa2 as an array job in Taito. More about array jobs at CSC [here](https://research.csc.fi/taito-array-jobs).  
-Make a folder for Metaxa2 results and direct the results to that folder in your array job script. (Takes ~6 h for the largest files)
+You can find READ_BASED.sh script from the same location as before. Then copy it to your folder. How can you check in which folder you are?
 
 ```
-#!/bin/bash -l
-#SBATCH -J metaxa
-#SBATCH -o metaxa_out_%A_%a.txt
-#SBATCH -e metaxa_err_%A_%a.txt
-#SBATCH -t 10:00:00
-#SBATCH --mem=15000
-#SBATCH --array=1-10
-#SBATCH -n 1
-#SBATCH --nodes=1
-#SBATCH --cpus-per-task=6
-#SBATCH -p serial
+/scratch/project_2001499/SBATCH_SCRIPTS/READ_BASED.sh
 
-cd $WRKDIR/Metagenomics2019/Metaxa2
-# Metaxa uses HMMER3 and BLAST, so load the biokit first
-module load biokit
-# each job will get one sample from the sample names file stored to a variable $name
-name=$(sed -n "$SLURM_ARRAY_TASK_ID"p ../sample_names.txt)
-# then the variable is used in running metaxa2
-metaxa2 -1 ../trimmed_data/$name"_R1_trimmed.fastq" -2 ../trimmed_data/$name"_R2_trimmed.fastq" \
-            -o $name --align none --graphical F --cpu $SLURM_CPUS_PER_TASK --plus
-metaxa2_ttt -i $name".taxonomy.txt" -o $name
 ```
+Launch READ_BASED.sh as you did for Cutadapt earlier today. 
 
-When all Metaxa2 array jobs are done, we can combine the results to an OTU table. Different levels correspond to different taxonomic levels.  
-When using any 16S rRNA based software, be cautious with species (and beyond) level classifications. Especially when using short reads.  
-We will look at genus level classification.
-```
-# Genus level taxonomy
-cd Metaxa2
-metaxa2_dc -o metaxa_genus.txt *level_6.txt
-```
+The database NCBI nr is being updated by CSC  so we do not need to copy it from NCBI ourselves. The databases found at CSC can be listed with command xxx in Puhti. 
+
