@@ -87,27 +87,6 @@ multiqc ./ --interactive
 ```
 Copy it to your local machine as earlier and look how well the trimming went.  
 
-## Assembly
-We will assemble all 4 samples indivially and use [Megahit assembler](https://github.com/voutcn/megahit) for the job. *In addition, we will use MetaQuast to get some statistics about our assembly.  *
-
-Megahit is an ultra fast assembly tool for metagenomics data. It is installed to CSC and be loaded with following command:
-
-```
-module load biokit
-```
-
-Assembling metagenomic data can be very resource demanding and we need to do it as a batch job. 
-
-Copy the  script called MEGAHIT.sh from the SBATCH folder to your own directory and submit the batch job as previously.
-
-What do the following flags mean?
-
---min-contig-len 1000
---k-min 27 
---k-max 127 
---k-step 10 
---memory 0.8 
---num-cpu-threads 8
 
 ## Read based analysis
 We will annotate short reads with tool called Megan (https://uni-tuebingen.de/fakultaeten/mathematisch-naturwissenschaftliche-fakultaet/fachbereiche/informatik/lehrstuehle/algorithms-in-bioinformatics/software/megan6/) and Metaxa (https://microbiology.se/software/metaxa2/).  These will take a while to run and therefore will run it already today to have the results ready on Tuesday. 
