@@ -1,5 +1,5 @@
 ## Assembly
-We will assemble all 4 samples indivially and use [Megahit assembler](https://github.com/voutcn/megahit) for the job. *In addition, we will use MetaQuast to get some statistics about our assembly.  *
+We will assemble all 4 samples indivially and use [Megahit assembler](https://github.com/voutcn/megahit) for the job. In addition, we will use MetaQuast to get some statistics about our assembly.
 
 Megahit is an ultra fast assembly tool for metagenomics data. It is installed to CSC and be loaded with following command:
 
@@ -20,7 +20,7 @@ What do the following flags mean?
 --memory 0.8 
 --num-cpu-threads 8
 
-However, as this is only one week course we cannot wait for your assemblies to finish but let's terminate the running jons.
+However, as this is only one week course we cannot wait for your assemblies to finish but let's terminate the running jobs.
 
 What was the command to view on-going batch jobs? You can terminate the sbatch job byt typing
 
@@ -68,8 +68,9 @@ We need to do some tricks for the contigs from assembly before we can use them i
 Open a screen for Anvi'o workflow. `screen -S anvio`
 
 ```
-module load bioconda3_env
-conda activate anvio-7
+export PROJAPPL=/projappl/project_2001499
+module load bioconda/3
+source activate anvio-7
 ```
 ## Rename the scaffolds and select those >2,500nt.
 Anvio wants sequence IDs in your FASTA file as simple as possible. Therefore we need to reformat the headerlines to remove spaces and non-numeric characters. Also contigs shorter than 2500 bp will be removed.
@@ -111,7 +112,7 @@ samtools sort $3-RAW.bam -o $3.bam
 samtools index $3.bam
 rm $3.sam $3-RAW.bam
 ```
-The array job script:
+The array job script: NOT UPDATED
 ```
 #!/bin/bash -l
 #SBATCH -J array_map
