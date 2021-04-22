@@ -69,7 +69,7 @@ Open a screen for Anvi'o workflow. `screen -S anvio`
 
 ```
 module load bioconda3_env
-source activate anvio-7
+conda activate anvio-7
 ```
 ## Rename the scaffolds and select those >2,500nt.
 Anvio wants sequence IDs in your FASTA file as simple as possible. Therefore we need to reformat the headerlines to remove spaces and non-numeric characters. Also contigs shorter than 2500 bp will be removed.
