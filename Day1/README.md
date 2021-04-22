@@ -78,7 +78,6 @@ Then make a new folder (`FASTQC`) for the QC files of the trimmed data.
 
 Run FASTQC and MultiQC again as you did before trimming.  
 
-
 ## run QC on the trimmed reads
 ```
 fastqc ./*.fastq -o FASTQC/ -t 4
