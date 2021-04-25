@@ -12,13 +12,14 @@ Assembling metagenomic data can be very resource demanding and we need to do it 
 Copy the  script called MEGAHIT.sh from the SBATCH folder to your own directory and submit the batch job as previously.
 
 What do the following flags mean?
-
+```
 --min-contig-len 1000
 --k-min 27 
 --k-max 127 
 --k-step 10 
 --memory 0.8 
 --num-cpu-threads 8
+```
 
 However, as this is only one week course we cannot wait for your assemblies to finish but let's terminate the running jobs.
 
@@ -40,7 +41,7 @@ Questions about the assembly
 ## Assembly quality statistics
 Let's take a look at the assemblies in abit more detail with tool [MetaQUAST](http://bioinf.spbau.ru/metaquast). 
 
-# ADD THIS
+# ADD THIS ANTTI
 
 Copy folder called "assembly_QC" to your computer. You can view the results (`report.html`) in your favorite browser.
 
