@@ -51,7 +51,7 @@ Due to COVID-19 the doors of Biocenter 1 are closed. Please call the porter to o
 
 ### Friday
 [__30.4.2021 9-16__](Day5/)
-* Annotation of metagenomne assembled genomes (MAGs)
+* Annotation of metagenome assembled genomes (MAGs)
 
 ## Target group
 This course is targeted at PhD and MSc students who are interested in using metagenomics for investigating microbial communities.
