@@ -35,7 +35,7 @@ __26.4.2021 9-16__
 | __*Morning*__ | [Basic usage of computing services at CSC](https://drive.google.com/open?id=13Afjk2lDxx4kh2Jdd_5jIGrNcPqflIGJ) (__Igor__) |
 | __*Morning*__ |  [Quality control and trimming of data](https://github.com/karkman/Metagenomics2021/tree/main/Day1#qc-and-trimming) hands-on, [Slides](https://drive.google.com/file/d/1qA8xxK2nwSqZo2lV3BohKQA_RlHW7QBb/view?usp=sharing) (__Jenni__)|
 |  |    **Lunch** |
-| __*Afternoon*__ | [Read based analyses] https://drive.google.com/file/d/1EHsy1spesv3gIAALWWX7_1NBu9dwA37J/view?usp=sharing)(__Igor__) |
+| __*Afternoon*__ | [Read based analyses] (https://drive.google.com/file/d/1EHsy1spesv3gIAALWWX7_1NBu9dwA37J/view?usp=sharing)(__Igor__) |
 | __*Afternoon*__ | [QC for trimmed reads](https://github.com/karkman/Metagenomics2021/tree/main/Day1#run-qc-on-the-trimmed-reads)  |
 | __*Afternoon*__ | [Read based annotation](https://github.com/karkman/Metagenomics2021/tree/main/Day1#read-based-analysis) |
 
@@ -66,7 +66,7 @@ __23.5.2019 9-16__
 
 | Time | Description |
 | --- | --- |
-| __*Morning*__  | [Anvi’o interface](Day4#metaphlan2) (__Antti__)|
+| __*Morning*__  | [Anvi’o interface](Day4#metaphlan2) (__Antti__) |
 |  |    **Lunch** |
 | __*Afternoon*__  | [Anvi’o interface](Day5#humann2) |
 
@@ -77,7 +77,7 @@ __24.5.2019 9-16__
 | --- | --- |
 | 10:15-11:30 | [MAG annotation + databases lecture ](Day5#humann2) (__Igor__)|
 |  |    **Lunch** |
-| __*Afternoon*__  | [Further analyses of MAGs]((https://drive.google.com/open?id=1FMBSI1df1fDFoDXud3BDMb7Z6EIST0g0) (__Igor__)|
+| __*Afternoon*__  | [Further analyses of MAGs](https://drive.google.com/open?id=1FMBSI1df1fDFoDXud3BDMb7Z6EIST0g0) (__Igor__)|
 | __*Afternoon*__ | Wrapping up, feedback, Q&A (__all__)|
 
 ## Target group
