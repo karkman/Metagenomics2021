@@ -261,8 +261,8 @@ QC does not require lot of memory and can be run on the interactive nodes using 
 Activate the biokit environment and open interactive node:
 
 ```bash
+sinteractive -A project_2001499
 module load biokit
-sinteractive
 ```
 
 ## Running fastQC
@@ -336,7 +336,7 @@ Go to the folder containing the trimmed reads (`TRIMMED`) and view the `Cutadapt
 Then make a new folder (`FASTQC`) for the QC files of the trimmed data and run fastQC and multiQC again as you did before trimming:
 
 ```bash
-sinteractive
+sinteractive -A project_2001499
 module load biokit
 
 fastqc *.fastq -o FASTQC/ -t 4
@@ -359,7 +359,7 @@ We will annotate short reads with `MEGAN` (https://uni-tuebingen.de/fakultaeten/
 Here we will use the NCBI nr database which has been formatted for `DIAMOND`.   
 Then we will use `MEGAN` to parse the annotations and get taxonomic and functional assignments.  
 
-In addition to `MEGAN`, we will also use another approach (`METAXA`) to get taxonomic profiles.
+In addition to `MEGAN`, we will also use another approach (`METAXA`) to get taxonomic profiles.  
 `METAXA` runs in two steps: the first command finds rRNA genes among our reads using HMM models and then annotates them using `BLAST` and a reference database.  
 
 All these steps will take a while to run and therefore we will submit the scripts today to have the results ready for tomorrow.  
