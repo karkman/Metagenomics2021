@@ -30,56 +30,17 @@ Due to COVID-19 the doors of Biocenter 1 are closed. Please call the porter to o
 ### Monday  
 [__26.4.2021 9-16__](Day1/)
 
-| Time            | Description |
-| --------------- | ----------- |
-| __*Morning*__   | [Introduction](https://drive.google.com/file/d/1Fr63zkAQ8EiG7J37taBD0GMLRHaQzBu-/view?usp=sharing) (__Jenni__) |
-| __*Morning*__   | Introduction to Unix and basic usage of computing services at CSC (__Igor__): [slides](), [exercise](Day1/) |
-| __*Morning*__   | Quality control and trimming of data (__Jenni__): [hands-on](Day1#qc-and-trimming) , [slides](https://drive.google.com/file/d/1qA8xxK2nwSqZo2lV3BohKQA_RlHW7QBb/view?usp=sharing) |
-|                 |  **Lunch**  |
-| __*Afternoon*__ | [Read based analyses]() (__Igor__) |
-| __*Afternoon*__ | [QC for trimmed reads](Day1#run-qc-on-the-trimmed-reads)  |
-| __*Afternoon*__ | [Read based analyses](Day1#read-based-analyses) (__Igor__) |
-
-
 ### Tuesday
 [__27.4.2021 9-16__](Day2/)
 
-| Time            | Description |
-| --------------- | ----------- |
-| __*Morning*__   | [Megan interface](Day2/README.md#assembly-quality-statistics) (__Igor__)|
-|                 |  **Lunch**  |
-| __*Afternoon*__ | [Metaxa + R ](https://www.dropbox.com/s/yh1yf9vfuxbi9gl/2019_Helsinki_Tom_Delmont_Teaching_Material.pdf?dl=0) (__Antti__)|
-| __*Afternoon*__ | [Optional: MEGAN R](Day3/README.md#02--describing-the-interface) (__Igor__)|
-
 ### Wednesday
-__22.5.2019 9-16__  
-
-| Time            | Description |
-| --------------- | ----------- |
-| __*Morning*__   | [Assembly lecture](Day3/README.md#02--describing-the-interface) (__Jenni__)|
-| __*Morning*__   | [Assembly hands-on](https://github.com/karkman/Metagenomics2021/tree/main/Day3#assembly) (__Jenni__)|
-| __*Morning*__   | [Genome resolved metagenomics](Day3/README.md#11--what-do-we-do-with-these-genomes) (__Antti__) |
-|                 |  **Lunch**  |
-| __*Afternoon*__ | [Preparing files for Anvi'o](Day3/README.md#11--what-do-we-do-with-these-genomes) |
+[__22.5.2019 9-16__](Day3/)
 
 ### Thursday
-__23.5.2019 9-16__  
-
-| Time            | Description |
-| --------------- | ----------- |
-| __*Morning*__   | [Anvi’o interface](Day4#metaphlan2) (__Antti__) |
-|                 |  **Lunch**  |
-| __*Afternoon*__ | [Anvi’o interface](Day5#humann2) |
+[__23.5.2019 9-16__](Day4/)  
 
 ### Friday
-__24.5.2019 9-16__  
-
-| Time            | Description |
-| --------------- | ----------- |
-| 10:15-11:30     | [MAG annotation + databases lecture ](Day5#humann2) (__Igor__)|
-|                 |  **Lunch**  |
-| __*Afternoon*__ | [Further analyses of MAGs](https://drive.google.com/open?id=1FMBSI1df1fDFoDXud3BDMb7Z6EIST0g0) (__Igor__)|
-| __*Afternoon*__ | Wrapping up, feedback, Q&A (__all__)|
+[__24.5.2019 9-16__](Day5/)
 
 ## Target group
 This course is targeted at PhD and MSc students who are interested in using metagenomics for investigating microbial communities.

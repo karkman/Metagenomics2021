@@ -1,3 +1,19 @@
+# Day 3
+
+| Time            | Description |
+| --------------- | ----------- |
+| __*Morning*__   | [Assembly lecture](Day3/README.md#02--describing-the-interface) (__Jenni__)|
+| __*Morning*__   | [Assembly hands-on](https://github.com/karkman/Metagenomics2021/tree/main/Day3#assembly) (__Jenni__)|
+| __*Morning*__   | [Genome resolved metagenomics](Day3/README.md#11--what-do-we-do-with-these-genomes) (__Antti__) |
+|                 |  **Lunch**  |
+| __*Afternoon*__ | [Preparing files for Anvi'o](Day3/README.md#11--what-do-we-do-with-these-genomes) |
+
+| Time      | Activity                      | Slides                               | Hands-on                                 |
+|-----------|-------------------------------|--------------------------------------|------------------------------------------|
+| Morning   | Read-based analyses (Part 1)  | [Link here](read-based-analyses.pdf) | [Link here](#read-based-analyses-part-1) |
+| Afternoon | Read-based analyses (Part 2)  |                                      | [Link here](#read-based-analyses-part-2) |
+
+
 ## Assembly
 We will assemble all 4 samples indivially and use [Megahit assembler](https://github.com/voutcn/megahit) for the job. In addition, we will use MetaQuast to get some statistics about our assembly.
 
@@ -7,17 +23,17 @@ Megahit is an ultra fast assembly tool for metagenomics data. It is installed to
 module load biokit
 ```
 
-Assembling metagenomic data can be very resource demanding and we need to do it as a batch job. 
+Assembling metagenomic data can be very resource demanding and we need to do it as a batch job.
 
 Copy the  script called MEGAHIT.sh from the SBATCH folder to your own directory and submit the batch job as previously.
 
 What do the following flags mean?
 ```
 --min-contig-len 1000
---k-min 27 
---k-max 127 
---k-step 10 
---memory 0.8 
+--k-min 27
+--k-max 127
+--k-step 10
+--memory 0.8
 --num-cpu-threads 8
 ```
 
@@ -28,9 +44,9 @@ What was the command to view on-going batch jobs? You can terminate the sbatch j
 ```
 scancel JOBID
 ```
-Terminate your job and check that is it no longer in your list of jobs. 
+Terminate your job and check that is it no longer in your list of jobs.
 
-We have run the assemblies for you and now copy the assembled metagenomes from `/scratch/project_2001499/hultman/ASSEMBLY_MEGAHIT`. What kind of files did you copy? Please take a look at the log-files. 
+We have run the assemblies for you and now copy the assembled metagenomes from `/scratch/project_2001499/hultman/ASSEMBLY_MEGAHIT`. What kind of files did you copy? Please take a look at the log-files.
 
 Questions about the assembly
 * Which version of megahit did we actually use for the assemblies?
@@ -39,7 +55,7 @@ Questions about the assembly
 
 
 ## Assembly quality statistics
-Let's take a look at the assemblies in abit more detail with tool [MetaQUAST](http://bioinf.spbau.ru/metaquast). 
+Let's take a look at the assemblies in abit more detail with tool [MetaQUAST](http://bioinf.spbau.ru/metaquast).
 
 # ADD THIS ANTTI
 
