@@ -46,10 +46,9 @@ __21.5.2019 9-16__
 | Time | Description |
 | --- | --- |
 | __*Morning*__ | [Megan interface](Day2/README.md#assembly-quality-statistics) (__Igor__)|
-
 |  |    **Lunch** |
-| __*Afternoon*__ | [Metaxa + R ](https://www.dropbox.com/s/yh1yf9vfuxbi9gl/2019_Helsinki_Tom_Delmont_Teaching_Material.pdf?dl=0) (__Antti__)
-| __*Afternoon*__ | [Optional: MEGAN R](Day3/README.md#02--describing-the-interface) (__Igor__)
+| __*Afternoon*__ | [Metaxa + R ](https://www.dropbox.com/s/yh1yf9vfuxbi9gl/2019_Helsinki_Tom_Delmont_Teaching_Material.pdf?dl=0) (__Antti__)|
+| __*Afternoon*__ | [Optional: MEGAN R](Day3/README.md#02--describing-the-interface) (__Igor__)|
 
 ### Wednesday
 __22.5.2019 9-16__  
@@ -80,7 +79,7 @@ __24.5.2019 9-16__
 | 10:15-11:30 | [MAG annotation + databases lecture ](Day5#humann2) (__Igor__)|
 |  |    **Lunch** |
 | __*Afternoon*__  | [Further analyses of MAGs]((https://drive.google.com/open?id=1FMBSI1df1fDFoDXud3BDMb7Z6EIST0g0) (__Igor__)|
-| __*Afternoon*__ | Wrapping up, feedback, Q&A (__all__) |
+| __*Afternoon*__ | Wrapping up, feedback, Q&A (__all__)|
 
 ## Target group
 This course is targeted at PhD and MSc students who are interested in using metagenomics for investigating microbial communities.
