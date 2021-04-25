@@ -37,8 +37,8 @@ __26.4.2021 9-16__
 | __*Morning*__   | Quality control and trimming of data (__Jenni__): [hands-on](Day1#qc-and-trimming) , [slides](https://drive.google.com/file/d/1qA8xxK2nwSqZo2lV3BohKQA_RlHW7QBb/view?usp=sharing) |
 |                 |  **Lunch**  |
 | __*Afternoon*__ | [Read based analyses] ()(__Igor__) |
-| __*Afternoon*__ | [QC for trimmed reads](https://github.com/karkman/Metagenomics2021/tree/main/Day1#run-qc-on-the-trimmed-reads)  |
-| __*Afternoon*__ | [Read based annotation](https://github.com/karkman/Metagenomics2021/tree/main/Day1#read-based-analysis) |
+| __*Afternoon*__ | [QC for trimmed reads](Day1#run-qc-on-the-trimmed-reads)  |
+| __*Afternoon*__ | Read based analyses (__Igor__): [slides](), [hands-on](Day1#read-based-analyses) |
 
 
 ### Tuesday
