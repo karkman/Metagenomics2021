@@ -28,7 +28,7 @@ Due to COVID-19 the doors of Biocenter 1 are closed. Please call the porter to o
 
 
 ### Monday  
-__26.4.2021 9-16__  
+[__26.4.2021 9-16__](#Day1/)
 
 | Time            | Description |
 | --------------- | ----------- |
@@ -42,7 +42,7 @@ __26.4.2021 9-16__
 
 
 ### Tuesday
-__21.5.2019 9-16__  
+[__27.4.2021 9-16__](#Day2/)
 
 | Time            | Description |
 | --------------- | ----------- |

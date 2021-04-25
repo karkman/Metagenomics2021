@@ -1,8 +1,15 @@
-*Antti Karkman, Igor S Pessi and Jenni Hultman*
+# Day 1
 
-# Connecting to Puhti
+| Time      | Activity                      | Slides                                | Hands-on                                                |
+|-----------|-------------------------------|---------------------------------------|---------------------------------------------------------|
+| Morning   | Introduction                  | [Link here](https://drive.google.com/file/d/1Fr63zkAQ8EiG7J37taBD0GMLRHaQzBu-/view?usp=sharing)||
+| Morning   | Introduction to Unix and basic usage of computing services at CSC | [Link here](#link here) | [Link here](#connecting-to-puhti) |
+| Afternoon | QC and trimming               | [Link here](https://drive.google.com/file/d/1qA8xxK2nwSqZo2lV3BohKQA_RlHW7QBb/view?usp=sharing) | [Link here](#qc-and-trimming)                           |
+| Afternoon | Read-based analyses           |                                       | [Link here](#read-based-analyses)                       |
 
-## Windows users
+## Connecting to Puhti
+
+### Windows users
 * Launch PuTTY
 * In “Host Name (or IP address)”, type **puhti.csc.fi** and click “Open”
 * In the following dialogue window, choose “Yes”
@@ -10,19 +17,19 @@
 * Type your password and hit "Enter"
 * To logout just type `exit` and hit "Enter"
 
-## MacOS users
+### MacOS users
 * Launch Terminal (e.g. open the Launchpad and type **terminal**)
 * Type `ssh user@puhti.csc.fi` and hit "Enter" (change **user** for your own CSC username)
 * In the following dialogue, type `yes` and hit "Enter"
 * Type your password and hit "Enter"
 * To logout first type `exit`, hit "Enter", and close the Terminal window
 
-# Introduction to Unix: exercises
+## Introduction to Unix: exercises
 Most of our activities will be done using the Unix command line (aka Unix shell).  
 It is thus highly recommend to have at least a basic grasp of how to get around in the Unix shell.  
 We will now dedicate half hour or so to follow some basic to learn (or refresh) the basics of the Unix shell.  
 
-## Important notes
+### Important notes
 Things inside a box like this...
 
 ```bash
@@ -48,7 +55,7 @@ man mkdir
 # To quit, hit "q"
 ```
 
-## Creating and navigating directories
+### Creating and navigating directories
 First let's see where we are:
 
 ```bash
@@ -97,7 +104,7 @@ HINT
 
 </details>  
 
-## Creating a new file
+### Creating a new file
 Let's create a new file called `myfile.txt` by launching the text editor `nano`:
 
 ```bash
@@ -116,7 +123,7 @@ Now inside the nano screen:
 
 List the contents of the folder. Can you see the file we have just created?
 
-## Copying, renaming, moving and deleting files
+### Copying, renaming, moving and deleting files
 First let's create a new folder called `myfolder`. Do you remember how to do this?
 
 <details>
@@ -233,7 +240,7 @@ rmdir myfolder
 
 Let's list the contents of the folder. What happened to `myfolder`?  
 
-# Setting up the course folders
+## Setting up the course folders
 The main course directory is located in `/scratch/project_2001499`.  
 There you will set up your own directory where you wil perform all the tasks for this course.  
 So let's create a folder for you:
@@ -252,7 +259,7 @@ The raw data used on this course can be found in `/scratch/project_2001499/COURS
 Instead of copying the data we will use links to this folder in all of the needed tasks.  
 Why don't we want 14 students copying data to their own folders?
 
-# QC and trimming
+## QC and trimming
 QC for the raw data takes few minutes, depending on the allocation.  
 Go to your working directory and make a folder called e.g. `FASTQC` for the QC reports.  
 
@@ -265,7 +272,7 @@ sinteractive -A project_2001499
 module load biokit
 ```
 
-## Running fastQC
+### Running fastQC
 Run `fastQC` to the files stored in the RAWDATA folder. What does the `-o` and `-t` flags refer to?
 
 ```bash
@@ -286,7 +293,7 @@ Have a look at the QC report with your favourite browser.
 After inspecting the output, it should be clear that we need to do some trimming.  
 __What kind of trimming do you think should be done?__
 
-## Running Cutadapt
+### Running Cutadapt
 For trimming we have an array script that runs `Cutadapt` for each file in the `RAWDATA` folder.  
 Go to your working directory and copy the `CUTADAPT.sh` script from `/scratch/project_2001499/COURSE_FILES/SBATCH_SCRIPTS`.  
 Check the script for example with the command `less`.  
@@ -324,7 +331,7 @@ seff JOBID
 
 **NOTE:** Change **JOBID** the the job id number you got when you submitted the script.
 
-## Running fastQC on the trimmed reads
+### Running fastQC on the trimmed reads
 Go to the folder containing the trimmed reads (`TRIMMED`) and view the `Cutadapt` log. Can you answer:
 
 * How many read pairs we had originally?
@@ -345,7 +352,7 @@ multiqc FASTQC/* -o FASTQC --interactive
 
 Copy the resulting HTML file to your local machine as earlier and look how well the trimming went.  
 
-# Read based analyses
+## Read based analyses
 For the read-based analyses, we will use `seqtk`, `DIAMOND`, `MEGAN` and `METAXA`.  
 Like before, the script is provided and can be found in the scripts folder (`/scratch/project_2001499/COURSE_FILES/SBATCH_SCRIPTS/READ_BASED.sh`).  
 Let's copy the script to your working directory and take a look using `less`.

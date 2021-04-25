@@ -1,6 +1,179 @@
+# Day 2
 
-# MEGAN
+| Time      | Activity                      | Slides                               | Hands-on                                    |
+|-----------|-------------------------------|--------------------------------------|---------------------------------------------|
+| Morning   | Read-based analyses (Part 1)  | [Link here](read-based-analyses.pdf) | [Link here](#megan)                         |
+| Afternoon | Read-based analyses (Part 2)  |                                      | [Link here](#read-based-data-analysis-in-R) |
 
-# R for Metaxa
+## MEGAN
+
+## Read based data analysis in R
+
+### METAXA
+Now we will work on the output of `METAXA`, the other tool we have employed to obtain taxonomic profiles for the communities.  
+
+Let's start RStudio and load the necessary packages:
+
+```r
+library(tidyverse)
+library(phyloseq)
+library(vegan)
+library(DESeq2)
+library(patchwork)
+```
+
+And let's change the directory the `READ_BASED_R` folder:
+
+```r
+setwd("PUT-HERE-TO-THE-PATH-TO-THE-READ-BASED-R-FOLDER")
+```
+
+#### Data import
+
+```r
+# Read metadata
+metadata <- read.table("sample_info.txt", sep = "\t", row.names = 1, header = TRUE)
+
+# Read METAXA results at the genus level
+metaxa_genus <- read.table("metaxa_genus.txt", sep = "\t", header = TRUE, row.names = 1)
+
+# Make taxonomy data frame
+metaxa_TAX <- data.frame(Taxa = row.names(metaxa_genus)) %>%
+  separate(Taxa, into = c("Kingdom", "Phylum", "Class", "Order", "Family", "Genus"), sep = ";")
+
+row.names(metaxa_genus) <- paste0("OTU", seq(nrow(metaxa_genus)))
+row.names(metaxa_TAX) <- paste0("OTU", seq(nrow(metaxa_genus)))
+
+# Make a phyloseq object
+metaxa_genus <- phyloseq(otu_table(metaxa_genus, taxa_are_rows = TRUE),
+                        tax_table(as.matrix(metaxa_TAX)),
+                        sample_data(metadata))
+```
+
+#### Data exploration
+
+```r
+# Take a look at the phyloseq object
+metaxa_genus
+
+# See the first few OTUs
+metaxa_genus %>% otu_table() %>% head
+metaxa_genus %>% tax_table() %>%  head
+
+# Take a look at the samples
+metaxa_genus %>% sample_data()
+metaxa_genus %>% sample_sums()
+
+# Calculate the count per sample and plot it
+metaxa_genus %>% sample_sums() %>% barplot()
+
+# See the top 10 OTUs (most abundant throughout all samples)
+metaxa_abund <- taxa_sums(metaxa_genus) %>%
+  sort(decreasing = TRUE) %>%
+  head(10) %>%
+  names()
+
+# See taxonomy for these OTUs
+tax_table(metaxa_genus)[metaxa_abund,]
+
+# And their abundance in our samples
+otu_table(metaxa_genus)[metaxa_abund,]
+```
+
+#### Heatmap of the most abundant taxa
+
+```r
+metaxa_top10 <- prune_taxa(metaxa_abund, metaxa_genus)
+otu_table(metaxa_top10) %>%  as.matrix() %>% sqrt() %>% t() %>% heatmap(col = rev(heat.colors(20)))
+
+tax_table(metaxa_top10)[rownames(otu_table(metaxa_top10)), ]
+```
+
+#### Alpha diversity
+
+```r
+# Calculate and plot Shannon diversity
+metaxa_genus %>% otu_table() %>% t() %>% diversity(index = "shannon") %>% barplot(ylab = "Shannon diversity")
 
 
+# Calculate and plot richness
+metaxa_genus %>% otu_table() %>% t() %>% specnumber() %>% barplot(ylab = "Observed taxa", las = 3)
+```
+
+#### Beta diversity
+
+```r
+# Calculate distance matrix and do ordination  
+metaxa_ord_df <- metaxa_genus %>%
+                    otu_table() %>%
+                    t() %>%
+                    vegdist() %>%
+                    cmdscale() %>%
+                    data.frame(Ecosystem = sample_data(metaxa_genus)$Ecosystem)
+
+# Plot ordination
+ggplot(metaxa_ord_df, aes(x = X1, y = X2, color = Ecosystem)) +
+  geom_point(size = 3) +
+  scale_color_manual(values=c("firebrick", "royalblue")) +
+  theme_classic() +
+  labs(x = "Axis-1", y = "Axis-2") +
+  geom_text(label = row.names(metaxa_ord_df), nudge_y = 0.03) +
+  theme(legend.position = "bottom")
+
+# Test if differences are significant
+adonis(metaxa_ord ~ Ecosystem, metadata)
+```
+
+#### Differential abundance analysis
+
+```r
+# Remove eukaryotes
+metaxa_genus_noeuk <- subset_taxa(metaxa_genus, Kingdom == "Bacteria" | Kingdom == "Archaea")
+
+# Run deseq
+metaxa_deseq <- phyloseq_to_deseq2(metaxa_genus_noeuk, ~ Ecosystem)
+metaxa_deseq <- DESeq(metaxa_deseq, test = "Wald", fitType = "local")
+
+# Get deseq results
+metaxa_deseq_res <- results(metaxa_deseq, cooksCutoff = FALSE)
+
+# Keep only p < 0.01
+metaxa_deseq_sig <- metaxa_deseq_res[which(metaxa_deseq_res$padj < 0.01), ]
+metaxa_deseq_sig <- cbind(as(metaxa_deseq_sig, "data.frame"), as(tax_table(metaxa_genus_noeuk)[rownames(metaxa_deseq_sig), ], "matrix"))
+
+### Plot differentially abundanta taxa
+left_join(otu_table(metaxa_genus_noeuk) %>% as.data.frame %>% rownames_to_column("OTU"),
+          metaxa_TAX %>% rownames_to_column("OTU")) %>%
+  filter(OTU %in% rownames(metaxa_deseq_sig)) %>%
+  unite(taxonomy, c(OTU, Kingdom, Phylum, Class, Order, Family, Genus), sep = "; ") %>%
+  gather(Library, Reads, -taxonomy) %>%
+  left_join(metadata %>% rownames_to_column("Library")) %>%
+  mutate(Reads = sqrt(Reads)) %>%
+  ggplot(aes(x = Library, y = taxonomy, fill = Reads)) +
+  geom_tile() +
+  facet_grid(cols = vars(Ecosystem), scale = "free") +
+  scale_fill_gradient(low = "white", high = "skyblue4", name = "Reads (square root)") +
+  scale_x_discrete(expand = c(0, 0)) +
+  scale_y_discrete(expand = c(0, 0))
+```
+
+### MEGAN
+
+Let's also look at the data we exported from `MEGAN` using R.  
+After importing the data as shown below, repeat the steps you have done for the `METAXA` data, this time using as input the `megan_genus`, `megan_COG`, and `MEGAN_SEED` objects.  
+
+#### Data import
+
+```r
+# Read MEGAN results at the genus level
+megan_genus <- import_biom("MEGAN_genus.biom")
+sample_data(megan_genus) <- sample_data(metadata)
+
+# Read COG functions
+megan_COG <- import_biom("MEGAN_EGGNOG.biom")
+sample_data(megan_COG) <- sample_data(metadata)
+
+# Read SEED functions
+megan_SEED <- import_biom("MEGAN_SEED.biom")
+sample_data(megan_SEED) <- sample_data(metadata)
+```
