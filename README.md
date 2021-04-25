@@ -75,7 +75,6 @@ __24.5.2019 9-16__
 
 | Time | Description |
 | --- | --- |
-
 | 10:15-11:30 | [MAG annotation + databases lecture ](Day5#humann2) (__Igor__)|
 |  |    **Lunch** |
 | __*Afternoon*__  | [Further analyses of MAGs]((https://drive.google.com/open?id=1FMBSI1df1fDFoDXud3BDMb7Z6EIST0g0) (__Igor__)|
