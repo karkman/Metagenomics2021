@@ -9,8 +9,7 @@
     - [Friday](#Friday)
 3. [Target group](#target-group)
 4. [Learning outcomes](#learning-outcomes)
-5. [Installations](#installations)
-6. [Internet connection](#internet-connection)
+5. [Internet connection](#internet-connection)
 7. [Organizers and teachers](#Organizers-and-teachers)
 
 
@@ -19,7 +18,7 @@ Microbial community structure and diversity, and population structure are fundam
 
 **Everything is possible thanks to the support of [CSC](http://www.csc.fi)**
 
-## [Feedback](https://presemo.helsinki.fi/metagenomics2019/)
+## [Feedback](https://presemo.helsinki.fi/metagenomics2021/)
 
 ## Schedule
 The course will be held in Viikki at the Faculty of Agriculture and Forestry, University of Helsinki.  
@@ -34,66 +33,60 @@ __26.4.2021 9-16__
 | --- | --- |
 | __*Morning*__ | [Introduction](https://drive.google.com/file/d/1Fr63zkAQ8EiG7J37taBD0GMLRHaQzBu-/view?usp=sharing) (__Jenni__) |
 | __*Morning*__ | [Basic usage of computing services at CSC](https://drive.google.com/open?id=13Afjk2lDxx4kh2Jdd_5jIGrNcPqflIGJ) (__Igor__) |
-| __*Morning*__ | [Installations for the course](MetagenomeInstallations.md) (__Antti__) |
-| __*Morning*__ |  [Quality control and trimming of data](Day1/README.md#QC-and-trimming) hands-on, [Slides](https://drive.google.com/file/d/1qA8xxK2nwSqZo2lV3BohKQA_RlHW7QBb/view?usp=sharing) (__Jenni__)|
+| __*Morning*__ |  [Quality control and trimming of data](https://github.com/karkman/Metagenomics2021/tree/main/Day1#qc-and-trimming) hands-on, [Slides](https://drive.google.com/file/d/1qA8xxK2nwSqZo2lV3BohKQA_RlHW7QBb/view?usp=sharing) (__Igor__)|
 |  |    **Lunch** |
-| __*Afternoon*__ | [Assembly](Day1/README.md#Assembly) hands-on, [Slides](https://drive.google.com/file/d/1EHsy1spesv3gIAALWWX7_1NBu9dwA37J/view?usp=sharing)(__Jenni__) |
-| __*Afternoon*__ | [Read based annotation](https://github.com/karkman/MetagenomeCourse2019/tree/master/Day1#humann2) (__Jenni has updated this__) |
+| __*Afternoon*__ | [Read based analyses] https://drive.google.com/file/d/1EHsy1spesv3gIAALWWX7_1NBu9dwA37J/view?usp=sharing)(__Igor__) |
+| __*Afternoon*__ | [QC for trimmed reads](https://github.com/karkman/Metagenomics2021/tree/main/Day1#run-qc-on-the-trimmed-reads)  |
+| __*Afternoon*__ | [Read based annotation](https://github.com/karkman/Metagenomics2021/tree/main/Day1#read-based-analysis) |
 
 
 ### Tuesday
-__21.5.2019 8-17__  
+__21.5.2019 9-16__  
 
 | Time | Description |
 | --- | --- |
-| __*Morning*__ | [Assembly statistics](Day2/README.md#assembly-quality-statistics) (__Jenni/Antti__)|
-| __*Morning*__ | [Getting files for Anvio](Day2/README.md#anvio) (__Tom, Antti, Jenni__)|
+| __*Morning*__ | [Megan interface](Day2/README.md#assembly-quality-statistics) (__Igor__)|
+
 |  |    **Lunch** |
-| __*Afternoon*__ | [Introduction to Anvio, slides](https://www.dropbox.com/s/yh1yf9vfuxbi9gl/2019_Helsinki_Tom_Delmont_Teaching_Material.pdf?dl=0) (__Tom__)
-| __*Afternoon*__ | [Anvio hands-on](Day3/README.md#02--describing-the-interface) (__Tom__)
+| __*Afternoon*__ | [Metaxa + R ](https://www.dropbox.com/s/yh1yf9vfuxbi9gl/2019_Helsinki_Tom_Delmont_Teaching_Material.pdf?dl=0) (__Antti__)
+| __*Afternoon*__ | [Optional: MEGAN R](Day3/README.md#02--describing-the-interface) (__Igor__)
 
 ### Wednesday
-__22.5.2019 8-17__  
+__22.5.2019 9-16__  
 
 | Time | Description |
 | --- | --- |
-| __*Morning*__  | [Manual binning of MAGs with Anvio](Day3/README.md#02--describing-the-interface) (__Tom__)|
+| __*Morning*__  | [Assembly lecture](Day3/README.md#02--describing-the-interface) (__Jenni__)|
+| __*Morning*__  | [Assembly hands-on](https://github.com/karkman/Metagenomics2021/tree/main/Day3#assembly) (__Jenni__)|
+| __*Morning*__  | [Genome resolved metagenomics](Day3/README.md#11--what-do-we-do-with-these-genomes) (__Antti__) |
 |  |    **Lunch** |
-| __*Afternoon*__  |  |
-| __*Afternoon*__  | [Taxonomic annotation of MAGs](Day3/README.md#11--what-do-we-do-with-these-genomes) (__Tom__) |
+| __*Afternoon*__  | [Preparing files for Anvi'o](Day3/README.md#11--what-do-we-do-with-these-genomes) |
 
 ### Thursday
-__23.5.2019 8-16.30__  
+__23.5.2019 9-16__  
 
 | Time | Description |
 | --- | --- |
-| __*Morning*__  | [Metaphlan profiles](Day4#metaphlan2) (__Tommi__)|
-| __*Morning*__  | [CheckM output](Day3/README.md#11--what-do-we-do-with-these-genomes) (__Tom__)|
-| __*Morning*__  | *MetaPhlan lecture* (__Tommi__)|
-| __*Morning*__  | [R-installations and R-part for Metaphlan](R_for_MetaPhlAn2)(__Tommi__)|
+| __*Morning*__  | [Anvi’o interface](Day4#metaphlan2) (__Antti__)|
 |  |    **Lunch** |
-| __*Afternoon*__  | *HUMAnN2 lecture* (__Tommi__)|
-| __*Afternoon*__  | [Humann2 hands on](Day5#humann2) (__Tommi__)|
+| __*Afternoon*__  | [Anvi’o interface](Day5#humann2) |
 
 ### Friday
-__24.5.2019 9-17__  
+__24.5.2019 9-16__  
 
 | Time | Description |
 | --- | --- |
-| 09:00-10:00 | **Tommi Vatanen**: The gut microbiome structure and function in early life - lessons from cohort studies NB. Infocenter Korona, lecture hall 3)|
-| 10:15-11:30 | [Humann2 hands on cont'd](Day5#humann2) [and R for Humann2 results](R_for_Humann2) (__Tommi__)|
+
+| 10:15-11:30 | [MAG annotation + databases lecture ](Day5#humann2) (__Igor__)|
 |  |    **Lunch** |
-| __*Afternoon*__  | [Crash course in statistics of metagenomic data: Multivariate analysis and generalized linear models of overdispersed count data](R_for_overdispersed_data/) hands on, [Slides](https://drive.google.com/open?id=1FMBSI1df1fDFoDXud3BDMb7Z6EIST0g0) (__Katariina__)|
-| __*Afternoon*__ | Wrapping up (__all__) |
+| __*Afternoon*__  | [Further analyses of MAGs]((https://drive.google.com/open?id=1FMBSI1df1fDFoDXud3BDMb7Z6EIST0g0) (__Igor__)|
+| __*Afternoon*__ | Wrapping up, feedback, Q&A (__all__) |
 
 ## Target group
 This course is targeted at PhD and MSc students who are interested in using metagenomics for investigating microbial communities.
 
 ## Learning outcomes
 QA/QC of the raw sequence data, cleaning and assembly; Gene-by-gene annotation; Visualization of data; Taxonomic classification; Functional assignment, Analyses of microbial community composition; Comparative metagenomics; MAG (MetagenomeAssembledGenome) analysis; Statistical methods for metagenome data analysis.
-
-## Installations
-[Installation instructions](MetagenomeInstallations.md)
 
 ## Internet connection
 Inside the class room you can find  __eduroam__ . Instructions on how to connect in [HelpDesk website.](https://helpdesk.it.helsinki.fi/en/instructions/logging-and-connections/networks/wireless-connections-university)
