@@ -1,9 +1,9 @@
 # Day 2
 
-| Time      | Activity                      | Slides                               | Hands-on                                    |
-|-----------|-------------------------------|--------------------------------------|---------------------------------------------|
-| Morning   | Read-based analyses (Part 1)  | [Link here](read-based-analyses.pdf) | [Link here](#megan)                         |
-| Afternoon | Read-based analyses (Part 2)  |                                      | [Link here](#read-based-data-analysis-in-R) |
+| Time      | Activity                       | Slides                               | Hands-on                                    |
+|-----------|--------------------------------|--------------------------------------|---------------------------------------------|
+| Morning   | Read-based analyses with MEGAN | [Link here](read-based-analyses.pdf) | [Link here](#megan)                         |
+| Afternoon | Read-based data analyses in R  |                                      | [Link here](#read-based-data-analysis-in-R) |
 
 ## MEGAN
 
