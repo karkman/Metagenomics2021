@@ -33,7 +33,7 @@ __26.4.2021 9-16__
 | --- | --- |
 | __*Morning*__ | [Introduction](https://drive.google.com/file/d/1Fr63zkAQ8EiG7J37taBD0GMLRHaQzBu-/view?usp=sharing) (__Jenni__) |
 | __*Morning*__ | [Basic usage of computing services at CSC](https://drive.google.com/open?id=13Afjk2lDxx4kh2Jdd_5jIGrNcPqflIGJ) (__Igor__) |
-| __*Morning*__ |  [Quality control and trimming of data](https://github.com/karkman/Metagenomics2021/tree/main/Day1#qc-and-trimming) hands-on, [Slides](https://drive.google.com/file/d/1qA8xxK2nwSqZo2lV3BohKQA_RlHW7QBb/view?usp=sharing) (__Igor__)|
+| __*Morning*__ |  [Quality control and trimming of data](https://github.com/karkman/Metagenomics2021/tree/main/Day1#qc-and-trimming) hands-on, [Slides](https://drive.google.com/file/d/1qA8xxK2nwSqZo2lV3BohKQA_RlHW7QBb/view?usp=sharing) (__Jenni__)|
 |  |    **Lunch** |
 | __*Afternoon*__ | [Read based analyses] https://drive.google.com/file/d/1EHsy1spesv3gIAALWWX7_1NBu9dwA37J/view?usp=sharing)(__Igor__) |
 | __*Afternoon*__ | [QC for trimmed reads](https://github.com/karkman/Metagenomics2021/tree/main/Day1#run-qc-on-the-trimmed-reads)  |
