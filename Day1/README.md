@@ -3,7 +3,6 @@
 # Connecting to Puhti
 
 ## Windows users
-
 * Launch PuTTY
 * In “Host Name (or IP address)”, type **puhti.csc.fi** and click “Open”
 * In the following dialogue window, choose “Yes”
@@ -12,9 +11,8 @@
 * To logout just type `exit` and hit "Enter"
 
 ## MacOS users
-
 * Launch Terminal (e.g. open the Launchpad and type **terminal**)
-* Type `ssh **user**@puhti.csc.fi` and hit "Enter" (change "user" for your own CSC username)
+* Type `ssh user@puhti.csc.fi` and hit "Enter" (change **user** for your own CSC username)
 * In the following dialogue, type `yes` and hit "Enter"
 * Type your password and hit "Enter"
 * To logout first type `exit`, hit "Enter", and close the Terminal window
@@ -25,7 +23,6 @@ It is thus highly recommend to have at least a basic grasp of how to get around 
 We will now dedicate half hour or so to follow some basic to learn (or refresh) the basics of the Unix shell.  
 
 ## Important notes
-
 Things inside a box like this...
 
 ```bash
@@ -52,7 +49,6 @@ man mkdir
 ```
 
 ## Creating and navigating directories
-
 First let's see where we are:
 
 ```bash
@@ -102,7 +98,6 @@ HINT
 </details>  
 
 ## Creating a new file
-
 Let's create a new file called `myfile.txt` by launching the text editor `nano`:
 
 ```bash
@@ -121,9 +116,7 @@ Now inside the nano screen:
 
 List the contents of the folder. Can you see the file we have just created?
 
-
 ## Copying, renaming, moving and deleting files
-
 First let's create a new folder called `myfolder`. Do you remember how to do this?
 
 <details>
@@ -240,23 +233,26 @@ rmdir myfolder
 
 Let's list the contents of the folder. What happened to `myfolder`?  
 
-__All the scripts are to be run in `your_name` folder!__
+# Setting up the course folders
+The main course directory is located in `/scratch/project_2001499`.  
+There you will set up your own directory where you wil perform all the tasks for this course.  
+So let's create a folder for you:
 
-## Data download
-First set up the your directory where you wil perform all the tasks for this course and create some folders. All the task are performed at Puhti scratch-folder in the course directory `project_2001499`.
-
-```
+```bash
+cd /scratch/project_2001499
 mkdir $USER
-cd $USER
-mkdir TRIMMED
-
 ```
 
-Check with `ls` what kind of folders were created. What kind of folder did `mkdir $USER ` create?
+Check with `ls` what kind of folder was created. Which folder did `mkdir $USER` create?
 
-The raw data used on this course can be found from `/scratch/project_2001499/RAWDATA`. Do not copy data but use link to this folder in all of the needed tasks. Why we do not want 14 students to download data to their own folders?
+This directory (`/scratch/project_2001499/your-user-name`) is your working directory.  
+Every time you log into Puhti, you should use `cd` to navigate to this directory, and **all the scripts are to be run in this folder**.  
 
-## QC and trimming
+The raw data used on this course can be found in `/scratch/project_2001499/RAWDATA`.  
+Instead of copying the data we will use links to this folder in all of the needed tasks.  
+Why don't we want 14 students to download data to their own folders?
+
+# QC and trimming
 QC for the raw data (takes few min, depending on the allocation). Go to your own folder under project_2001499 and make a folder called e.g. `FASTQC` for the QC reports.  
 
 QC does not require lot of memory and can be run on the interactive nodes using `sinteractive`.   
