@@ -243,63 +243,89 @@ cd /scratch/project_2001499
 mkdir $USER
 ```
 
-Check with `ls` what kind of folder was created. Which folder did `mkdir $USER` create?
+Check with `ls`; which folder did `mkdir $USER` create?
 
 This directory (`/scratch/project_2001499/your-user-name`) is your working directory.  
 Every time you log into Puhti, you should use `cd` to navigate to this directory, and **all the scripts are to be run in this folder**.  
 
-The raw data used on this course can be found in `/scratch/project_2001499/RAWDATA`.  
+The raw data used on this course can be found in `/scratch/project_2001499/COURSE_FILES/RAWDATA`.  
 Instead of copying the data we will use links to this folder in all of the needed tasks.  
-Why don't we want 14 students to download data to their own folders?
+Why don't we want 14 students copying data to their own folders?
 
 # QC and trimming
-QC for the raw data (takes few min, depending on the allocation). Go to your own folder under project_2001499 and make a folder called e.g. `FASTQC` for the QC reports.  
+QC for the raw data takes few minutes, depending on the allocation.  
+Go to your working directory and make a folder called e.g. `FASTQC` for the QC reports.  
 
 QC does not require lot of memory and can be run on the interactive nodes using `sinteractive`.   
 
-Activate the biokit environment and open interactive node
-```
+Activate the biokit environment and open interactive node:
+
+```bash
 module load biokit
 sinteractive
 ```
 
-## Run fastqc
+## Running fastQC
+Run `fastQC` to the files stored in the RAWDATA folder. What does the `-o` and `-t` flags refer to?
 
-Run fastqc to the files stored in the RAWDATA folder. What does the -o flag refer to?
-```
-fastqc /scratch/project_2001499/RAWDATA/*fastq.gz -o FASTQC/
+```bash
+fastqc /scratch/project_2001499/COURSE_FILES/RAWDATA/*fastq.gz -o FASTQC/ -t 4
 ```
 
-## Then combine the reports in FASTQC folder with multiqc
-```
+Then combine the reports in FASTQC folder with multiQC:
+
+```bash
 multiqc FASTQC/* -o FASTQC --interactive
-
 ```
 
-Copy the resulting HTML file to your local machine with `scp` from the command line (Mac/Linux) or *WinSCP* on Windows. Have a look at the QC report with your favourite browser.  
+To leave the interactive node, type `exit`.  
+
+Copy the resulting HTML file to your local machine with `scp` from the command line (Mac/Linux) or *WinSCP* on Windows.  
+Have a look at the QC report with your favourite browser.  
 
 After inspecting the output, it should be clear that we need to do some trimming.  
-
 __What kind of trimming do you think should be done?__
 
-For trimming we have a array script that runs `cutadapt` for each file in the `RAWDATA`folder located at `/scratch/project_2001499`.    
-Go to your folder folder and copy the array script from `/scratch/project_2001499/SBATCH_SCRIPTS`. Check the script for example with command `less`. The adapter sequences that you want to trim after `-a` and `-A`. What is the difference with `-a` and `-A`? And what is specified with option `-p` or `-o`? And how about `-m`and `-j`? You can find the answers from Cutadapt [manual](http://cutadapt.readthedocs.io).
+## Running Cutadapt
+For trimming we have an array script that runs `Cutadapt` for each file in the `RAWDATA` folder.  
+Go to your working directory and copy the `CUTADAPT.sh` script from `/scratch/project_2001499/COURSE_FILES/SBATCH_SCRIPTS`.  
+Check the script for example with the command `less`.  
+The adapter sequences that you want to trim are located after `-a` and `-A`.  
+What is the difference with `-a` and `-A`?  
+And what is specified with option `-p` or `-o`?
+And how about `-m` and `-j`?  
+You can find the answers from Cutadapt [manual](http://cutadapt.readthedocs.io).
 
-Then we need to submit our jos to the SLURM system. Make sure to submit it from your own folder. More about CSC batch jobs here: https://docs.csc.fi/computing/running/creating-job-scripts-puhti/.  
+Before running the script, we need to create the directory where the trimmed data will be written:
 
-`sbatch scripts/cut_batch.sh`  
+```bash
+mkdir TRIMMED
+```
+
+Then we need to submit our jos to the SLURM system.  
+Make sure to submit it from your own folder.  
+More about CSC batch jobs here: https://docs.csc.fi/computing/running/creating-job-scripts-puhti/.  
+
+```bash
+sbatch CUTADAPT.sh
+```
 
 You can check the status of your job with:  
 
-`squeue -l -u $USER`  
+```bash
+squeue -l -u $USER
+```
 
-After the job has finished, you can see how much resources it actually used and how many billing units were consumed. `JOBID` is the number after the batch job error and output files.  
+After the job has finished, you can see how much resources it actually used and how many billing units were consumed.
 
-`seff JOBID`  
+```bash
+seff JOBID
+```
 
-After lunch break let's check the results from the trimming.
+**NOTE:** Change **JOBID** the the job id number you got when you submitted the script.
 
-Go to the folder containing the trimmed reads (`TRIMMED`) and view the Cutadapt log. Can you answer:
+## Running fastQC on the trimmed reads
+Go to the folder containing the trimmed reads (`TRIMMED`) and view the `Cutadapt` log. Can you answer:
 
 * How many read pairs we had originally?
 * How many reads contained adapters?
@@ -307,40 +333,35 @@ Go to the folder containing the trimmed reads (`TRIMMED`) and view the Cutadapt 
 * How many base calls were quality-trimmed?
 * Overall, what is the percentage of base pairs that were kept?
 
-Then make a new folder (`FASTQC`) for the QC files of the trimmed data.
+Then make a new folder (`FASTQC`) for the QC files of the trimmed data and run fastQC and multiQC again as you did before trimming:
 
-Run FASTQC and MultiQC again as you did before trimming.  
+```bash
+sinteractive
+module load biokit
 
-## run QC on the trimmed reads
+fastqc *.fastq -o FASTQC/ -t 4
+multiqc FASTQC/* -o FASTQC --interactive
 ```
-fastqc ./*.fastq -o FASTQC/ -t 4
-multiqc ./ --interactive
 
-```
-Copy it to your local machine as earlier and look how well the trimming went.  
+Copy the resulting HTML file to your local machine as earlier and look how well the trimming went.  
 
+# Read based analyses
+For the read-based analyses, we will use `seqtk`, `DIAMOND`, `MEGAN` and `METAXA`.  
+Like before, the script is provided and can be found in the scripts folder (`/scratch/project_2001499/COURSE_FILES/SBATCH_SCRIPTS/READ_BASED.sh`).  
+Let's copy the script to your working directory and take a look using `less`.
 
-## Read based analysis
-We will annotate short reads with tool called Megan (https://uni-tuebingen.de/fakultaeten/mathematisch-naturwissenschaftliche-fakultaet/fachbereiche/informatik/lehrstuehle/algorithms-in-bioinformatics/software/megan6/) and Metaxa (https://microbiology.se/software/metaxa2/).  These will take a while to run and therefore will run it already today to have the results ready on Tuesday.
+Since the four samples have been sequenced really deep, we will utilize only a subset of the reads for the read-based analysis.  
+The subsampled 2,000,000 sequences represent the total community for this analysis.  
+The tool `seqtk` will be used for this.  
 
-Altogether we will use four different programs for read based analysis: `seqtk`, `DIAMOND`, `MEGAN` and `METAXA`.
+We will annotate short reads with `MEGAN` (https://uni-tuebingen.de/fakultaeten/mathematisch-naturwissenschaftliche-fakultaet/fachbereiche/informatik/lehrstuehle/algorithms-in-bioinformatics/software/megan6/) and `METAXA` (https://microbiology.se/software/metaxa2/).  
+`MEGAN` uses a tool called `DIAMOND` which is 20,000 times faster than `blast` to annotate reads against the database of interest.  
+Here we will use the NCBI nr database which has been formatted for `DIAMOND`.   
+Then we will use `MEGAN` to parse the annotations and get taxonomic and functional assignments.  
 
-MEGAN utilizes program called Diamond which claims to be up to 20,000 times faster than Blast to annotate  reads against the database of interest. Here we will use NCBI nr database which has been formatted for DIAMOND.
+In addition to `MEGAN`, we will also use another approach (`METAXA`) to get taxonomic profiles.
+`METAXA` runs in two steps: the first command finds rRNA genes among our reads using HMM models and then annotates them using `BLAST` and a reference database.  
 
-Then we will use MEGAN to parse the annotations and get taxonomic and functional assignments.
-
-In addition to DIAMOND and MEGAN, we will also use another approach to get taxonomic profiles using METAXA. Metaxa runs in two steps: the first command finds rRNA genes among our reads using HMM models and then annotates them using BLAST and a reference database.
-
-Since the four samples have been sequenced really deep, we will utilize only subset of them for read based analysis. The subsampled 2 000 000 sequences represent the total community for this analysis. Tool `Seqtk` is used for this.
-
-First, make following folders to your own folder: MEGAN, RESAMPLED and METAXA.
-
-You can find READ_BASED.sh script from the same location as before. Then copy it to your folder. How can you check in which folder you are?
-
-```
-/scratch/project_2001499/SBATCH_SCRIPTS/READ_BASED.sh
-
-```
-Launch READ_BASED.sh as you did for Cutadapt earlier today.
-
-The database NCBI nr is being updated by CSC  so we do not need to copy it from NCBI ourselves. The databases found at CSC can be listed with command xxx in Puhti.
+All these steps will take a while to run and therefore we will submit the scripts today to have the results ready for tomorrow.  
+First, you will need to create the following folders to store the output from the script: `RESAMPLED`, `MEGAN` and `METAXA`.  
+Then sumbit the `READ_BASED.sh` script as you did for `Cutadapt` earlier today.  
