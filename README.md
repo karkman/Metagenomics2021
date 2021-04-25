@@ -29,18 +29,29 @@ Due to COVID-19 the doors of Biocenter 1 are closed. Please call the porter to o
 
 ### Monday  
 [__26.4.2021 9-16__](Day1/)
+* Introduction
+* Working with command line
+* QC and trimming
+* Read based analysis
 
 ### Tuesday
 [__27.4.2021 9-16__](Day2/)
+* Read based analysis with MEGAN
+* Read based data analysis in R
 
 ### Wednesday
-[__22.5.2019 9-16__](Day3/)
+[__28.4.2021 9-16__](Day3/)
+* Assembly
+* Assembly QC
+* Prepping files for anvi'o
 
 ### Thursday
-[__23.5.2019 9-16__](Day4/)  
+[__29.4.2021 9-16__](Day4/)  
+* Genome-resolved metagenomics
 
 ### Friday
-[__24.5.2019 9-16__](Day5/)
+[__30.4.2021 9-16__](Day5/)
+* Annotation of metagenomne assembled genomes (MAGs)
 
 ## Target group
 This course is targeted at PhD and MSc students who are interested in using metagenomics for investigating microbial communities.
