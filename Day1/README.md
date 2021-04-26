@@ -2,7 +2,7 @@
 
 | Time      | Activity                      | Slides                                | Hands-on                                                |
 |-----------|-------------------------------|---------------------------------------|---------------------------------------------------------|
-| Morning   | Introduction                  | [Link here](mbdp_introduction.pdf)||
+| Morning   | Introduction                  | [Link here](MBDP_introduction.pdf)||
 | Morning   | Introduction to Unix and basic usage of computing services at CSC | [Link here](introduction-to-unix.pdf) | [Link here](#connecting-to-puhti) |
 | Afternoon | QC and trimming               | [Link here](#link here) | [Link here](#qc-and-trimming) |
 | Afternoon | Read-based analyses           | [Link here](read-based-analyses.pdf) | [Link here](#read-based-analyses) |
