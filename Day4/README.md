@@ -56,18 +56,14 @@ In SSH tab select "tunnels". Add:
 
 Click add and connect as usual.
 
-Before doing anything else, again pull the changes from Github.
-
-```bash
-cd /scratch/project_2001499/$USER
-git pull origin main
-```
-
 Then we can start to work with our data in anvi'o.  
 Activate anvi'o v.7 virtual environment and copy the folder containing the tutorial files to you own course folder. Go to the folder and see what it contains.
 
 ```bash
-conda activate anvio-7
+screen -R anvio
+module purge
+module load bioconda/3
+source activate  anvio-7
 cp -r ../COURSE_FOLDER/ANVI-TUTORIAL .
 cd ANVI-TUTORIAL
 ls -l
@@ -80,7 +76,7 @@ First have a look at some basic statistics about the contigs database.
 ```bash
 anvi-display-contigs-stats CONTIGS.db -P PORT
 ```
-Now anvi'o tells you to the servr address. It shoudl contain your port number. Copy-paste the address to your favourite browser. Chrome is preferred.
+Now anvi'o tells you to the server address. It should contain your port number. Copy-paste the address to your favourite browser. Chrome is preferred.
 
 One thing before starting the binning, let's check what genomes we might expect to find from our data based on the single-copy core genes (SCGs).
 
@@ -101,7 +97,7 @@ anvi-interactive -c CONTIGS.db -p PROFILE.db -P PORT
 
 You might notice that it's a bit slow to use sometimes. Even this tutorial data is quite big and anvi'o gets slow to use when viewing the whole data. So next step is to split the data in to ~ 5-8 clusters (__bins__) that we will work on individually.
 
-Make the clusters and store them in a collection called `PreCluster`. Make sure that the bins are named `Bin_1`, `Bin_2`,..., `Bin_N`. (or anything else easy to remember).  
+Make the clusters and store them in a collection called `PreCluster`. Make sure that the bins are named `Bin_1`, `Bin_2`,..., `Bin_N`. (or anything else that's easy to remember).  
 Then you can close the server from the command line.
 
 Next we'll move on to manually refine each cluster we made in the previous step. We'll do this to each bin in our collection called `PreCluster`.  
