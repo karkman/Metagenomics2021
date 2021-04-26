@@ -279,10 +279,22 @@ Run `fastQC` to the files stored in the RAWDATA folder. What does the `-o` and `
 fastqc /scratch/project_2001499/COURSE_FILES/RAWDATA/Sample04.NOVASEQ* -o FASTQC/ -t 2
 ```
 
-Then combine the reports in FASTQC folder with multiQC:
+Running the QC step on all sequence files would take too long, so they are already done and you can just copy them.
+Make sure you're on your own folder before copying.
 
 ```bash
-multiqc FASTQC/* -o FASTQC --interactive
+cd /scratch/project_2001499/$USER
+cp -r /scratch/project_2001499/COURSE_FILES/FASTQC_RAW ./
+```
+
+Then combine the reports in FASTQC folder with multiQC:
+MultiQC is not pre-installed to Puhti, so we have created a virtual environment that has it.
+
+```bash
+export PROJAPPL=/projappl/project_2001499
+module load bioconda/3
+source activate QC_env
+multiqc FASTQC_RAW/* -o FASTQC_RAW --interactive
 ```
 
 To leave the interactive node, type `exit`.  
@@ -341,13 +353,21 @@ Go to the folder containing the trimmed reads (`TRIMMED`) and view the `Cutadapt
 * Overall, what is the percentage of base pairs that were kept?
 
 Then make a new folder (`FASTQC`) for the QC files of the trimmed data and run fastQC and multiQC again as you did before trimming:
+Again the QC part would take too long, so we have created the files for you to copy and run only the multiQC part.
+
+```bash
+cd /scratch/project_2001499/$USER
+cp -r /scratch/project_2001499/COURSE_FILES/FASTQC_TRIMMED ./
+```
 
 ```bash
 sinteractive -A project_2001499
-module load biokit
 
-fastqc *.fastq -o FASTQC/ -t 4
-multiqc FASTQC/* -o FASTQC --interactive
+export PROJAPPL=/projappl/project_2001499
+module load bioconda/3
+source activate QC_env
+
+multiqc FASTQC_TRIMMED/* -o FASTQC_TRIMMED --interactive
 ```
 
 Copy the resulting HTML file to your local machine as earlier and look how well the trimming went.  
