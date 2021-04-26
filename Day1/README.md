@@ -2,10 +2,10 @@
 
 | Time      | Activity                      | Slides                                | Hands-on                                                |
 |-----------|-------------------------------|---------------------------------------|---------------------------------------------------------|
-| Morning   | Introduction                  | [Link here](https://drive.google.com/file/d/1Fr63zkAQ8EiG7J37taBD0GMLRHaQzBu-/view?usp=sharing)||
-| Morning   | Introduction to Unix and basic usage of computing services at CSC | [Link here](#link here) | [Link here](#connecting-to-puhti) |
-| Afternoon | QC and trimming               | [Link here](https://drive.google.com/file/d/1qA8xxK2nwSqZo2lV3BohKQA_RlHW7QBb/view?usp=sharing) | [Link here](#qc-and-trimming)                           |
-| Afternoon | Read-based analyses           |                                       | [Link here](#read-based-analyses)                       |
+| Morning   | Introduction                  | [Link here](#link here)||
+| Morning   | Introduction to Unix and basic usage of computing services at CSC | [Link here](introduction-to-unix.pdf) | [Link here](#connecting-to-puhti) |
+| Afternoon | QC and trimming               | [Link here](#link here) | [Link here](#qc-and-trimming) |
+| Afternoon | Read-based analyses           | [Link here](read-based-analyses.pdf) | [Link here](#read-based-analyses) |
 
 ## Connecting to Puhti
 
