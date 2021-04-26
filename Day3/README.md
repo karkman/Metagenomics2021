@@ -25,7 +25,7 @@ module load biokit
 
 Assembling metagenomic data can be very resource demanding and we need to do it as a batch job.
 
-Copy the  script called MEGAHIT.sh from the SBATCH folder to your own directory and submit the batch job as previously.
+Copy the  script called MEGAHIT.sh from the `COURSE_FILES/SBATCH_SCRIPTS` folder to your own directory and submit the batch job as previously.
 
 What do the following flags mean?
 ```
@@ -46,7 +46,7 @@ scancel JOBID
 ```
 Terminate your job and check that is it no longer in your list of jobs.
 
-We have run the assemblies for you and now copy the assembled metagenomes from `/scratch/project_2001499/hultman/ASSEMBLY_MEGAHIT`. What kind of files did you copy? Please take a look at the log-files.
+We have run the assemblies for you and now copy the assembled metagenomes from `/scratch/project_2001499/COURSE_FILES/ASSEMBLY_MEGAHIT`. What kind of files did you copy? Please take a look at the log-files.
 
 Questions about the assembly
 * Which version of megahit did we actually use for the assemblies?
