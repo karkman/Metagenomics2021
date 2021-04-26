@@ -276,7 +276,7 @@ module load biokit
 Run `fastQC` to the files stored in the RAWDATA folder. What does the `-o` and `-t` flags refer to?
 
 ```bash
-fastqc /scratch/project_2001499/COURSE_FILES/RAWDATA/*fastq.gz -o FASTQC/ -t 4
+fastqc /scratch/project_2001499/COURSE_FILES/RAWDATA/Sample04.NOVASEQ* -o FASTQC/ -t 2
 ```
 
 Then combine the reports in FASTQC folder with multiQC:
