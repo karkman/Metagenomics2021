@@ -292,6 +292,7 @@ MultiQC is not pre-installed to Puhti, so we have created a virtual environment 
 
 ```bash
 export PROJAPPL=/projappl/project_2001499
+module purge
 module load bioconda/3
 source activate QC_env
 multiqc FASTQC_RAW/* -o FASTQC_RAW --interactive
@@ -364,6 +365,7 @@ cp -r /scratch/project_2001499/COURSE_FILES/FASTQC_TRIMMED ./
 sinteractive -A project_2001499
 
 export PROJAPPL=/projappl/project_2001499
+module purge
 module load bioconda/3
 source activate QC_env
 
