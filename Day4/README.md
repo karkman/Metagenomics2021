@@ -13,7 +13,7 @@ But let's start with a smaller tutorial dataset. It's a subset taken from Sample
 ### Tunneling the interactive interafce
 
 Although you can install anvi'o on your own computer (and you're free to do so, but we won't have time to help in that), we will run anvi'o in Puhti and tunnel the interactive interface to your local computer.  
-To be able to to do this, everyone needs to use a different port for tunneling and your port will be __8080 + you user number__. So `user1` will use port 8081.
+To be able to to do this, everyone needs to use a different port for tunneling and your port will be __8080 + your number given on the course__. So `Student 1` will use port 8081. If the port doesn't work, try __8100 + your number__.  
 
 Connecting using a tunnel is a bit tricky and involves several steps, so pay special attention.  
 First we need to open an interactive session inside a screen and then log in again with a tunnel using the computing node identifier.
@@ -35,15 +35,15 @@ Note the computing node identifier before logging out.
 
 ```bash
 cd /scratch/project_2001499/$USER
+# Take note whether you were connected to login1 or login2. Screens are login node specific.
 screen -S anvio
-# Take note whethe yo were connected to login1 or login2. Screens are login node specific.
 sinteractive -i
-# And after this answer to the questions
+# And after this change the time and memory allocations.
 # When your connected to the computing node, check the identifier and detach from the screen
 ```
 
 Then you can log out and log in again, but this time in a bit different way.  
-You need to specify your PORT and the computing node to which you connected and also the login node you were connected the first time.  
+You need to specify your __PORT__ and the __computing node__ to which you connected and also the __login node__ you were connected the first time.  
 
 ```bash
 ssh -L PORT:NODEID.bullx:PORT USERNAME@puhti-loginX.csc.fi
