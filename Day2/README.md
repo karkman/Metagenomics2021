@@ -2,10 +2,42 @@
 
 | Time      | Activity                       | Slides                               | Hands-on                                    |
 |-----------|--------------------------------|--------------------------------------|---------------------------------------------|
-| Morning   | Read-based analyses with MEGAN | [Link here](read-based-analyses.pdf) | [Link here](#megan)                         |
+| Morning   | Read-based analyses with MEGAN |                                      | [Link here](#MEGAN)                         |
 | Afternoon | Read-based data analyses in R  |                                      | [Link here](#read-based-data-analysis-in-R) |
 
 ## MEGAN
+We will start by checking if the script we ran yesterday finished successfully.  
+Login to Puhti and go to your working directory, then:
+
+- Take a look at the `READ_BASED_*_err.txt` and `READ_BASED_*_out.txt` files using `less`. Does it tell you something about the status of your script?
+- Find the JOB ID number for each of your four jobs (you can find these in the name of the files you check just now).
+- The use `seff JOBID` (changing `JOBID` of course) to see how your job went.
+- Then see if you can find in your directory the folder `RESAMPLED`, `MEGAN` and `METAXA`.
+- Are they empty? Do you see the ouput that was supposed to be produced by the commands?
+- Now let's take a look for example the file `MEGAN/Sample01.megan.log.txt`. Does it seem that it finished correctly? What about the other three samples?
+
+
+In the `MEGAN` directory, for each sample, you should find:
+- `$SAMPLE.blastx.txt`: DIAMOND output
+- `$SAMPLE.diamond.log.txt`: DIAMOND log
+- `$SAMPLE.rma6`: MEGAN output
+- `$SAMPLE.megan.log.txt`: MEGAN log
+
+The `.rma6` files are compressed binary files created by `MEGAN` (command-line version).  
+These describe the taxonomic and functional composition of the samples based on the `DIAMOND` annotation against the NCBI nr database.  
+
+`MEGAN` also has a powerful GUI version, that you have installed in your own computer.  
+First let's copy the four `.rma6` files to your own computers using FileZilla/scp/WinScp etc.  
+When that's done let's launch `MEGAN` and take a look together at one of the samples.  
+
+Now, by using the `Compare` tool, let's try to find differences between the samples.  
+On the slides for the first day ("Course outline and practical info") we saw that we have two heathland and two fen soils.  
+Can we see major differences in community structure between these two ecosystems? For example:
+- Are samples from the same ecosystem type more similar to each other than to the other samples? **HINT:** Try changing the view to the Genus Rank and then going to "Window" > "Cluster Analysis" and chosing "UPGMA Tree".
+- What is the most abundant phylum in the heathland soils? And in the fen soils?
+- By the way, what is the main environmental difference between these two ecosystems? Can you think about how this could explain the difference in phylum abundance?
+- Now looking at the functional profiles (e.g. SEED), can you spot differences between these two ecosystems? Specially regarding energy and metabolism?
+- Again, how these differences relate to the environmental aspects of these ecosystems?
 
 ## Read based data analysis in R
 
