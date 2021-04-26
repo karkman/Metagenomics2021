@@ -62,6 +62,10 @@ QA/QC of the raw sequence data, cleaning and assembly; Gene-by-gene annotation; 
 ## Internet connection
 Inside the class room you can find  __eduroam__ . Instructions on how to connect in [HelpDesk website.](https://helpdesk.it.helsinki.fi/en/instructions/logging-and-connections/networks/wireless-connections-university)
 
+## Slack
+We will be using Slack on this course. Use the link below to join the workspace.  
+https://join.slack.com/t/slack-exb2205/shared_invite/zt-poh4c74x-GyL66mmcc5MTREQXxX0bxg
+
 ## Organizers and Teachers
 
 ### Organizers
