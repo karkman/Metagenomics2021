@@ -12,7 +12,7 @@
 |-----------|-------------------------------|--------------------------------------|------------------------------------------|
 | Morning   | Read-based analyses (Part 1)  | [Link here](read-based-analyses.pdf) | [Link here](#read-based-analyses-part-1) |
 | Afternoon | Read-based analyses (Part 2)  |                                      | [Link here](#read-based-analyses-part-2) |
-
+  
 
 ## Assembly
 We will assemble all 4 samples indivially and use [Megahit assembler](https://github.com/voutcn/megahit) for the job. In addition, we will use MetaQuast to get some statistics about our assembly.
