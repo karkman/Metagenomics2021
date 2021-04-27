@@ -166,7 +166,6 @@ ln -s ../../COURSE_FILES/BINNING_MEGAHIT/
 Next we will profile the samples using the DB and the mapping output. Write an array script for the profiling and submit it to the queue.
 __Don't__ do this from the screen and make sure your inside your `ANVIO` folder.
 
-# ANTTI: this with sample03 only or with all 4 samples?
 ```
 
 anvi-profile --input-file BINNING_MEGAHIT/Sample03/MAPPING/$SAMPLE.bam \
