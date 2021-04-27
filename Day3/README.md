@@ -97,6 +97,7 @@ Anvio is an analysis and visualization platform for omics data. You can read mor
 Go to your course folder and make a new folder called ANVIO. All task on this section are to be done in this folder.
 
 ```
+sinteractive -A project_20001499 -c 4
 mkdir ANVIO
 cd ANVIO
 ```
