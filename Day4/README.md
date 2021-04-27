@@ -27,7 +27,6 @@ Mini manual for `screen`:
 * `screen -rD` - re-attach to a attached session
 * `exit` - close the screen and kill all processes running inside the screen (from inside the screen)
 
-
 So open a normal connection to Puhti and go to your course folder. Take note which login node you were connected.   
 Then open an interactive session and specify that you need 8 hours and 10 Gb of memory.  
 Other options can stay as they are.  
