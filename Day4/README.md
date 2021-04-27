@@ -123,7 +123,7 @@ anvi-summarize -c CONTIGS.db -p PROFILE.db -C PreliminaryBins -o SUMMARY_Prelimi
 ```
 After that's done, copy the summary folder to your local machine ands open `index.html`.
 
-From there you can find the summary of each of your bins. In the next step we'll further refine each bin that meets our criteria for a good bin but still has too much redundancy. In this case completeness > 50 % and redundancy > 5 %. So refine all bins that are more than 50 % complete and have more than 5 % redundancy.
+From there you can find the summary of each of your bins. In the next step we'll further refine each bin that meets our criteria for a good bin but still has too much redundancy. In this case completeness > 80 % and redundancy > 10 %. So refine all bins that are more than 80 % complete and have more than 10 % redundancy.
 
 When you're ready it's time to again rename the bins and run the summary on them.  
 Name the new collection `Bins` and use prefix `Sample03`.
