@@ -168,11 +168,29 @@ __Don't__ do this from the screen and make sure your inside your `ANVIO` folder.
 
 # ANTTI: this with sample03 only or with all 4 samples?
 ```
+#!/bin/bash -l
+#SBATCH --job-name array_profiling
+#SBATCH --output array_profiling_out_%A_%a.txt
+#SBATCH --error array_profiling_err_%A_%a.txt
+#SBATCH --partition small
+#SBATCH --time 01:00:00
+#SBATCH --mem-per-cpu=1000
+#SBATCH --array=1-4
+#SBATCH --nodes 1
+#SBATCH --cpus-per-task=6
+#SBATCH --account project_2001499
+
+SAMPLE=Sample0${SLURM_ARRAY_TASK_ID}
+
+export PROJAPPL=/projappl/project_2001499
+module load bioconda/3
+source activate anvio-7
 
 anvi-profile --input-file BINNING_MEGAHIT/Sample03/MAPPING/$SAMPLE.bam \
                --output-dir PROFILES/$SAMPLE \
                --contigs-db Sample03_5000nt_CONTIGS.db \
-               --num-threads 4
+               --num-threads 20 &> $SAMPLE.profilesdb.log.txt
+
 ```
 
 ### Merging the profiles
