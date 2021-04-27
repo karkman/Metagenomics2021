@@ -10,8 +10,9 @@
 
 | Time      | Activity                      | Slides                               | Hands-on                                 |
 |-----------|-------------------------------|--------------------------------------|------------------------------------------|
-| Morning   | Read-based analyses (Part 1)  | [Link here](read-based-analyses.pdf) | [Link here](#read-based-analyses-part-1) |
-| Afternoon | Read-based analyses (Part 2)  |                                      | [Link here](#read-based-analyses-part-2) |
+| Morning   | Assembly                      | [Link here](assembly.pdf)            | [Link here](#Assembly)                   |
+| Morning   | Genome resolved metagenomics  | [link here](antti.pdf)               |                                          |
+| Afternoon | Genome resolved metagenomics  | [Link here](read-based-analyses.pdf) | [Link here](#11--what-do-we-do-with-these-genomes) |
   
 
 ## Assembly
