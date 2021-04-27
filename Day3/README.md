@@ -114,7 +114,8 @@ Anvio wants sequence IDs in your FASTA file as simple as possible. Therefore we 
 
 
 ```
-anvi-script-reformat-fasta ../ASSEMBLY_MEGAHIT/Sample03/final.contigs.fa -l 5000 --simplify-names --prefix MEGAHIT_sample03 -r REPORT -o MEGAHIT_sample03_5000nt.fa
+anvi-script-reformat-fasta ../ASSEMBLY_MEGAHIT/Sample03/final.contigs.fa -l 5000 --simplify-names \
+                            --prefix MEGAHIT_sample03 -r REPORT -o MEGAHIT_sample03_5000nt.fa
 ````
 Deattach from the screen with `Ctrl a+d`  
 
@@ -124,7 +125,8 @@ Deattach from the screen with `Ctrl a+d`
 Contigs database (contigs.db) contains information on contig length, open reading frames (searched with Prodigal) and kmers. See [Anvio webpage](http://merenlab.org/2016/06/22/anvio-tutorial-v2/#creating-an-anvio-contigs-database) for more information.  
 
 ```
-anvi-gen-contigs-database --contigs-fasta MEGAHIT_sample03_5000nt.fa --output-db-path MEGAHIT_sample03_5000nt_CONTIGS.db -n MEGAHIT_sample03_5000nt --num-threads 4
+anvi-gen-contigs-database --contigs-fasta MEGAHIT_sample03_5000nt.fa --output-db-path MEGAHIT_sample03_5000nt_CONTIGS.db \
+                          -n MEGAHIT_sample03_5000nt --num-threads 4
 ```
 ## Run HMMs to identify single copy core genes for Bacteria, Archaea and Eukarya, plus rRNAs
 ```
@@ -134,9 +136,14 @@ anvi-run-hmms --contigs-db MEGAHIT_sample03_5000nt_CONTIGS.db --num-threads 4
 Next thing to do is mapping all the reads back to the assembly. We use the renamed >5000 nt contigs and do it sample-wise, so each sample is mapped separately using the trimmed R1 & R2 reads.  
 
 However, since this would take three days, we have run this for you and the data can be found from `COURSE_DATA/MEGAHIT_BINNING/`
+Let's make a softlink to that folder as well. Make sure you make the softlink to your `ANVIO` folder
+
+```bash
+ln -s ../../COURSE_FILES/BINNING_MEGAHIT/
+```
+
 Next we will profile the samples using the DB and the mapping output. Write an array script for the profiling and submit it to the queue.
 
-# SCRIPT NOT UPDATED
 ```
 #!/bin/bash -l
 #SBATCH -J array_profiling
@@ -144,16 +151,17 @@ Next we will profile the samples using the DB and the mapping output. Write an a
 #SBATCH -e array_profiling_err_%A_%a.txt
 #SBATCH -t 01:00:00
 #SBATCH --mem-per-cpu=1000
-#SBATCH --array=1-10
+#SBATCH --array=1-4
 #SBATCH -n 1
 #SBATCH --cpus-per-task=6
 #SBATCH -p serial
 
-anvi-profile --input-file BINNING_MEGAHIT/$ASSEMBLY/MAPPING/$SAMPLE.bam \
-               --output-dir BINNING_MEGAHIT/$ASSEMBLY/PROFILES/$SAMPLE \
-               --contigs-db BINNING_MEGAHIT/$ASSEMBLY/CONTIGS.db \
-               --num-threads 20
-done &> BINNING_MEGAHIT/$ASSEMBLY.profilesdb.log.txt
+SAMPLE=Sample0${SLURM_ARRAY_TASK_ID}
+
+anvi-profile --input-file BINNING_MEGAHIT/Sample03/MAPPING/$SAMPLE.bam \
+               --output-dir PROFILES/$SAMPLE \
+               --contigs-db CONTIGS.db \
+               --num-threads 20 &> $SAMPLE.profilesdb.log.txt
 ```
 Submit the job with `sbatch` as previously.  
 
