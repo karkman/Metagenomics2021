@@ -147,15 +147,16 @@ Next we will profile the samples using the DB and the mapping output. Write an a
 
 ```
 #!/bin/bash -l
-#SBATCH -J array_profiling
-#SBATCH -o array_profiling_out_%A_%a.txt
-#SBATCH -e array_profiling_err_%A_%a.txt
-#SBATCH -t 01:00:00
+#SBATCH --job-name array_profiling
+#SBATCH --output array_profiling_out_%A_%a.txt
+#SBATCH --error array_profiling_err_%A_%a.txt
+#SBATCH --partition small
+#SBATCH --time 01:00:00
 #SBATCH --mem-per-cpu=1000
 #SBATCH --array=1-4
-#SBATCH -n 1
+#SBATCH --nodes 1
 #SBATCH --cpus-per-task=6
-#SBATCH -p serial
+#SBATCH --account project_2001499
 
 SAMPLE=Sample0${SLURM_ARRAY_TASK_ID}
 
