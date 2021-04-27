@@ -239,3 +239,6 @@ Then open google chrome and go to address that anvi'o address
 http://localhost:PORT
 
 **Again change XXXX to your port number**
+
+When you're done, close the anvi'o server, close the interactive session, close the screen and log out from Puhti.  
+And we're done for today.

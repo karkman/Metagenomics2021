@@ -55,11 +55,12 @@ In SSH tab select "tunnels". Add:
 
 Click add and connect as usual.
 
-Then we can start to work with our data in anvi'o.  
-Activate anvi'o v.7 virtual environment and copy the folder containing the tutorial files to you own course folder. Go to the folder and see what it contains.
+Then we can start to work with our tutorial data in anvi'o.  
+Activate anvi'o v.7 virtual environment and copy the folder containing the tutorial files to you own course folder.  
+Go to the folder and see what it contains.
 
 ```bash
-screen -R anvio
+screen -r anvio
 module purge
 module load bioconda/3
 source activate  anvio-7
