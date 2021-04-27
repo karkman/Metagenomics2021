@@ -1,18 +1,11 @@
 # Day 3
 
-| Time            | Description |
-| --------------- | ----------- |
-| __*Morning*__   | [Assembly lecture](Day3/README.md#02--describing-the-interface) (__Jenni__)|
-| __*Morning*__   | [Assembly hands-on](https://github.com/karkman/Metagenomics2021/tree/main/Day3#assembly) (__Jenni__)|
-| __*Morning*__   | [Genome resolved metagenomics](Day3/README.md#11--what-do-we-do-with-these-genomes) (__Antti__) |
-|                 |  **Lunch**  |
-| __*Afternoon*__ | [Preparing files for Anvi'o](Day3/README.md#11--what-do-we-do-with-these-genomes) |
-
 | Time      | Activity                      | Slides                               | Hands-on                                 |
 |-----------|-------------------------------|--------------------------------------|------------------------------------------|
-| Morning   | Read-based analyses (Part 1)  | [Link here](read-based-analyses.pdf) | [Link here](#read-based-analyses-part-1) |
-| Afternoon | Read-based analyses (Part 2)  |                                      | [Link here](#read-based-analyses-part-2) |
-
+| Morning   | Assembly                      | [Link here](assembly.pdf)            | [Link here](#Assembly)                   |
+| Morning   | Genome resolved metagenomics  | [link here](antti.pdf)               |                                          |
+| Afternoon | Genome resolved metagenomics  | [Link here](read-based-analyses.pdf) | [Link here](#genome-resolved-metagenomics-with-anvio) |
+  
 
 ## Assembly
 We will assemble all 4 samples indivially and use [Megahit assembler](https://github.com/voutcn/megahit) for the job. In addition, we will use MetaQuast to get some statistics about our assembly.
