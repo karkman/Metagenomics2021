@@ -10,7 +10,7 @@
 Next step in our analysis is genome-resolved metagenomics using anvi'o. We ran all the steps to produce the files for anvi'o yesterday.
 But let's start with a smaller tutorial dataset. It's a subset taken from Sample03.
 
-### Tunneling the interactive interafce
+### Tunneling the interactive interafce (recap from yesterday)
 
 Although you can install anvi'o on your own computer (and you're free to do so, but we won't have time to help in that), we will run anvi'o in Puhti and tunnel the interactive interface to your local computer.  
 To be able to to do this, everyone needs to use a different port for tunneling and your port will be __8080 + your number given on the course__. So `Student 1` will use port 8081. If the port doesn't work, try __8100 + your number__.  
@@ -141,4 +141,4 @@ And finally you can make a summary of your MAGs before moving on.
 anvi-summarize -c CONTIGS.db -p PROFILE.db -C MAGs -o SUMMARY_MAGs
 ```
 
-Then it's finally time to start working with the full data set from Sample03. 
+Then it's finally time to start working with the full data set from Sample03.
