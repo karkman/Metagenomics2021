@@ -68,7 +68,7 @@ library(DESeq2)
 library(patchwork)
 ```
 
-And let's change the directory the `READ_BASED_R` folder:
+And let's change the directory the folder with the metaxa output files:
 
 ```r
 setwd("PUT-HERE-TO-THE-PATH-TO-THE-READ-BASED-R-FOLDER")
