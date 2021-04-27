@@ -97,6 +97,7 @@ Anvio is an analysis and visualization platform for omics data. You can read mor
 Go to your course folder and make a new folder called ANVIO. All task on this section are to be done in this folder.
 
 ```
+sinteractive -A project_20001499 -c 4
 mkdir ANVIO
 cd ANVIO
 ```
@@ -108,87 +109,14 @@ export PROJAPPL=/projappl/project_2001499
 module load bioconda/3
 source activate anvio-7
 ```
-## Rename the scaffolds and select those >2,500nt.
-Anvio wants sequence IDs in your FASTA file as simple as possible. Therefore we need to reformat the headerlines to remove spaces and non-numeric characters.  
-Also contigs shorter than 2500 bp will be removed.
+## Rename the scaffolds and select those >5000nt.
+Anvio wants sequence IDs in your FASTA file as simple as possible. Therefore we need to reformat the headerlines to remove spaces and non-numeric characters. Also contigs shorter than 5000 bp will be removed.
+
 
 ```
-anvi-script-reformat-fasta ../ASSEMBLY_MEGAHIT/Sample01/final.contigs.fa -l 2500 --simplify-names --prefix MEGAHIT_sample01 \
-                            -r REPORT -o MEGAHIT_sample01_2500nt.fa
+anvi-script-reformat-fasta ../ASSEMBLY_MEGAHIT/Sample03/final.contigs.fa -l 5000 --simplify-names --prefix MEGAHIT_sample03 -r REPORT -o MEGAHIT_sample03_5000nt.fa
 ````
 Deattach from the screen with `Ctrl a+d`  
-
-## Mapping the reads back to the assembly
-Next thing to do is mapping all the reads back to the assembly. We use the renamed >2,500 nt contigs and do it sample-wise, so each sample is mapped separately using the trimmed R1 & R2 reads.  
-We will need to two scripts for that, one for the actual mapping and another to run it as an array job. Save both scripts to your `scripts` folder.
-
-But before doing that we have make a bowtie2 index from the contig file. Run the following command:  
-
-```
-bowtie2-build MEGAHIT_co-assembly_2500nt.fa MEGAHIT_sample01  
-```
-
-`MEGAHIT_sample01` is the base name for the resulting index files.  
-
-
-The mapping script from Tom, modified to be used in Taito:
-```
-#!/bin/bash
-# example run: ./bowtie2-map-batch.sh SAMPLE1_R1.fastq SAMPLE1_R2.fastq SAMPLE1 bt2_index
-
-# $1: Forward reads
-# $2: Reverse reads
-# $3: Sample name
-# $4: Bowtie2 index
-
-set -e
-
-bowtie2 --threads $SLURM_CPUS_PER_TASK -x $4 -1 $1 -2 $2 -S $3.sam --no-unal
-samtools view -F 4 -bS $3.sam > $3-RAW.bam
-samtools sort $3-RAW.bam -o $3.bam
-samtools index $3.bam
-rm $3.sam $3-RAW.bam
-```
-The array job script: NOT UPDATED
-```
-#!/bin/bash -l
-#SBATCH -J array_map
-#SBATCH -o array_map_out_%A_%a.txt
-#SBATCH -e array_map_err_%A_%a.txt
-#SBATCH -t 02:00:00
-#SBATCH --mem-per-cpu=1000
-#SBATCH --array=1-10
-#SBATCH -n 1
-#SBATCH --cpus-per-task=6
-#SBATCH -p serial
-
-cd $WRKDIR/Metagenomics2019/co-assembly
-# we need Bowtie2 from the biokit
-module load biokit
-# each job will get one sample from the sample names file
-name=$(sed -n "$SLURM_ARRAY_TASK_ID"p ../sample_names.txt)
-# run mapping script for each sample
-bash ../scripts/bowtie2-map-batch.sh ../trimmed_data/$name"_R1_trimmed.fastq" \
-     ../trimmed_data/$name"_R2_trimmed.fastq" \
-     $name ../ANVIO/co-assembly
-```
-Then again submit the array job with `sbatch`.  
-
-During launch break check what happens in the different steps in the mapping script.
-```
-bowtie2
-samtools view
-samtools sort
-samtools index
-```
-
-## Back to Anvi'o
-
-Reattach to your Anvi'o screen
-
-```
-screen -r anvio
-```
 
 
 ## Generate CONTIGS.db
@@ -196,20 +124,19 @@ screen -r anvio
 Contigs database (contigs.db) contains information on contig length, open reading frames (searched with Prodigal) and kmers. See [Anvio webpage](http://merenlab.org/2016/06/22/anvio-tutorial-v2/#creating-an-anvio-contigs-database) for more information.  
 
 ```
-anvi-gen-contigs-database -f MEGAHIT_co-assembly_2500nt.fa -o MEGAHIT_co-assembly_2500nt_CONTIGS.db -n MEGAHIT_co-assembly
+anvi-gen-contigs-database --contigs-fasta MEGAHIT_sample03_5000nt.fa --output-db-path MEGAHIT_sample03_5000nt_CONTIGS.db -n MEGAHIT_sample03_5000nt --num-threads 4
 ```
 ## Run HMMs to identify single copy core genes for Bacteria, Archaea and Eukarya, plus rRNAs
 ```
-anvi-run-hmms -c MEGAHIT_co-assembly_2500nt_CONTIGS.db -T 6
+anvi-run-hmms --contigs-db MEGAHIT_sample03_5000nt_CONTIGS.db --num-threads 4
 ```
+## Mapping the reads back to the assembly
+Next thing to do is mapping all the reads back to the assembly. We use the renamed >5000 nt contigs and do it sample-wise, so each sample is mapped separately using the trimmed R1 & R2 reads.  
 
-While the HMM identification is running, deattach from the screen and check if the mapping has been done.  
-```
-squeue -l -u $USER
-```
+However, since this would take three days, we have run this for you and the data can be found from `COURSE_DATA/MEGAHIT_BINNING/`
+Next we will profile the samples using the DB and the mapping output. Write an array script for the profiling and submit it to the queue.
 
-When the mapping is done for all samples and the contigs database is ready, we can profile the samples using the DB and the mapping output. Write an array script for the profiling and submit it to the queue.
-
+# SCRIPT NOT UPDATED
 ```
 #!/bin/bash -l
 #SBATCH -J array_profiling
@@ -222,55 +149,25 @@ When the mapping is done for all samples and the contigs database is ready, we c
 #SBATCH --cpus-per-task=6
 #SBATCH -p serial
 
-cd $WRKDIR/Metagenomics2019/co-assembly
-# we need to load Bioconda
-module load bioconda/3
-# then activate Anvi'o
-source activate anvio5
-# and also load the biokit, since Anvi'o uses samtools in the profiling
-module load biokit
-# each job will get one sample from the sample names file
-name=$(sed -n "$SLURM_ARRAY_TASK_ID"p ../sample_names.txt)
-# then the actual profiling
-anvi-profile -c ../ANVIO/MEGAHIT_co-assembly_2500nt_CONTIGS.db  -M 2500 -T $SLURM_CPUS_PER_TASK -i $name.bam -o $name
+anvi-profile --input-file BINNING_MEGAHIT/$ASSEMBLY/MAPPING/$SAMPLE.bam \
+               --output-dir BINNING_MEGAHIT/$ASSEMBLY/PROFILES/$SAMPLE \
+               --contigs-db BINNING_MEGAHIT/$ASSEMBLY/CONTIGS.db \
+               --num-threads 20
+done &> BINNING_MEGAHIT/$ASSEMBLY.profilesdb.log.txt
 ```
 Submit the job with `sbatch` as previously.  
 
-## Export GENES
-With this command we export the genecalls from Prodigal to gene-calls.fa and do taxonomic annotation against centrifuge database you installed on Monday
-
-```
-anvi-get-sequences-for-gene-calls -o gene-calls.fa -c MEGAHIT_co-assembly_2500nt_CONTIGS.db
-```
-
-## Run centrifuge
-_Centrifuge: rapid and sensitive classification of metagenomic sequences._ Read more from [here](http://biorxiv.org/content/early/2016/05/25/054965).
-
-Remember to set the environmental variable pointing to the centrifuge folder as shown in [MetagenomeInstallations](/MetagenomeInstallations.md#centrifuge).
-
-```
-centrifuge -f -p 6 -x $CENTRIFUGE_BASE/p+h+v gene-calls.fa -S centrifuge_hits.tsv
-```
-## Import centrifuge results
-```
-anvi-import-taxonomy-for-genes -i centrifuge_report.tsv centrifuge_hits.tsv -p centrifuge -c MEGAHIT_co-assembly_2500nt_CONTIGS.db
-```
-
-
-## Run COGs (Optional)
-
-Next we annotate genes in  contigs database with functions from the NCBI’s Clusters of Orthologus Groups (COGs).
-Again first reattach to your Anvio'o screen.  
-
-```
-anvi-run-ncbi-cogs -c MEGAHIT_co-assembly_2500nt_CONTIGS.db -T 6
-```
 
 ## Merging the profiles
-When the profiling is done, you can merge them with one command.
+
+Now you have done this for one sample. However, as we have four samples, we will use the data from all samples. We have pre-run this for you and data can be found from COURSE_DATA
+When the profiling is done, you can merge them with thus command.
 
 ```
-anvi-merge ../co-assembly/*/PROFILE.db -o SAMPLES-MERGED -c MEGAHIT_co-assembly_2500nt_CONTIGS.db
+anvi-merge ../../COURSE_DATA/BINNING_MEGAHIT/$ASSEMBLY/PROFILES/*/PROFILE.db \
+           --output-dir BINNING_MEGAHIT/$ASSEMBLY/MERGED_PROFILES \
+           --contigs-db BINNING_MEGAHIT/$ASSEMBLY/CONTIGS.db \
+           --enforce-hierarchical-clustering &> BINNING_MEGAHIT/$ASSEMBLY.merge.log.txt
 ```
 
 ## Visualization in the interface
