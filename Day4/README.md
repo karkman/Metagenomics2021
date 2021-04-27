@@ -140,3 +140,5 @@ And finally you can make a summary of your MAGs before moving on.
 ```bash
 anvi-summarize -c CONTIGS.db -p PROFILE.db -C MAGs -o SUMMARY_MAGs
 ```
+
+Then it's finally time to start working with the full data set from Sample03. 

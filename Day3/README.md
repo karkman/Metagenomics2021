@@ -236,11 +236,13 @@ Remember to change the port.
 anvi-interactive -c  MEGAHIT_sample03_5000nt_CONTIGS.db -p MERGED_PROFILES/PROFILE.db -P PORT
 ```
 
-Then open google chrome and go to address that anvi'o address
-
-http://localhost:PORT
+Then open google chrome and go to address that anvi'o prints on the screen.  
+Also this should work: http://localhost:PORT
 
 **Again change XXXX to your port number**
+
+Since the interface is pretty slow with so large data set, we will divide it to approx. 5 smaller subsets (_bins_). Save this _collection_ with the name `PreCluster`.  
+We will continue working with this set tomorrow.  
 
 When you're done, close the anvi'o server, close the interactive session, close the screen and log out from Puhti.  
 And we're done for today.
