@@ -1,11 +1,11 @@
 # Day 3
 
-| Time      | Activity                      | Slides                               | Hands-on                                 |
-|-----------|-------------------------------|--------------------------------------|------------------------------------------|
-| Morning   | Assembly                      | [Link here](assembly.pdf)            | [Link here](#Assembly)                   |
-| Morning   | Genome resolved metagenomics  | [link here](antti.pdf)               |                                          |
-| Afternoon | Genome resolved metagenomics  | [Link here](read-based-analyses.pdf) | [Link here](#genome-resolved-metagenomics-with-anvio) |
-  
+| Time      | Activity                             | Slides                               | Hands-on                                              |
+|-----------|--------------------------------------|--------------------------------------|-------------------------------------------------------|
+| Morning   | Assembly                             | [Link here](assembly.pdf)            | [Link here](#Assembly)                                |
+| Morning   | Genome resolved metagenomics         | [link here](antti.pdf)               |                                                       |
+| Afternoon | Genome resolved metagenomics  cont'd |                                      | [Link here](#genome-resolved-metagenomics-with-anvio) |
+
 
 ## Assembly
 We will assemble all 4 samples indivially and use [Megahit assembler](https://github.com/voutcn/megahit) for the job. In addition, we will use MetaQuast to get some statistics about our assembly.
@@ -100,8 +100,8 @@ Go to your course folder and make a new folder called ANVIO. All task on this se
 mkdir ANVIO
 cd ANVIO
 ```
-We need to do some tricks for the contigs from assembly before we can use them in Anvi'o. We will do this for one sample and you will get the needed data for rest of samples from ANVI-TUTORIAL. For Anvi'o you'll need to load bioconda and activate Anvio-7 program.  
-Open a screen for Anvi'o workflow. `screen -S anvio`
+We need to do some tricks for the contigs from assembly before we can use them in anvi'o. We will do this for one sample and you will get the needed data for rest of samples from ANVI-TUTORIAL. For anvi'o you'll need to load bioconda and activate anvio-7 virtual environment.  
+Open a screen for anvi'o workflow. `screen -S anvio`
 
 ```
 export PROJAPPL=/projappl/project_2001499
@@ -109,11 +109,12 @@ module load bioconda/3
 source activate anvio-7
 ```
 ## Rename the scaffolds and select those >2,500nt.
-Anvio wants sequence IDs in your FASTA file as simple as possible. Therefore we need to reformat the headerlines to remove spaces and non-numeric characters. Also contigs shorter than 2500 bp will be removed.
-
+Anvio wants sequence IDs in your FASTA file as simple as possible. Therefore we need to reformat the headerlines to remove spaces and non-numeric characters.  
+Also contigs shorter than 2500 bp will be removed.
 
 ```
-anvi-script-reformat-fasta ../ASSEMBLY_MEGAHIT/Sample01/final.contigs.fa -l 2500 --simplify-names --prefix MEGAHIT_sample01 -r REPORT -o MEGAHIT_sample01_2500nt.fa
+anvi-script-reformat-fasta ../ASSEMBLY_MEGAHIT/Sample01/final.contigs.fa -l 2500 --simplify-names --prefix MEGAHIT_sample01 \
+                            -r REPORT -o MEGAHIT_sample01_2500nt.fa
 ````
 Deattach from the screen with `Ctrl a+d`  
 
