@@ -51,10 +51,10 @@ export PROJAPPL=/projappl/project_2001499
 module load bioconda/3
 source activate metaxa
 
-cd /scratch/project_2001499/$USER
+cd /scratch/project_2001499/$USER/METAXA
 
-metaxa2_dc -o METAXA/metaxa_genus.txt METAXA/*level_6.txt
-metaxa2_dc -o METAXA/metaxa_species.txt METAXA/*level_7.txt
+metaxa2_dc -o metaxa_genus.txt *level_6.txt
+metaxa2_dc -o metaxa_species.txt *level_7.txt
 ```
 
 Then copy the two files to your own computer using `scp`, `WinSCP`, `FileZilla` or `Cyberduck`.
