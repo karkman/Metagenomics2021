@@ -3,7 +3,7 @@
 | Time      | Activity                             | Slides                                         | Hands-on                                              |
 |-----------|--------------------------------------|------------------------------------------------|-------------------------------------------------------|
 | Morning   | Assembly                             | [Link here](assembly.pdf)                      | [Link here](#Assembly)                                |
-| Morning   | Genome resolved metagenomics         | [link here](genome-resoolved-metagenomics.pdf) |                                                       |
+| Morning   | Genome resolved metagenomics         | [link here](genome-resolved-metagenomics.pdf) |                                                       |
 | Afternoon | Genome resolved metagenomics  cont'd |                                                | [Link here](#genome-resolved-metagenomics-with-anvio) |
 
 
