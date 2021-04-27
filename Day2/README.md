@@ -58,7 +58,7 @@ metaxa2_dc -o METAXA/metaxa_species.txt METAXA/*level_7.txt
 ```
 
 Then copy the two files to your own computer using `scp`, `WinSCP`, `FileZilla` or `Cyberduck`.
-When the files have been copied, let's start `R/RStudio` and load the necessary packages:
+When the files have been copied, let's start `R/RStudio` and load the necessary packages:
 
 ```r
 library(tidyverse)
