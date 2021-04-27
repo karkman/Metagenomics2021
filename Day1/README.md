@@ -365,8 +365,8 @@ cp -r /scratch/project_2001499/COURSE_FILES/FASTQC_TRIMMED ./
 sinteractive -A project_2001499
 
 export PROJAPPL=/projappl/project_2001499
-module purge
 module load bioconda/3
+conda deactivate
 source activate QC_env
 
 multiqc FASTQC_TRIMMED/* -o FASTQC_TRIMMED --interactive

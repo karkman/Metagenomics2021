@@ -43,8 +43,22 @@ Can we see major differences in community structure between these two ecosystems
 
 ### METAXA
 Now we will work on the output of `METAXA`, the other tool we have employed to obtain taxonomic profiles for the communities.  
+Metaxa2 outputs lot of files but at this point we only need the ones ending with `level_6.txt` and `level_7.txt`. They contain the genus and species level counts for each sammple.  
+We will use Metaxa2 data collector tool to combine all of these reports to an abundance tables that we will read into R for further analyses.
 
-Let's start RStudio and load the necessary packages:
+```bash
+export PROJAPPL=/projappl/project_2001499
+module load bioconda/3
+source activate metaxa
+
+cd /scratch/project_2001499/$USER
+
+metaxa2_dc -o METAXA/metaxa_genus.txt METAXA/*level_6.txt
+metaxa2_dc -o METAXA/metaxa_species.txt METAXA/*level_7.txt
+```
+
+Then copy the two files to your own computer using `scp`, `WinSCP`, `FileZilla` or `Cyberduck`.
+When the files have been copied, let's start `R/RStudio` and load the necessary packages:
 
 ```r
 library(tidyverse)
