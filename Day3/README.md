@@ -123,7 +123,7 @@ Deattach from the screen with `Ctrl a+d`
 Contigs database (contigs.db) contains information on contig length, open reading frames (searched with Prodigal) and kmers. See [Anvio webpage](http://merenlab.org/2016/06/22/anvio-tutorial-v2/#creating-an-anvio-contigs-database) for more information.  
 
 ```
-anvi-gen-contigs-database --contigs-fasta MEGAHIT_sample03_5000nt.fa --output-db-path MEGAHIT_sample03_5000nt_CONTIGS.db -n MEGAHIT_sample03_5000nt
+anvi-gen-contigs-database --contigs-fasta MEGAHIT_sample03_5000nt.fa --output-db-path MEGAHIT_sample03_5000nt_CONTIGS.db -n MEGAHIT_sample03_5000nt --num-threads 4
 ```
 ## Run HMMs to identify single copy core genes for Bacteria, Archaea and Eukarya, plus rRNAs
 ```
