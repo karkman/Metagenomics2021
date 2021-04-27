@@ -1,10 +1,10 @@
 # Day 3
 
-| Time      | Activity                             | Slides                               | Hands-on                                              |
-|-----------|--------------------------------------|--------------------------------------|-------------------------------------------------------|
-| Morning   | Assembly                             | [Link here](assembly.pdf)            | [Link here](#Assembly)                                |
-| Morning   | Genome resolved metagenomics         | [link here](antti.pdf)               |                                                       |
-| Afternoon | Genome resolved metagenomics  cont'd |                                      | [Link here](#genome-resolved-metagenomics-with-anvio) |
+| Time      | Activity                             | Slides                                         | Hands-on                                              |
+|-----------|--------------------------------------|------------------------------------------------|-------------------------------------------------------|
+| Morning   | Assembly                             | [Link here](assembly.pdf)                      | [Link here](#Assembly)                                |
+| Morning   | Genome resolved metagenomics         | [link here](genome-resoolved-metagenomics.pdf) |                                                       |
+| Afternoon | Genome resolved metagenomics  cont'd |                                                | [Link here](#genome-resolved-metagenomics-with-anvio) |
 
 
 ## Assembly
