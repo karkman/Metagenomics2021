@@ -1,18 +1,10 @@
 # Day 3
 
-| Time            | Description |
-| --------------- | ----------- |
-| __*Morning*__   | [Assembly lecture](Day3/README.md#02--describing-the-interface) (__Jenni__)|
-| __*Morning*__   | [Assembly hands-on](https://github.com/karkman/Metagenomics2021/tree/main/Day3#assembly) (__Jenni__)|
-| __*Morning*__   | [Genome resolved metagenomics](Day3/README.md#11--what-do-we-do-with-these-genomes) (__Antti__) |
-|                 |  **Lunch**  |
-| __*Afternoon*__ | [Preparing files for Anvi'o](Day3/README.md#11--what-do-we-do-with-these-genomes) |
-
 | Time      | Activity                      | Slides                               | Hands-on                                 |
 |-----------|-------------------------------|--------------------------------------|------------------------------------------|
 | Morning   | Assembly                      | [Link here](assembly.pdf)            | [Link here](#Assembly)                   |
 | Morning   | Genome resolved metagenomics  | [link here](antti.pdf)               |                                          |
-| Afternoon | Genome resolved metagenomics  | [Link here](read-based-analyses.pdf) | [Link here](#11--what-do-we-do-with-these-genomes) |
+| Afternoon | Genome resolved metagenomics  | [Link here](read-based-analyses.pdf) | [Link here](#genome-resolved-metagenomics-with-anvio) |
   
 
 ## Assembly
