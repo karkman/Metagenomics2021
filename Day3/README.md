@@ -157,13 +157,16 @@ After that's done, detach from the anvi'o screen with `Ctrl+a` `d`
 Next thing to do is mapping all the reads back to the assembly. We use the renamed >5000 nt contigs and do it sample-wise, so each sample is mapped separately using the trimmed R1 & R2 reads.  
 
 However, since this would take three days, we have run this for you and the data can be found from `COURSE_DATA/MEGAHIT_BINNING/`
+The folder contains the output from mapping all samples against all four assemblies. We will be using only the mappings against assembly from Sample03.
 Let's make a softlink to that folder as well. Make sure you make the softlink to your `ANVIO` folder
 
 ```bash
 ln -s ../../COURSE_FILES/BINNING_MEGAHIT/
 ```
 
-Next we will profile the samples using the DB and the mapping output. Write an array script for the profiling and submit it to the queue.
+Next we will build profiles for each sample that was mapped against the assembly. The mapping output from each sample is the `$SAMPLE.bam` file.  
+Write an array script for the profiling and submit it to the queue.
+
 __Don't__ do this from the screen and make sure your inside your `ANVIO` folder.
 
 ```
@@ -189,7 +192,6 @@ anvi-profile --input-file BINNING_MEGAHIT/Sample03/MAPPING/$SAMPLE.bam \
                --output-dir PROFILES/$SAMPLE \
                --contigs-db Sample03_5000nt_CONTIGS.db \
                --num-threads 20 &> $SAMPLE.profilesdb.log.txt
-
 ```
 
 ### Merging the profiles
@@ -200,34 +202,26 @@ Remember to re-attach to you screen and run the command in there.
 ```
 anvi-merge PROFILES/*/PROFILE.db \
            --output-dir MERGED_PROFILES \
-           --contigs-db MEGAHIT_sample03_5000nt_CONTIGS.db \
+           --contigs-db Sample03_5000nt_CONTIGS.db \
            --enforce-hierarchical-clustering &> Sample03.merge.log.txt
 ```
 
 ### Tunneling the interactive interafce
 
 Although you can install anvi'o on your own computer (and you're free to do so, but we won't have time to help in that), we will run anvi'o in Puhti and tunnel the interactive interface to your local computer.  
-To be able to to do this, everyone needs to use a different port for tunneling and your port will be __8080 + your number given on the course__. So `Student 1` will use port 8081. If the port doesn't work, try __8100 + your number__.  
+To be able to to do this, everyone needs to use a different port for tunneling and your port number will be given on the course.
 
 Connecting using a tunnel is a bit tricky and involves several steps, so pay special attention.  
-detach from your screen and note on which login node you're on. Then re-attach and note the ID of the computing node your logged in.
-
-```bash
-cd /scratch/project_2001499/$USER
-# Take note whether you were connected to login1 or login2. Screens are login node specific.
-screen -S anvio
-sinteractive -i
-# And after this change the time and memory allocations.
-# When your connected to the computing node, check the identifier and detach from the screen
-```
+Detach from your screen and note on which login node you're on. Then re-attach and note the ID of the computing node your logged in. Then you will also need to remember your port number.
 
 Then you can log out and log in again, but this time in a bit different way.  
-You need to specify your __PORT__ and the __computing node__ to which you connected and also the __login node__ you were connected the first time.  
+You need to specify your `PORT` and the `NODEID` to which you connected and also the `NUMBER` of the login node you where your screen is running. *Also change your username in the command below.*
 
 ```bash
-ssh -L PORT:NODEID.bullx:PORT USERNAME@puhti-loginX.csc.fi
+ssh -L PORT:NODEID.bullx:PORT USERNAME@puhti-loginNUMBER.csc.fi
 ```
 
+__This most likely won't work, but we will fid the solution__  
 And in windows using Putty:  
 In SSH tab select "tunnels". Add:  
 - Source port: PORT  
@@ -236,10 +230,10 @@ In SSH tab select "tunnels". Add:
 Click add and connect as usual.
 
 Then go back to your screen and launch the interactive interface.  
-Remember to change the port.
+Remember to change the `PORT`.
 
 ```
-anvi-interactive -c  MEGAHIT_sample03_5000nt_CONTIGS.db -p MERGED_PROFILES/PROFILE.db -P PORT
+anvi-interactive -c Sample03_5000nt_CONTIGS.db -p MERGED_PROFILES/PROFILE.db -P PORT
 ```
 
 Then open google chrome and go to address that anvi'o prints on the screen.  
