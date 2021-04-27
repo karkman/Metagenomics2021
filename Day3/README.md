@@ -94,10 +94,11 @@ Anvio is an analysis and visualization platform for omics data. You can read mor
 
 ![alt text](/Figure/Screen%20Shot%202017-12-07%20at%2013.50.20.png "Tom's fault")
 
-Go to your course folder and make a new folder called ANVIO. All task on this section are to be done in this folder.
+First open interactive node with 4 cores and go to your course folder and make a new folder called ANVIO. All task on this section are to be done in this folder.
 
 ```
-sinteractive -A project_20001499 -c 4
+sinteractive -A project_2001499 -c 4 -m 10000
+
 mkdir ANVIO
 cd ANVIO
 ```
@@ -146,15 +147,16 @@ Next we will profile the samples using the DB and the mapping output. Write an a
 
 ```
 #!/bin/bash -l
-#SBATCH -J array_profiling
-#SBATCH -o array_profiling_out_%A_%a.txt
-#SBATCH -e array_profiling_err_%A_%a.txt
-#SBATCH -t 01:00:00
+#SBATCH --job-name array_profiling
+#SBATCH --output array_profiling_out_%A_%a.txt
+#SBATCH --error array_profiling_err_%A_%a.txt
+#SBATCH --partition small
+#SBATCH --time 01:00:00
 #SBATCH --mem-per-cpu=1000
 #SBATCH --array=1-4
-#SBATCH -n 1
+#SBATCH --nodes 1
 #SBATCH --cpus-per-task=6
-#SBATCH -p serial
+#SBATCH --account project_2001499
 
 SAMPLE=Sample0${SLURM_ARRAY_TASK_ID}
 
