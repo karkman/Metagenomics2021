@@ -88,29 +88,44 @@ Questions about the assembly QC
 * If yes, in what way?
 
 
-# Genome-resolved metagenomics with Anvi'o
+## Genome-resolved metagenomics with anvi'o
 
 Anvio is an analysis and visualization platform for omics data. You can read more from Anvio's [webpage](http://merenlab.org/software/anvio/).
 
 ![alt text](/Figure/Screen%20Shot%202017-12-07%20at%2013.50.20.png "Tom's fault")
 
-First open interactive node with 4 cores and go to your course folder and make a new folder called ANVIO. All task on this section are to be done in this folder.
+First we need to open an interactive session inside a screen and then log in again with a tunnel using the computing node identifier.
+
+Mini manual for `screen`:
+* `screen -S NAME` - open a screen and give it a session name `NAME`
+* `screen` - open new screen without specifying any name
+* `screen -ls` - list all open sessions
+* `ctrl + a` + `d` - to detach from a session (from inside the screen)
+* `screen -r NAME` - re-attach to a detached session using the name
+* `screen -rD` - re-attach to a attached session
+* `exit` - close the screen and kill all processes running inside the screen (from inside the screen)
+
+
+So after opening a new screen, connect to an interactive node with 4 cores and go to your course folder and make a new folder called ANVIO. All task on this section are to be done in this folder.
 
 ```
+screen -S anvio
 sinteractive -A project_2001499 -c 4 -m 10000
 
+cd /scratch/project_2001499/$USER
 mkdir ANVIO
 cd ANVIO
 ```
-We need to do some tricks for the contigs from assembly before we can use them in anvi'o. We will do this for one sample and you will get the needed data for rest of samples from ANVI-TUTORIAL. For anvi'o you'll need to load bioconda and activate anvio-7 virtual environment.  
-Open a screen for anvi'o workflow. `screen -S anvio`
+
+We need to do some tricks for the contigs from assembly before we can use them in anvi'o. We will do this for one sample to demonstrate the workflow. For anvi'o you'll need to load bioconda and activate anvio-7 virtual environment.  
 
 ```
 export PROJAPPL=/projappl/project_2001499
 module load bioconda/3
 source activate anvio-7
 ```
-## Rename the scaffolds and select those >5000nt.
+
+### Rename the scaffolds and select those >5000nt.
 Anvio wants sequence IDs in your FASTA file as simple as possible. Therefore we need to reformat the headerlines to remove spaces and non-numeric characters. Also contigs shorter than 5000 bp will be removed.
 
 
@@ -118,22 +133,27 @@ Anvio wants sequence IDs in your FASTA file as simple as possible. Therefore we 
 anvi-script-reformat-fasta ../ASSEMBLY_MEGAHIT/Sample03/final.contigs.fa -l 5000 --simplify-names \
                             --prefix MEGAHIT_sample03 -r REPORT -o MEGAHIT_sample03_5000nt.fa
 ````
-Deattach from the screen with `Ctrl a+d`  
 
+When ever you need, you can detach from the screen with `Ctrl+a` `d`.  
+And re-attach with `screen -r anvio`.
 
-## Generate CONTIGS.db
+### Generate CONTIGS.db
 
 Contigs database (contigs.db) contains information on contig length, open reading frames (searched with Prodigal) and kmers. See [Anvio webpage](http://merenlab.org/2016/06/22/anvio-tutorial-v2/#creating-an-anvio-contigs-database) for more information.  
 
 ```
-anvi-gen-contigs-database --contigs-fasta MEGAHIT_sample03_5000nt.fa --output-db-path MEGAHIT_sample03_5000nt_CONTIGS.db \
+anvi-gen-contigs-database --contigs-fasta MEGAHIT_sample03_5000nt.fa \
+                          --output-db-path MEGAHIT_sample03_5000nt_CONTIGS.db \
                           -n MEGAHIT_sample03_5000nt --num-threads 4
 ```
-## Run HMMs to identify single copy core genes for Bacteria, Archaea and Eukarya, plus rRNAs
+### Run HMMs to identify single copy core genes for Bacteria, Archaea and Eukarya, plus rRNAs
 ```
 anvi-run-hmms --contigs-db MEGAHIT_sample03_5000nt_CONTIGS.db --num-threads 4
 ```
-## Mapping the reads back to the assembly
+
+After that's done, detach from the anvi'o screen with `Ctrl+a` `d`
+
+### Mapping the reads back to the assembly
 Next thing to do is mapping all the reads back to the assembly. We use the renamed >5000 nt contigs and do it sample-wise, so each sample is mapped separately using the trimmed R1 & R2 reads.  
 
 However, since this would take three days, we have run this for you and the data can be found from `COURSE_DATA/MEGAHIT_BINNING/`
@@ -144,6 +164,7 @@ ln -s ../../COURSE_FILES/BINNING_MEGAHIT/
 ```
 
 Next we will profile the samples using the DB and the mapping output. Write an array script for the profiling and submit it to the queue.
+__Don't__ do this from the screen and make sure your inside your `ANVIO` folder.
 
 ```
 #!/bin/bash -l
@@ -171,11 +192,10 @@ anvi-profile --input-file BINNING_MEGAHIT/Sample03/MAPPING/$SAMPLE.bam \
 ```
 Submit the job with `sbatch` as previously.  
 
+### Merging the profiles
 
-## Merging the profiles
-
-Now you have done this for one sample. However, as we have four samples, we will use the data from all samples. We have pre-run this for you and data can be found from COURSE_DATA
-When the profiling is done, you can merge them with thus command.
+When the profiling is done, you can merge them with this command.
+Remember to re-attach to you screen and run the command in there.
 
 ```
 anvi-merge PROFILES/*/PROFILE.db \
@@ -190,21 +210,7 @@ Although you can install anvi'o on your own computer (and you're free to do so, 
 To be able to to do this, everyone needs to use a different port for tunneling and your port will be __8080 + your number given on the course__. So `Student 1` will use port 8081. If the port doesn't work, try __8100 + your number__.  
 
 Connecting using a tunnel is a bit tricky and involves several steps, so pay special attention.  
-First we need to open an interactive session inside a screen and then log in again with a tunnel using the computing node identifier.
-
-Mini manual for `screen`:
-* `screen -S NAME` - open a screen and give it a session name `NAME`
-* `screen` - open new screen without specifying any name
-* `screen -ls` - list all open sessions
-* `ctrl + a` + `d` - to detach from a session (from inside the screen)
-* `screen -r NAME` - re-attach to a detached session using the name
-* `screen -rD` - re-attach to a attached session
-* `exit` - close the screen and kill all processes running inside the screen (from inside the screen)
-
-So open a normal connection to Puhti and go to your course folder. Take note which login node you were connected.   
-Then open an interactive session and specify that you need 8 hours and 10 Gb of memory.  
-Other options can stay as they are.  
-Note the computing node identifier before logging out.
+detach from your screen and note on which login node you're on. Then re-attach and note the ID of the computing node your logged in.
 
 ```bash
 cd /scratch/project_2001499/$USER
