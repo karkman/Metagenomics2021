@@ -110,7 +110,7 @@ So after opening a new screen, connect to an interactive node with 4 cores and g
 
 ```
 screen -S anvio
-sinteractive -A project_2001499 -c 4 -m 10000
+sinteractive -A project_2001499 -c 4 -m 20G
 
 cd /scratch/project_2001499/$USER
 mkdir ANVIO
@@ -175,8 +175,8 @@ __Don't__ do this from the screen and make sure your inside your `ANVIO` folder.
 #SBATCH --output array_profiling_out_%A_%a.txt
 #SBATCH --error array_profiling_err_%A_%a.txt
 #SBATCH --partition small
-#SBATCH --time 01:00:00
-#SBATCH --mem-per-cpu=1000
+#SBATCH --time 00:20:00
+#SBATCH --mem-per-cpu=500
 #SBATCH --array=1-4
 #SBATCH --nodes 1
 #SBATCH --cpus-per-task=20
