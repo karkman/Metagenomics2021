@@ -48,7 +48,7 @@ The assembly files can be pretty big as well, so you will make a softlink to the
 
 ```bash
 cd /scratch/project_2001499/$USER
-ln -s ../COURSE_FILES/ASSEMBLY_MEGAHIT/
+ln -s -f ../COURSE_FILES/ASSEMBLY_MEGAHIT/
 ```
 
 What kind of files did you "copy"?  
