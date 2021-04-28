@@ -147,7 +147,7 @@ anvi-script-reformat-fasta ../ASSEMBLY_MEGAHIT/Sample03/final.contigs.fa \
 Instead let's copy the re-formatted file that luckily we have a copy:
 
 ```bash
-cp ../COURSE_FILES/BINNING_MEGAHIT/Sample03/CONTIGS_5000nt.fa Sample03_5000nt.fa
+cp ../../COURSE_FILES/BINNING_MEGAHIT/Sample03/CONTIGS_5000nt.fa Sample03_5000nt.fa
 ```
 
 Whenever you need, you can detach from the screen with `Ctrl+a` `d`.  
