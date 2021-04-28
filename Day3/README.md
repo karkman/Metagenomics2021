@@ -39,14 +39,6 @@ scancel JOBID
 ```
 
 Terminate your job and check that it is no longer in your list of jobs.  
-We have run the assemblies for you, so now copy the assembled metagenomes from `/scratch/project_2001499/COURSE_DATA/ASSEMBLY_MEGAHIT`.  
-What kind of files did you copy?  
-Please take a look at the log files.
-
-Questions about the assembly:
-* Which version of `MEGAHIT` did we actually use for the assemblies?
-* How long did the assemblies take to finish?
-* Which sample gave the longest contig?
 
 ## Assembly quality statistics
 Let's take a look at the assemblies in a bit more detail with [MetaQUAST](http://bioinf.spbau.ru/metaquast).
@@ -58,6 +50,14 @@ The assembly files can be pretty big as well, so you will make a softlink to the
 cd /scratch/project_2001499/$USER
 ln -s ../COURSE_FILES/ASSEMBLY_MEGAHIT/
 ```
+
+What kind of files did you "copy"?  
+Please take a look at the log files.
+
+Questions about the assembly:
+* Which version of `MEGAHIT` did we actually use for the assemblies?
+* How long did the assemblies take to finish?
+* Which sample gave the longest contig?
 
 Then we'll run assembly QC using `MetaQUAST`.
 First have a look at the different options that you can specify.
