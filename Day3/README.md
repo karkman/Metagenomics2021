@@ -133,6 +133,7 @@ source activate anvio-7
 `anvi'o` wants sequence IDs in your FASTA file as simple as possible.  
 Therefore we need to reformat the headers to remove spaces and non-numeric characters.  
 Also contigs shorter than 5000 bp will be removed.
+Because *Igor* deleted the assembly files we need to skip this step...
 
 ```bash
 anvi-script-reformat-fasta ../ASSEMBLY_MEGAHIT/Sample03/final.contigs.fa \
@@ -142,6 +143,12 @@ anvi-script-reformat-fasta ../ASSEMBLY_MEGAHIT/Sample03/final.contigs.fa \
                            -r REPORT \
                            -o Sample03_5000nt.fa
 ````
+
+Instead let's copy the re-formatted file that luckily we have a copy:
+
+```bash
+cp ../COURSE_FILES/BINNING_MEGAHIT/Sample03/CONTIGS_5000nt.fa Sample03_5000nt.fa
+```
 
 Whenever you need, you can detach from the screen with `Ctrl+a` `d`.  
 And re-attach with `screen -r anvio`.
