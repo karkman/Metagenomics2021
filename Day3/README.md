@@ -89,14 +89,14 @@ Questions about the assembly QC:
 * Were the long read assemblies different from the corresponding short read assemblies?
 * If yes, in what way?
 
-
 ## Genome-resolved metagenomics with anvi'o
 
-Anvio is an analysis and visualization platform for omics data. You can read more from Anvio's [webpage](http://merenlab.org/software/anvio/).
+`anvi'o` is an analysis and visualization platform for omics data.  
+You can read more from their [webpage](http://merenlab.org/software/anvio/).
 
 ![alt text](/Figure/Screen%20Shot%202017-12-07%20at%2013.50.20.png "Tom's fault")
 
-First we need to open an interactive session inside a screen and then log in again with a tunnel using the computing node identifier.
+First we need to open an interactive session inside a `screen` and then log in again with a tunnel using the computing node identifier.
 
 Mini manual for `screen`:
 * `screen -S NAME` - open a screen and give it a session name `NAME`
@@ -107,10 +107,10 @@ Mini manual for `screen`:
 * `screen -rD` - re-attach to a attached session
 * `exit` - close the screen and kill all processes running inside the screen (from inside the screen)
 
+So after opening a new `screen`, connect to an interactive node with 4 cores and go to your course folder and make a new folder called `ANVIO`.  
+All task on this section are to be done in this folder.
 
-So after opening a new screen, connect to an interactive node with 4 cores and go to your course folder and make a new folder called ANVIO. All task on this section are to be done in this folder.
-
-```
+```bash
 screen -S anvio
 sinteractive -A project_2001499 -c 4 -m 20G
 
@@ -119,37 +119,47 @@ mkdir ANVIO
 cd ANVIO
 ```
 
-We need to do some tricks for the contigs from assembly before we can use them in anvi'o. We will do this for one sample to demonstrate the workflow. For anvi'o you'll need to load bioconda and activate anvio-7 virtual environment.  
+We need to do some preparation for the contigs before we can use them in `anvi'o`.  
+We will do this for one sample to demonstrate the workflow.  
+For `anvi'o` you'll need to load `bioconda` and activate the anvio-7 virtual environment.  
 
-```
+```bash
 export PROJAPPL=/projappl/project_2001499
 module load bioconda/3
 source activate anvio-7
 ```
 
 ### Rename the scaffolds and select those >5000nt.
-Anvio wants sequence IDs in your FASTA file as simple as possible. Therefore we need to reformat the headerlines to remove spaces and non-numeric characters. Also contigs shorter than 5000 bp will be removed.
+`anvi'o` wants sequence IDs in your FASTA file as simple as possible.  
+Therefore we need to reformat the headers to remove spaces and non-numeric characters.  
+Also contigs shorter than 5000 bp will be removed.
 
-
-```
-anvi-script-reformat-fasta ../ASSEMBLY_MEGAHIT/Sample03/final.contigs.fa -l 5000 --simplify-names \
-                            --prefix Sample03 -r REPORT -o Sample03_5000nt.fa
+```bash
+anvi-script-reformat-fasta ../ASSEMBLY_MEGAHIT/Sample03/final.contigs.fa \
+                           -l 5000 \
+                           --simplify-names \
+                           --prefix Sample03 \
+                           -r REPORT \
+                           -o Sample03_5000nt.fa
 ````
 
-When ever you need, you can detach from the screen with `Ctrl+a` `d`.  
+Whenever you need, you can detach from the screen with `Ctrl+a` `d`.  
 And re-attach with `screen -r anvio`.
 
 ### Generate CONTIGS.db
+The contigs database (`Sample03_5000nt_CONTIGS.db`) contains information on contig length, open reading frames (searched with `Prodigal`) and kmer composition.  
+See the [anvi'o webpage](http://merenlab.org/2016/06/22/anvio-tutorial-v2/#creating-an-anvio-contigs-database) for more information.  
 
-Contigs database (contigs.db) contains information on contig length, open reading frames (searched with Prodigal) and kmers. See [Anvio webpage](http://merenlab.org/2016/06/22/anvio-tutorial-v2/#creating-an-anvio-contigs-database) for more information.  
-
-```
+```bash
 anvi-gen-contigs-database --contigs-fasta Sample03_5000nt.fa \
                           --output-db-path Sample03_5000nt_CONTIGS.db \
-                          -n Sample03_5000nt --num-threads 4
+                          -n Sample03_5000nt \
+                          --num-threads 4
 ```
-### Run HMMs to identify single copy core genes for Bacteria, Archaea and Eukarya, plus rRNAs
-```
+
+### Run HMMs to identify single-copy core genes for Bacteria, Archaea and Eukarya, plus rRNAs
+
+```bash
 anvi-run-hmms --contigs-db Sample03_5000nt_CONTIGS.db --num-threads 4
 ```
 
