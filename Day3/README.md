@@ -71,6 +71,8 @@ Then when you're connected to the interactive node, run `MetaQUAST`.
 ```bash
 sinteractive -i
 
+module load biokit
+
 metaquast.py ASSEMBLY_MEGAHIT/*/final.contigs.fa \
              -o METAQUAST_FAST \
              --threads 4 \
