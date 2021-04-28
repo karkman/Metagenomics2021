@@ -6,22 +6,22 @@
 | Morning   | Genome resolved metagenomics         | [Link here](genome-resolved-metagenomics.pdf)  |                                                       |
 | Afternoon | Genome resolved metagenomics  cont'd |                                                | [Link here](#genome-resolved-metagenomics-with-anvio) |
 
-
 ## Assembly
-We will assemble all 4 samples indivially and use [Megahit assembler](https://github.com/voutcn/megahit) for the job. In addition, we will use MetaQuast to get some statistics about our assembly.
+We will assemble all 4 samples indivially using the `MEGAHIT` [assembler](https://github.com/voutcn/megahit).  
+In addition, we will use `MetaQUAST` to get some statistics about our assemblies.
 
-Megahit is an ultra fast assembly tool for metagenomics data. It is installed to CSC and be loaded with following command:
+`MEGAHIT` is an ultra-fast assembly tool for metagenomics data.  
+It is installed to CSC and can be loaded with the following command:
 
-```
+```bash
 module load biokit
 ```
 
-Assembling metagenomic data can be very resource demanding and we need to do it as a batch job.
+Assembling metagenomic data can be very resource demanding and so we need to do it as a batch job.  
+Copy the script called `MEGAHIT.sh` from the `SBATCH_SCRIPTS` folder to your own directory and submit the batch job as previously.  
+Then open the script using `less` and and answer what do the following flags mean?
 
-Copy the  script called MEGAHIT.sh from the SBATCH folder to your own directory and submit the batch job as previously.
-
-What do the following flags mean?
-```
+```bash
 --min-contig-len 1000
 --k-min 27
 --k-max 127
@@ -30,27 +30,28 @@ What do the following flags mean?
 --num-cpu-threads 8
 ```
 
-However, as this is only one week course we cannot wait for your assemblies to finish but let's terminate the running jobs.
+However, as this is only a one-week course we cannot wait for your assemblies to finish, so let's terminate the running jobs.  
+What was the command to view on-going batch jobs?  
+You can terminate the sbatch job by typing:
 
-What was the command to view on-going batch jobs? You can terminate the sbatch job byt typing
-
-```
+```bash
 scancel JOBID
 ```
-Terminate your job and check that is it no longer in your list of jobs.
 
-We have run the assemblies for you and now copy the assembled metagenomes from `/scratch/project_2001499/COURSE_DATA/ASSEMBLY_MEGAHIT`. What kind of files did you copy? Please take a look at the log-files.
+Terminate your job and check that it is no longer in your list of jobs.  
+We have run the assemblies for you, so now copy the assembled metagenomes from `/scratch/project_2001499/COURSE_DATA/ASSEMBLY_MEGAHIT`.  
+What kind of files did you copy?  
+Please take a look at the log files.
 
-Questions about the assembly
+Questions about the assembly:
 * Which version of megahit did we actually use for the assemblies?
 * How long did the assemblies take to finish?
 * Which sample gave the longest contig?
 
-
 ## Assembly quality statistics
-Let's take a look at the assemblies in a bit more detail with tool [MetaQUAST](http://bioinf.spbau.ru/metaquast).
+Let's take a look at the assemblies in a bit more detail with [MetaQUAST](http://bioinf.spbau.ru/metaquast).
 
-Since the assmebly woud have taken too long to finish, we ran the assembly for you.
+Since the assembly would have taken too long to finish, we ran the assembly for you.
 The assembly files can be pretty big as well, so you will make a softlink to the assembly folder to save some space.
 
 ```bash
@@ -59,29 +60,30 @@ ln -s ../COURSE_FILES/ASSEMBLY_MEGAHIT/
 ```
 
 Then we'll run assembly QC using `MetaQUAST`.
-First have a look at the different options that you specify.
+First have a look at the different options that you can specify.
 
 ```bash
 module load biokit
 metaquast.py -h
 ```
 
-Open an interactive session for QC and allocate __1 hour__, __10 Gb of memory__ and __4 CPUs/threads__.  
-Then when you're connecteed to the login node, run `MetaQUAST`.
+Open an interactive session for QC allocating __1 hour__, __10 Gb of memory__ and __4 CPUs/threads__.  
+Then when you're connected to the interactive node, run `MetaQUAST`.
 
 ```bash
 sinteractive -i
+
 metaquast.py ASSEMBLY_MEGAHIT/*/final.contigs.fa \
-               -o METAQUAST_FAST \
-               --threads 4 \
-               --fast \
-               --max-ref-number 0 &> metaquast.fast.log.txt
+             -o METAQUAST_FAST \
+             --threads 4 \
+             --fast \
+             --max-ref-number 0 &> metaquast.fast.log.txt
 ```
 
-Copy folder called "METAQUAST_FAST" to your computer. You can view the results (`report.html`) in your favorite browser.
+Copy the folder called `METAQUAST_FAST` to your computer.  
+You can view the results (`report.html`) in your favorite browser.
 
-Questions about the assembly QC
-
+Questions about the assembly QC:
 * Which assembly has the longest contig when also long reads assemblies are included?
 * Which assembly had the most contigs?
 * Were the long read assemblies different from the corresponding short read assemblies?
