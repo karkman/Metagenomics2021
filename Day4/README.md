@@ -2,7 +2,7 @@
 
 | Time      | Activity                     | Slides                                        | Hands-on                                   |
 |-----------|------------------------------|-----------------------------------------------|--------------------------------------------|
-| Morning   | Genome-resolved metagenomics | [Link here](genome-resolved-metagenomics.pdf) | [Link here](#genome-resolved-metagenomics) |
+| Morning   | Genome-resolved metagenomics | [Link here](tree/main/Day3/genome-resolved-metagenomics.pdf) | [Link here](#genome-resolved-metagenomics) |
 | Afternoon | Genome-resolved metagenomics |                                               | [Link here](#genome-resolved-metagenomics) |
 
 ## Genome-resolved metagenomics
