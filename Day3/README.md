@@ -44,7 +44,7 @@ What kind of files did you copy?
 Please take a look at the log files.
 
 Questions about the assembly:
-* Which version of megahit did we actually use for the assemblies?
+* Which version of `MEGAHIT` did we actually use for the assemblies?
 * How long did the assemblies take to finish?
 * Which sample gave the longest contig?
 
