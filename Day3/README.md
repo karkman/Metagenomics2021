@@ -244,9 +244,9 @@ __This most likely won't work, but we will find a solution__
 And in windows using Putty:  
 In SSH tab select "tunnels". Add:  
 - Source port: PORT  
-- Destination: localhost:PORT  
+- Destination: NODEID.bullx:PORT  
 
-Click add and connect as usual.
+Click add and connect to the right login node, login1 or login2.
 
 Then go back to your screen and launch the interactive interface.  
 Remember to change the `PORT`.
