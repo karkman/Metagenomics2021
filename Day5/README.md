@@ -20,8 +20,21 @@ Let's copy these to your working directory:
 cp -r ../COURSE_FILES/MAGs MAGs
 ```
 
+### Taxonomic assignment with GTDBtk
+Normally, one thing that we want to learn more about is the taxonomy of our MAGs.  
+Although `anvi'o` gives us a preliminary idea, we can use a more dedicated platform for taxonomic assignment of MAGs.  
+Here we will use `GTDBtk`, a tool to infer taxonomy for MAGs based on the GTDB database (you can - and probably should - read more about GTDB [here](https://gtdb.ecogenomic.org/)).  
+
+We have prepared a script to run `GTDBtk` for you, so let's copy it and take a look:
+
+```bash
+cp ../COURSE_FILES/SBATCH_SCRIPTS/GTDBtk.sh .
+```
+
+And submit the script using `sbatch`.
+
 ### MAG dereplication with dRep
-Because we running individual assemblies, it could be that we have obtained a given MAG more than once.  
+Because we are doing individual assemblies, it could be that we have obtained a given MAG more than once.  
 To remove this redundancy, we perform a step that is called dereplication.  
 Here we will use `dRep` for this (to learn more about `dRep` see [here](https://drep.readthedocs.io/)):
 
@@ -41,18 +54,6 @@ Copy the `DREP` folder to your computer and look at the PDF files inside the `fi
 Also look at the `Cdb.csv` file inside `data_tables`.  
 How many clusters of duplicated (redudant) MAGs do we have?
 
-### Taxonomic assignment with GTDBtk
-Normally, one thing that we want to learn more about is the taxonomy of our MAGs.  
-Although `anvi'o` gives us a preliminary idea, we can use a more dedicated platform for taxonomic assignment of MAGs.  
-Here we will use `GTDBtk`, a tool to infer taxonomy for MAGs based on the GTDB database (you can - and probably should - read more about GTDB [here](https://gtdb.ecogenomic.org/)).  
-
-We have prepared a script to run `GTDBtk` for you, so let's copy it and take a look:
-
-```bash
-cp ../COURSE_FILES/SBATCH_SCRIPTS/GTDBtk.sh .
-```
-
-And submit the script using `sbatch`.
 
 
 
