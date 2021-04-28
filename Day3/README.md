@@ -65,7 +65,7 @@ module load biokit
 metaquast.py -h
 ```
 
-Open an interactive session for QC allocating __1 hour__, __10 Gb of memory__ and __4 CPUs/threads__.  
+Open an interactive session for QC allocating __1 hour__, __10 Gb of memory__, __4 CPUs/threads__, and __10 Gb of temporary disk area__.  
 Then when you're connected to the interactive node, run `MetaQUAST`.
 
 ```bash
