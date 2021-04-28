@@ -240,7 +240,6 @@ You need to specify your `PORT` and the `NODEID` to which you connected and also
 ssh -L PORT:NODEID.bullx:PORT USERNAME@puhti-loginNUMBER.csc.fi
 ```
 
-__This most likely won't work, but we will find a solution__  
 And in windows using Putty:  
 In SSH tab select "tunnels". Add:  
 - Source port: PORT  
