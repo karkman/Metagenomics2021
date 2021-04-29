@@ -36,7 +36,7 @@ Note the computing node identifier before logging out.
 cd /scratch/project_2001499/$USER
 # Take note whether you were connected to login1 or login2. Screens are login node specific.
 screen -S anvio
-sinteractive -i
+sinteractive -A project_2001499 -c 4 -m 10G -t 08:00:00
 # And after this change the time and memory allocations.
 # When your connected to the computing node, check the identifier and detach from the screen
 ```
@@ -51,9 +51,9 @@ ssh -L PORT:NODEID.bullx:PORT USERNAME@puhti-loginX.csc.fi
 And in windows using Putty:  
 In SSH tab select "tunnels". Add:  
 - Source port: PORT  
-- Destination: localhost:PORT  
+- Destination: NODEID.bullx:PORT
 
-Click add and connect as usual.
+Click add and connect as usual, making sure you will be connected to the right login node.
 
 Then we can start to work with our tutorial data in anvi'o.  
 Activate anvi'o v.7 virtual environment and copy the folder containing the tutorial files to you own course folder.  
