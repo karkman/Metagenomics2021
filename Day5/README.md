@@ -229,7 +229,7 @@ Now we might be interested in the distribution/abundance of our MAGs across the 
 
 ```
 
-#### Exercise 4
+### Exercise 4
 Finally, let's look at the annotation of genes in each bin/MAG.  
 We might be interested in knowing, for example, which bin(s)/MAG(s) encode the nitric oxide reductase enzyme (NorBC), which is the enzyme responsible for converting nitric oxide (NO) to nitrous oxide (N2O), a potent greenhouse gas:
 
