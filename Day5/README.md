@@ -54,44 +54,6 @@ Copy the `DREP` folder to your computer and look at the PDF files inside the `fi
 Also look at the `Cdb.csv` file inside `data_tables`.  
 How many clusters of duplicated (redudant) MAGs do we have?
 
-
-
-
-
-
-# THIS IS OLD; CHECK
-
-
-Let's copy the two summary files:
-
-```bash
-cp ~/Share/GTDB/gtdbtk.bac120.summary.tsv MAGs
-cp ~/Share/GTDB/gtdbtk.ar122.summary.tsv MAGs
-```
-
-I particularly am curious about `Sample03Short_MAG_00001`, the nice bin from yesterday that had no taxonomic assignment.  
-I wonder if it's an archaeon?
-
-```bash
-grep Sample03Short_MAG_00001 MAGs/gtdbtk.ar122.summary.tsv
-```
-
-It doesn't look like it, no...  
-Let's see then in the bacterial classification summary:
-
-```bash
-grep Sample03Short_MAG_00001 MAGs/gtdbtk.bac120.summary.tsv
-```
-
-And what other taxa we have?  
-Let's take a quick look with some `bash` magic:
-
-```bash
-cut -f 2 gtdbtk.bac120.summary.tsv | sed '1d' | sort | uniq -c | sort
-```
-
-Later on, let's see if we can do some more analyses on R.
-
 ### Functional annotation
 Let's now annotate the MAGs against databases of functional genes to try to get an idea of their metabolic potential.  
 As everything else, there are many ways we can annotate our MAGs.  
@@ -100,27 +62,24 @@ Annotation usually takes some time to run, so we won't do it here.
 But let's take a look below at how you could achieve this:
 
 ```bash
-conda activate anvio-7
+anvi-run-ncbi-cogs --contigs-db CONTIGS.db \
+                   --num-threads 4
 
-for SAMPLE in Sample01 Sample02 Sample03 Sample04; do
-  anvi-run-ncbi-cogs --contigs-db $SAMPLE/CONTIGS.db \
+anvi-run-kegg-kofams --contigs-db CONTIGS.db \
                      --num-threads 4
 
-  anvi-run-kegg-kofams --contigs-db $SAMPLE/CONTIGS.db \
-                       --num-threads 4
-
-  anvi-run-pfams --contigs-db $SAMPLE/CONTIGS.db \
-                 --num-threads 4
-done
+anvi-run-pfams --contigs-db CONTIGS.db \
+               --num-threads 4
 ```
 
-These steps have been done by us already, and the annotations have been stored inside the `CONTIGS.db` of each assembly.  
+These steps have been done by us already, and the annotations have been stored inside the `CONTIGS.db` of each assembly in `/scratch/project_2001499/COURSE_FILES/BINNING_MEGAHIT`.  
 What we need now is to get our hands on a nice table that we can then later import to R.  
-We can achieve this by running `anvi-export-functions`:
+We can achieve this by running `anvi-export-functions`.
+If you're not yet in the `sinteractive` session, connect to it, go to your working directory, load `bioconda`, activate the `anvio-7` environment, and then:
 
 ```bash
 for SAMPLE in Sample01 Sample02 Sample03 Sample04; do
-  anvi-export-functions --contigs-db ~/Share/BINNING_MEGAHIT/$SAMPLE/CONTIGS.db \
+  anvi-export-functions --contigs-db BINNING_MEGAHIT/$SAMPLE/CONTIGS.db \
                         --output-file MAGs/$SAMPLE.gene_annotation.txt
 done
 ```
@@ -132,16 +91,15 @@ I don't think there's a straightforward way to get this using `anvi'o` commands,
 for SAMPLE in Sample01 Sample02 Sample03 Sample04; do
   # Get list of gene calls per split
   printf '%s|%s|%s|%s|%s\n' splits gene_callers_id start stop percentage > MAGs/$SAMPLE.genes_per_split.txt
-  sqlite3 ~/Share/BINNING_MEGAHIT/$SAMPLE/CONTIGS.db 'SELECT * FROM genes_in_splits' >> MAGs/$SAMPLE.genes_per_split.txt
+  sqlite3 BINNING_MEGAHIT/$SAMPLE/CONTIGS.db 'SELECT * FROM genes_in_splits' >> MAGs/$SAMPLE.genes_per_split.txt
 
 
   # Get splits per bin
   printf '%s|%s|%s\n' collection splits bins > MAGs/$SAMPLE.splits_per_bin.txt
-  sqlite3 ~/Share/BINNING_MEGAHIT/$SAMPLE/MERGED_PROFILES/PROFILE.db 'SELECT * FROM collections_of_splits' | grep 'MAGs|' >> MAGs/$SAMPLE.splits_per_bin.txt
+  sqlite3 BINNING_MEGAHIT/$SAMPLE/MERGED_PROFILES/PROFILE.db 'SELECT * FROM collections_of_splits' | grep 'MAGs|' >> MAGs/$SAMPLE.splits_per_bin.txt
 done
 ```
 
-## MAG annotation and downstream analyses (Part 2)
-
 Now let's get all these data into R to explore the MAGs taxonomic identity and functional potential.  
-First, download the `MAGs` folder to your computer using FileZilla.
+First, download all **TEXT** files (NOT FASTA) inside the `MAGs` folder to your computer.  
+Also grab the `gtdbtk.bac120.summary.tsv` and `gtdbtk.ar122.summary.tsv` files that are inside the `GTDB` folder.  
