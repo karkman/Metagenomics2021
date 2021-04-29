@@ -1,12 +1,12 @@
 # Day 5
 
-| Time      | Activity                               | Slides                                                  | Hands-on                                             |
-|-----------|----------------------------------------|---------------------------------------------------------|------------------------------------------------------|
-| Morning   | MAG annotation and downstream analyses | [Link here](MAG-annotation-and-downstream-analyses.pdf) | [Link here](#MAG-annotation-and-downstream-analyses) |
-| Afternoon | MAG annotation and downstream analyses |                                                         | [Link here](#MAG-annotation-and-downstream-analyses) |
-| Afternoon | Closing remarks and open discussion    |                                                         |                                                      |
+| Time      | Activity                               | Slides                                                  | Hands-on                                                    |
+|-----------|----------------------------------------|---------------------------------------------------------|-------------------------------------------------------------|
+| Morning   | MAG annotation and downstream analyses | [Link here](MAG-annotation-and-downstream-analyses.pdf) | [Link here](#MAG-annotation-and-downstream-analyses-part-1) |
+| Afternoon | MAG annotation and downstream analyses |                                                         | [Link here](#MAG-annotation-and-downstream-analyses-part-2) |
+| Afternoon | Closing remarks and open discussion    |                                                         |                                                             |
 
-## MAG annotation and downstream analyses
+## MAG annotation and downstream analyses (Part 1)
 First login to Puhti and go to your working directory:
 
 ```bash
@@ -14,10 +14,27 @@ cd /scratch/project_2001499/$USER
 ```
 
 Although you have probably binned some nice MAGs, we will work from now on with MAGs that Antti and Igor have binned.
-Let's copy these to your working directory:
+Let's copy the FASTA files to your working directory:
 
 ```bash
 cp -r ../COURSE_FILES/MAGs MAGs
+```
+
+Let's also take the summary file for each of the four samples:
+
+```bash
+for SAMPLE in Sample01 Sample02 Sample03 Sample04; do
+  cp BINNING_MEGAHIT/$SAMPLE/MAGsSummary/bins_summary.txt MAGs/$SAMPLE.bins_summary.txt
+done
+```
+
+And finally, let's also take a couple of files summarizing the abundance of the MAGs across the different samples:
+
+```bash
+for SAMPLE in Sample01 Sample02 Sample03 Sample04; do
+  cp BINNING_MEGAHIT/$SAMPLE/MAGsSummary/bins_across_samples/mean_coverage.txt MAGs/$SAMPLE.mean_coverage.txt
+  cp BINNING_MEGAHIT/$SAMPLE/MAGsSummary/bins_across_samples/detection.txt MAGs/$SAMPLE.detection.txt
+done
 ```
 
 ### Taxonomic assignment with GTDBtk
@@ -54,44 +71,6 @@ Copy the `DREP` folder to your computer and look at the PDF files inside the `fi
 Also look at the `Cdb.csv` file inside `data_tables`.  
 How many clusters of duplicated (redudant) MAGs do we have?
 
-
-
-
-
-
-# THIS IS OLD; CHECK
-
-
-Let's copy the two summary files:
-
-```bash
-cp ~/Share/GTDB/gtdbtk.bac120.summary.tsv MAGs
-cp ~/Share/GTDB/gtdbtk.ar122.summary.tsv MAGs
-```
-
-I particularly am curious about `Sample03Short_MAG_00001`, the nice bin from yesterday that had no taxonomic assignment.  
-I wonder if it's an archaeon?
-
-```bash
-grep Sample03Short_MAG_00001 MAGs/gtdbtk.ar122.summary.tsv
-```
-
-It doesn't look like it, no...  
-Let's see then in the bacterial classification summary:
-
-```bash
-grep Sample03Short_MAG_00001 MAGs/gtdbtk.bac120.summary.tsv
-```
-
-And what other taxa we have?  
-Let's take a quick look with some `bash` magic:
-
-```bash
-cut -f 2 gtdbtk.bac120.summary.tsv | sed '1d' | sort | uniq -c | sort
-```
-
-Later on, let's see if we can do some more analyses on R.
-
 ### Functional annotation
 Let's now annotate the MAGs against databases of functional genes to try to get an idea of their metabolic potential.  
 As everything else, there are many ways we can annotate our MAGs.  
@@ -100,27 +79,24 @@ Annotation usually takes some time to run, so we won't do it here.
 But let's take a look below at how you could achieve this:
 
 ```bash
-conda activate anvio-7
+anvi-run-ncbi-cogs --contigs-db CONTIGS.db \
+                   --num-threads 4
 
-for SAMPLE in Sample01 Sample02 Sample03 Sample04; do
-  anvi-run-ncbi-cogs --contigs-db $SAMPLE/CONTIGS.db \
+anvi-run-kegg-kofams --contigs-db CONTIGS.db \
                      --num-threads 4
 
-  anvi-run-kegg-kofams --contigs-db $SAMPLE/CONTIGS.db \
-                       --num-threads 4
-
-  anvi-run-pfams --contigs-db $SAMPLE/CONTIGS.db \
-                 --num-threads 4
-done
+anvi-run-pfams --contigs-db CONTIGS.db \
+               --num-threads 4
 ```
 
-These steps have been done by us already, and the annotations have been stored inside the `CONTIGS.db` of each assembly.  
+These steps have been done by us already, and the annotations have been stored inside the `CONTIGS.db` of each assembly in `/scratch/project_2001499/COURSE_FILES/BINNING_MEGAHIT`.  
 What we need now is to get our hands on a nice table that we can then later import to R.  
-We can achieve this by running `anvi-export-functions`:
+We can achieve this by running `anvi-export-functions`.
+If you're not yet in the `sinteractive` session, connect to it, go to your working directory, load `bioconda`, activate the `anvio-7` environment, and then:
 
 ```bash
 for SAMPLE in Sample01 Sample02 Sample03 Sample04; do
-  anvi-export-functions --contigs-db ~/Share/BINNING_MEGAHIT/$SAMPLE/CONTIGS.db \
+  anvi-export-functions --contigs-db BINNING_MEGAHIT/$SAMPLE/CONTIGS.db \
                         --output-file MAGs/$SAMPLE.gene_annotation.txt
 done
 ```
@@ -132,16 +108,95 @@ I don't think there's a straightforward way to get this using `anvi'o` commands,
 for SAMPLE in Sample01 Sample02 Sample03 Sample04; do
   # Get list of gene calls per split
   printf '%s|%s|%s|%s|%s\n' splits gene_callers_id start stop percentage > MAGs/$SAMPLE.genes_per_split.txt
-  sqlite3 ~/Share/BINNING_MEGAHIT/$SAMPLE/CONTIGS.db 'SELECT * FROM genes_in_splits' >> MAGs/$SAMPLE.genes_per_split.txt
+  sqlite3 BINNING_MEGAHIT/$SAMPLE/CONTIGS.db 'SELECT * FROM genes_in_splits' >> MAGs/$SAMPLE.genes_per_split.txt
 
 
   # Get splits per bin
   printf '%s|%s|%s\n' collection splits bins > MAGs/$SAMPLE.splits_per_bin.txt
-  sqlite3 ~/Share/BINNING_MEGAHIT/$SAMPLE/MERGED_PROFILES/PROFILE.db 'SELECT * FROM collections_of_splits' | grep 'MAGs|' >> MAGs/$SAMPLE.splits_per_bin.txt
+  sqlite3 BINNING_MEGAHIT/$SAMPLE/MERGED_PROFILES/PROFILE.db 'SELECT * FROM collections_of_splits' | grep 'MAGs|' >> MAGs/$SAMPLE.splits_per_bin.txt
 done
 ```
 
 ## MAG annotation and downstream analyses (Part 2)
 
 Now let's get all these data into R to explore the MAGs taxonomic identity and functional potential.  
-First, download the `MAGs` folder to your computer using FileZilla.
+First, download all **TXT** files **(NOT FASTA)** inside the `MAGs` folder to your computer.  
+Also grab the `gtdbtk.bac120.summary.tsv` and `gtdbtk.ar122.summary.tsv` files that are inside the `GTDB` folder.  
+
+Now let's combine these data into some custom analyses we can do to explore our MAGs.  
+We will do that in `R/RStudio`.
+First, let's load the packages we will need:
+
+```r
+library(tidyverse)
+library(patchwork)
+```
+
+And import the data:
+
+```r
+# Create metadata
+metadata <- tibble(Sample = c("Sample01", "Sample02", "Sample03", "Sample04"),
+                   Ecosystem = c("heathland", "fen", "fen", "heathland"))
+
+# Read bins summary
+summary <- bind_rows(read_delim("Sample01.bins_summary.txt", delim = "\t"),
+                     read_delim("Sample02.bins_summary.txt", delim = "\t"),
+                     read_delim("Sample03.bins_summary.txt", delim = "\t"),
+                     read_delim("Sample04.bins_summary.txt", delim = "\t"))
+
+# Make a list of MAGs
+MAGs <- summary %>%
+  filter(str_detect(bins, "_MAG_")) %>%
+  pull(bins)
+
+# Read bins coverage
+coverage <- bind_rows(read_delim("Sample01.mean_coverage.txt", delim = "\t"),
+                      read_delim("Sample02.mean_coverage.txt", delim = "\t"),
+                      read_delim("Sample03.mean_coverage.txt", delim = "\t"),
+                      read_delim("Sample04.mean_coverage.txt", delim = "\t"))
+
+# Read bins detection
+detection <- bind_rows(read_delim("Sample01.detection.txt", delim = "\t"),
+                       read_delim("Sample02.detection.txt", delim = "\t"),
+                       read_delim("Sample03.detection.txt", delim = "\t"),
+                       read_delim("Sample04.detection.txt", delim = "\t"))
+
+# Read GTDB taxonomy
+GTDB <- bind_rows(read_delim("gtdbtk.ar122.summary.tsv",  delim = "\t") %>% mutate(red_value = as.numeric(red_value)),
+                  read_delim("gtdbtk.bac120.summary.tsv", delim = "\t") %>% mutate(red_value = as.numeric(red_value))) %>%
+  rename(bins = user_genome) %>%
+  mutate(bins = str_remove(bins, "-contigs"))
+
+# Read annotation
+annotation <- bind_rows(read_delim("Sample01.gene_annotation.txt", delim = "\t") %>% mutate(Sample = "Sample01"),
+                        read_delim("Sample02.gene_annotation.txt", delim = "\t") %>% mutate(Sample = "Sample02"),
+                        read_delim("Sample03.gene_annotation.txt", delim = "\t") %>% mutate(Sample = "Sample03"),
+                        read_delim("Sample04.gene_annotation.txt", delim = "\t") %>% mutate(Sample = "Sample04")) %>%
+  rename(gene_function = `function`)
+
+# Read list of gene calls per split
+gene_calls <- bind_rows(read_delim("Sample01.genes_per_split.txt", delim = "|") %>% mutate(Sample = "Sample01"),
+                        read_delim("Sample02.genes_per_split.txt", delim = "|") %>% mutate(Sample = "Sample02"),
+                        read_delim("Sample03.genes_per_split.txt", delim = "|") %>% mutate(Sample = "Sample03"),
+                        read_delim("Sample04.genes_per_split.txt", delim = "|") %>% mutate(Sample = "Sample04"))
+
+# Read list of splits per bin
+splits <- bind_rows(read_delim("Sample01.splits_per_bin.txt", delim = "|") %>% mutate(Sample = "Sample01"),
+                    read_delim("Sample02.splits_per_bin.txt", delim = "|") %>% mutate(Sample = "Sample02"),
+                    read_delim("Sample03.splits_per_bin.txt", delim = "|") %>% mutate(Sample = "Sample03"),
+                    read_delim("Sample04.splits_per_bin.txt", delim = "|") %>% mutate(Sample = "Sample04"))
+```
+
+Now that all data is loaded into `R`, let's do some exploring.  
+By looking at the `summary` object, can you answer:
+
+- How many bins **AND** MAGs we have in total, and how many for each sample?
+- What is the mean completion, detection and length of the **MAGs**?
+- Can you make a nice bar/box/violin plot summarising these values?
+
+**ANSWERS HERE (COMING UP SOON)**
+
+```r
+
+```
