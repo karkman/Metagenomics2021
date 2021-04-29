@@ -23,13 +23,15 @@ MAGs <- summary %>%
 coverage <- bind_rows(read_delim("Sample01.mean_coverage.txt", delim = "\t"),
                       read_delim("Sample02.mean_coverage.txt", delim = "\t"),
                       read_delim("Sample03.mean_coverage.txt", delim = "\t"),
-                      read_delim("Sample04.mean_coverage.txt", delim = "\t"))
+                      read_delim("Sample04.mean_coverage.txt", delim = "\t")) %>% 
+  rename_all(~str_replace(., "SAMPLE", "Sample"))
 
 # Read bins detection
 detection <- bind_rows(read_delim("Sample01.detection.txt", delim = "\t"),
                        read_delim("Sample02.detection.txt", delim = "\t"),
                        read_delim("Sample03.detection.txt", delim = "\t"),
-                       read_delim("Sample04.detection.txt", delim = "\t"))
+                       read_delim("Sample04.detection.txt", delim = "\t")) %>% 
+  rename_all(~str_replace(., "SAMPLE", "Sample"))
 
 # Read GTDB taxonomy
 GTDB <- bind_rows(read_delim("gtdbtk.ar122.summary.tsv",  delim = "\t") %>% mutate(red_value = as.numeric(red_value)),
@@ -124,13 +126,23 @@ GTDB_genus %>%
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1), axis.title = element_blank())
 
 
-
 ##### COVERAGE & DETECTION #####
+
+# Most abundant MAG across all samples
+coverage_mean <- coverage %>% 
+  gather(Sample, Coverage, -bins) %>% 
+  group_by(bins) %>% 
+  summarise(mean = mean(Coverage))
+
+coverage_mean %>% 
+  arrange(desc(mean)) %>% 
+  left_join(GTDB) %>% 
+  select(bins, Domain, Phylum, Class, Order, Family, Genus)
+
 
 p1 <- coverage %>% 
   filter(bins %in% MAGs) %>% 
   gather(Sample, coverage, -bins) %>% 
-  mutate(Sample = str_replace(Sample, "SAMPLE", "Sample")) %>% 
   left_join(metadata) %>% 
   left_join(GTDB) %>% 
   separate(classification, into = c("Domain", "Phylum", "Class", "Order", "Family", "Genus", "Species"), sep = ";") %>% 

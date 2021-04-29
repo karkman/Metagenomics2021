@@ -124,16 +124,11 @@ Also grab the `gtdbtk.bac120.summary.tsv` and `gtdbtk.ar122.summary.tsv` files t
 
 Now let's combine these data into some custom analyses we can do to explore our MAGs.  
 We will do that in `R/RStudio`.
-First, let's load the packages we will need:
+First, let's load the packages we will need and import the data:
 
 ```r
 library(tidyverse)
-library(patchwork)
-```
 
-And import the data:
-
-```r
 # Create metadata
 metadata <- tibble(Sample = c("Sample01", "Sample02", "Sample03", "Sample04"),
                    Ecosystem = c("heathland", "fen", "fen", "heathland"))
@@ -153,17 +148,20 @@ MAGs <- summary %>%
 coverage <- bind_rows(read_delim("Sample01.mean_coverage.txt", delim = "\t"),
                       read_delim("Sample02.mean_coverage.txt", delim = "\t"),
                       read_delim("Sample03.mean_coverage.txt", delim = "\t"),
-                      read_delim("Sample04.mean_coverage.txt", delim = "\t"))
+                      read_delim("Sample04.mean_coverage.txt", delim = "\t")) %>%
+  rename_all(~str_replace(., "SAMPLE", "Sample"))
 
 # Read bins detection
 detection <- bind_rows(read_delim("Sample01.detection.txt", delim = "\t"),
                        read_delim("Sample02.detection.txt", delim = "\t"),
                        read_delim("Sample03.detection.txt", delim = "\t"),
-                       read_delim("Sample04.detection.txt", delim = "\t"))
+                       read_delim("Sample04.detection.txt", delim = "\t")) %>%
+  rename_all(~str_replace(., "SAMPLE", "Sample"))
 
 # Read GTDB taxonomy
 GTDB <- bind_rows(read_delim("gtdbtk.ar122.summary.tsv",  delim = "\t") %>% mutate(red_value = as.numeric(red_value)),
                   read_delim("gtdbtk.bac120.summary.tsv", delim = "\t") %>% mutate(red_value = as.numeric(red_value))) %>%
+  separate(classification, into = c("Domain", "Phylum", "Class", "Order", "Family", "Genus", "Species"), sep = ";") %>%
   rename(bins = user_genome) %>%
   mutate(bins = str_remove(bins, "-contigs"))
 
@@ -215,3 +213,9 @@ Now let's focus on the GTDB taxonomy, which is stored in the `GTDB` object:
 ```
 
 ### Exercise 3
+Now we might be interested in the distribution/abundance of our MAGs across the different samples (object `coverage`).  
+
+- What is the bin/MAG with the highest coverage when averaged across all samples? To which taxon it belongs?
+- Now, can you make a plot that shows the coverage of the MAGs across each of the four samples, with phylum-level taxonomic information as well? I'm thinking something like this:
+
+!(Rplot.png)
