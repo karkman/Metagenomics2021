@@ -216,6 +216,6 @@ Now let's focus on the GTDB taxonomy, which is stored in the `GTDB` object:
 Now we might be interested in the distribution/abundance of our MAGs across the different samples (object `coverage`).  
 
 - What is the bin/MAG with the highest coverage when averaged across all samples? To which taxon it belongs?
-- Now, can you make a plot that shows the coverage of the MAGs across each of the four samples, with phylum-level taxonomic information as well? I'm thinking something like this:
+- Now, can you make a plot that shows the coverage of the MAGs across each of the four samples, with phylum-level taxonomic information as well? I'm thinking something like this (but potentially better-looking):
 
-!(Rplot.png)
+![](Rplot.png)
