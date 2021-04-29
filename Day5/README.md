@@ -1,10 +1,10 @@
 # Day 5
 
-| Time      | Activity                               | Slides                                                  | Hands-on                                                    |
-|-----------|----------------------------------------|---------------------------------------------------------|-------------------------------------------------------------|
-| Morning   | MAG annotation and downstream analyses | [Link here](MAG-annotation-and-downstream-analyses.pdf) | [Link here](#MAG-annotation-and-downstream-analyses-part-1) |
-| Afternoon | MAG annotation and downstream analyses |                                                         | [Link here](#MAG-annotation-and-downstream-analyses-part-2) |
-| Afternoon | Closing remarks and open discussion    |                                                         |                                                             |
+| Time      | Activity                                        | Slides                                                  | Hands-on                                                    |
+|-----------|-------------------------------------------------|---------------------------------------------------------|-------------------------------------------------------------|
+| Morning   | MAG annotation and downstream analyses (Part 1) | [Link here](MAG-annotation-and-downstream-analyses.pdf) | [Link here](#MAG-annotation-and-downstream-analyses-part-1) |
+| Afternoon | MAG annotation and downstream analyses (Part 2) |                                                         | [Link here](#MAG-annotation-and-downstream-analyses-part-2) |
+| Afternoon | Closing remarks and open discussion             |                                                         |                                                             |
 
 ## MAG annotation and downstream analyses (Part 1)
 First login to Puhti and go to your working directory:
