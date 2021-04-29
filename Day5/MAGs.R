@@ -1,5 +1,4 @@
 library(tidyverse)
-library(patchwork)
 
 
 ##### IMPORT DATA #####
@@ -57,7 +56,8 @@ gene_calls <- bind_rows(read_delim("Sample01.genes_per_split.txt", delim = "|") 
 splits <- bind_rows(read_delim("Sample01.splits_per_bin.txt", delim = "|") %>% mutate(Sample = "Sample01"),
                     read_delim("Sample02.splits_per_bin.txt", delim = "|") %>% mutate(Sample = "Sample02"),
                     read_delim("Sample03.splits_per_bin.txt", delim = "|") %>% mutate(Sample = "Sample03"),
-                    read_delim("Sample04.splits_per_bin.txt", delim = "|") %>% mutate(Sample = "Sample04"))
+                    read_delim("Sample04.splits_per_bin.txt", delim = "|") %>% mutate(Sample = "Sample04")) %>% 
+  select(-collection)
 
 
 ##### EXPLORING THE SUMMARY #####
@@ -130,89 +130,105 @@ GTDB_genus %>%
 
 # Most abundant MAG across all samples
 coverage_mean <- coverage %>% 
-  gather(Sample, Coverage, -bins) %>% 
+  gather(Sample, coverage, -bins) %>% 
   group_by(bins) %>% 
-  summarise(mean = mean(Coverage))
+  summarise(mean = mean(coverage))
 
 coverage_mean %>% 
   arrange(desc(mean)) %>% 
   left_join(GTDB) %>% 
   select(bins, Domain, Phylum, Class, Order, Family, Genus)
 
+# Plot
 
-p1 <- coverage %>% 
-  filter(bins %in% MAGs) %>% 
+## Coverage
+coverage %>% 
+  filter(bins %in% MAGs) %>%
   gather(Sample, coverage, -bins) %>% 
   left_join(metadata) %>% 
   left_join(GTDB) %>% 
-  separate(classification, into = c("Domain", "Phylum", "Class", "Order", "Family", "Genus", "Species"), sep = ";") %>% 
   ggplot(aes(x = bins, y = coverage, fill = Ecosystem)) +
   geom_bar(stat = "identity", position = "dodge") +
   facet_grid(rows = vars(Sample), cols = vars(Domain, Phylum), scales = "free_x", space = "free") +
   theme_bw() +
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5), axis.title = element_blank()) +
-  labs(title = "Coverage")
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5), axis.title = element_blank())
 
-p2 <- detection %>% 
+## Detection
+detection %>% 
   filter(bins %in% MAGs) %>% 
   gather(Sample, detection, -bins) %>% 
-  mutate(Sample = str_replace(Sample, "SAMPLE", "Sample")) %>% 
   left_join(metadata) %>% 
   left_join(GTDB) %>% 
-  separate(classification, into = c("Domain", "Phylum", "Class", "Order", "Family", "Genus", "Species"), sep = ";") %>% 
   ggplot(aes(x = bins, y = detection, fill = Ecosystem)) +
   geom_bar(stat = "identity", position = "dodge") +
   facet_grid(rows = vars(Sample), cols = vars(Domain, Phylum), scales = "free_x", space = "free") +
   theme_bw() +
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5), axis.title = element_blank()) +
-  labs(title = "Detection")
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5), axis.title = element_blank())
 
-p1 + p2 +
-  plot_layout(guides = 'collect', nrow = 2) & theme(legend.position = 'bottom')
 
-ggsave("MAGs_coverage_detection.pdf", scale = 2)
+##### SEARCHING ANNOTATIONS #####
 
-# Coverage summed by phylum
-coverage %>% 
-  filter(bins %in% MAGs) %>% 
-  gather(Sample, coverage, -bins) %>% 
-  mutate(Sample = str_replace(Sample, "SAMPLE", "Sample")) %>% 
-  left_join(metadata) %>% 
+# Nitric oxide reductase
+NOR <- annotation %>% 
+  filter(str_detect(accession, "K04561") | str_detect(accession, "K02305")) %>% 
+  left_join(gene_calls) %>% 
+  left_join(splits)
+
+NOR %>% 
+  select(bins) %>% 
+  mutate(MAG_or_BIN = ifelse(str_detect(bins, "Bin"), "bin", "MAG")) %>% 
   left_join(GTDB) %>% 
-  separate(classification, into = c("Domain", "Phylum", "Class", "Order", "Family", "Genus", "Species"), sep = ";") %>% 
-  group_by(Sample, Ecosystem, Domain, Phylum) %>% 
-  mutate(coverage = sum(coverage)) %>% 
-  ggplot(aes(x = Phylum, y = coverage, fill = Ecosystem)) +
-  geom_bar(stat = "identity", position = "dodge") +
-  facet_grid(rows = vars(Sample), cols = vars(Domain), scales = "free_x", space = "free") +
-  theme_bw() +
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5), axis.title = element_blank()) +
-  labs(title = "Coverage")
-
-
-##### SEARCH ANNOTATIONS #####
+  group_by(MAG_or_BIN, Domain, Phylum) %>% 
+  tally
 
 # Nitrous oxide reductase
-annotation %>% 
-  filter(str_detect(accession, "COG3256") | str_detect(accession, "K00376")) %>% 
+NOS <- annotation %>% 
+  filter(str_detect(accession, "K00376")) %>% 
   left_join(gene_calls) %>% 
-  left_join(splits) %>% 
-  select(bins) %>% 
-  left_join(GTDB)
+  left_join(splits)
 
-# Nitrite reductase
-annotation %>% 
-  filter(str_detect(accession, "K00368")) %>% 
-  left_join(gene_calls) %>% 
-  left_join(splits) %>% 
+NOS %>% 
   select(bins) %>% 
-  left_join(GTDB)
+  mutate(MAG_or_BIN = ifelse(str_detect(bins, "Bin"), "bin", "MAG")) %>% 
+  left_join(GTDB) %>% 
+  group_by(MAG_or_BIN, Domain, Phylum) %>% 
+  tally
 
 # Nitrogenase
-annotation %>% 
-  filter(str_detect(accession, "COG1348")) %>% 
+NIF <- annotation %>% 
+  filter(str_detect(accession, "K02588")) %>% 
   left_join(gene_calls) %>% 
-  left_join(splits) %>% 
-  select(bins) %>% 
-  left_join(GTDB)
+  left_join(splits)
 
+NIF %>% 
+  select(bins) %>% 
+  mutate(MAG_or_BIN = ifelse(str_detect(bins, "Bin"), "bin", "MAG")) %>% 
+  left_join(GTDB) %>% 
+  group_by(MAG_or_BIN, Domain, Phylum) %>% 
+  tally
+
+# Methanogenesis
+MCR <- annotation %>% 
+  filter(str_detect(accession, "K00399")) %>% 
+  left_join(gene_calls) %>% 
+  left_join(splits)
+
+MCR %>% 
+  select(bins) %>% 
+  mutate(MAG_or_BIN = ifelse(str_detect(bins, "Bin"), "bin", "MAG")) %>% 
+  left_join(GTDB) %>% 
+  group_by(MAG_or_BIN, Domain, Phylum) %>% 
+  tally
+
+# Methane oxidation
+PMO <- annotation %>% 
+  filter(str_detect(accession, "K10944")) %>% 
+  left_join(gene_calls) %>% 
+  left_join(splits)
+
+PMO %>% 
+  select(bins) %>% 
+  mutate(MAG_or_BIN = ifelse(str_detect(bins, "Bin"), "bin", "MAG")) %>% 
+  left_join(GTDB) %>% 
+  group_by(MAG_or_BIN, Domain, Phylum) %>% 
+  tally

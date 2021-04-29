@@ -219,3 +219,46 @@ Now we might be interested in the distribution/abundance of our MAGs across the 
 - Now, can you make a plot that shows the coverage of the MAGs across each of the four samples, with phylum-level taxonomic information as well? I'm thinking something like this (but potentially better-looking):
 
 ![](Rplot.png)
+
+- Detection is also an important metric, can you replicate the plot before but using the `detection` object instead?
+- Do these abundance patterns agree with what we have seen using the read-based approach?
+
+**SOLUTION BELOW (COMING UP SOON)**
+
+```r
+
+```
+
+#### Exercise 4
+Finally, let's look at the annotation of genes in each bin/MAG.  
+We might be interested in knowing, for example, which bin(s)/MAG(s) encode the nitric oxide reductase enzyme (NorBC), which is the enzyme responsible for converting nitric oxide (NO) to nitrous oxide (N2O), a potent greenhouse gas:
+
+```r
+# We can first find the bins/MAGs containing the enzyme
+NOR <- annotation %>%
+  filter(str_detect(accession, "K04561") | str_detect(accession, "K02305")) %>%
+  left_join(gene_calls) %>%
+  left_join(splits)
+
+# And then see to which taxa they belong
+NOR %>%
+  select(bins) %>%
+  mutate(MAG_or_BIN = ifelse(str_detect(bins, "Bin"), "bin", "MAG")) %>%
+  left_join(GTDB) %>%
+  group_by(MAG_or_BIN, Domain, Phylum) %>%
+  tally
+```
+
+Now, can you modify the commands above to search for other enzymes, e.g.:
+
+- Nitrous oxide reductase (NosZ), which consumes N2O releasing nitrogen
+- Nitrogenase (NifH), which fixes atmospheric nitrogen into ammonia
+- What about methane production (McrA; methyl-coenzyme M reductase) and oxidation (PmoA; methane monooxygenase)?
+
+**Hint:** You can look for KEGG identifiers (K00000 type of ids) in their [website](https://www.genome.jp/kegg).  
+
+**SOLUTION BELOW (COMING UP SOON)**
+
+```r
+
+```
