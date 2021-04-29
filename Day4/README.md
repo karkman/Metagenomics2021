@@ -36,7 +36,7 @@ Note the computing node identifier before logging out.
 cd /scratch/project_2001499/$USER
 # Take note whether you were connected to login1 or login2. Screens are login node specific.
 screen -S anvio
-sinteractive -A project_2001499 -c 4 -m 10G -t 08:00:00
+  sinteractive -A project_2001499 -c 4 -m 10G -t 08:00:00
 # And after this change the time and memory allocations.
 # When your connected to the computing node, check the identifier and detach from the screen
 ```
