@@ -195,7 +195,19 @@ By looking at the `summary` object, can you answer:
 - What is the mean completion, detection and length of the **MAGs**?
 - Can you make a nice bar/box/violin plot summarising these values?
 
-**ANSWERS HERE (COMING UP SOON)**
+**SOLUTION BELOW (COMING UP SOON)**
+
+```r
+
+```
+
+Now let's focus on the GTDB taxonomy, which is stored in the `GTDB` object:  
+
+- What are the **three** phyla with highest number of MAGs?
+- And what about genera?
+- Again, can you make a nice plot for this?
+
+**SOLUTION BELOW (COMING UP SOON)**
 
 ```r
 

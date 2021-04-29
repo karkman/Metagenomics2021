@@ -15,27 +15,9 @@ summary <- bind_rows(read_delim("Sample01.bins_summary.txt", delim = "\t"),
                      read_delim("Sample04.bins_summary.txt", delim = "\t"))
 
 # Make a list of MAGs
-MAGs <- summary %>% 
-  filter(str_detect(bins, "_MAG_")) %>% 
+MAGs <- summary %>%
+  filter(str_detect(bins, "_MAG_")) %>%
   pull(bins)
-
-# Explore the summary a bit:
-
-## Number of MAGs per sample
-summary %>% 
-  filter(bins %in% MAGs) %>% 
-  mutate(Sample = str_extract(bins, "Sample[0-9]+")) %>% 
-  group_by(Sample) %>% 
-  tally
-
-## MAG statistics
-summary %>% 
-  filter(bins %in% MAGs) %>% 
-  select(total_length, num_contigs, percent_completion, percent_redundancy) %>% 
-  gather(parameter, value) %>% 
-  ggplot(aes(x = parameter, y = value)) +
-  geom_violin() +
-  facet_grid(rows = vars(parameter), scales = "free")
 
 # Read bins coverage
 coverage <- bind_rows(read_delim("Sample01.mean_coverage.txt", delim = "\t"),
@@ -51,15 +33,16 @@ detection <- bind_rows(read_delim("Sample01.detection.txt", delim = "\t"),
 
 # Read GTDB taxonomy
 GTDB <- bind_rows(read_delim("gtdbtk.ar122.summary.tsv",  delim = "\t") %>% mutate(red_value = as.numeric(red_value)),
-                  read_delim("gtdbtk.bac120.summary.tsv", delim = "\t") %>% mutate(red_value = as.numeric(red_value))) %>% 
-  rename(bins = user_genome) %>% 
+                  read_delim("gtdbtk.bac120.summary.tsv", delim = "\t") %>% mutate(red_value = as.numeric(red_value))) %>%
+  separate(classification, into = c("Domain", "Phylum", "Class", "Order", "Family", "Genus", "Species"), sep = ";") %>% 
+  rename(bins = user_genome) %>%
   mutate(bins = str_remove(bins, "-contigs"))
 
 # Read annotation
 annotation <- bind_rows(read_delim("Sample01.gene_annotation.txt", delim = "\t") %>% mutate(Sample = "Sample01"),
                         read_delim("Sample02.gene_annotation.txt", delim = "\t") %>% mutate(Sample = "Sample02"),
                         read_delim("Sample03.gene_annotation.txt", delim = "\t") %>% mutate(Sample = "Sample03"),
-                        read_delim("Sample04.gene_annotation.txt", delim = "\t") %>% mutate(Sample = "Sample04")) %>% 
+                        read_delim("Sample04.gene_annotation.txt", delim = "\t") %>% mutate(Sample = "Sample04")) %>%
   rename(gene_function = `function`)
 
 # Read list of gene calls per split
@@ -75,22 +58,71 @@ splits <- bind_rows(read_delim("Sample01.splits_per_bin.txt", delim = "|") %>% m
                     read_delim("Sample04.splits_per_bin.txt", delim = "|") %>% mutate(Sample = "Sample04"))
 
 
+##### EXPLORING THE SUMMARY #####
+
+# Number of bins/MAGs per sample
+summary %>% 
+  filter(bins %in% MAGs) %>% 
+  mutate(Sample = str_extract(bins, "Sample[0-9]+")) %>% 
+  group_by(Sample) %>% 
+  tally
+
+# MAG statistics
+summary_long <- summary %>% 
+  filter(bins %in% MAGs) %>% 
+  select(total_length, percent_completion, percent_redundancy) %>% 
+  gather(parameter, value)
+
+## Summarise
+summary_long %>% 
+  group_by(parameter) %>% 
+  summarise(mean = mean(value))
+
+## Plot
+summary_long %>% 
+  ggplot(aes(x = parameter, y = value)) +
+  geom_violin() +
+  facet_wrap(~parameter, scales = "free")
+
+
 ##### GTDB TAXONOMY #####
 
-GTDB %>% 
-  filter(bins %in% MAGs) %>% 
-  select(classification) %>% 
-  separate(classification, into = c("Domain", "Phylum", "Class", "Order", "Family", "Genus", "Species"), sep = ";") %>% 
+# Summarise
+
+## Phyla
+GTDB_phylum <- GTDB %>% 
   group_by(Domain, Phylum) %>%
-  # group_by(Phylum, Genus) %>%
-  tally %>% 
+  tally
+
+GTDB_phylum %>% 
+  arrange(desc(n))
+
+## Genera
+GTDB_genus <- GTDB %>% 
+  group_by(Phylum, Genus) %>%
+  tally
+
+GTDB_genus %>% 
+  arrange(desc(n))
+
+# Plot
+
+## Phyla
+GTDB_phylum %>% 
   ggplot(aes(x = Phylum, y = n)) +
-  # ggplot(aes(x = Genus, y = n)) +
   geom_bar(stat = "identity") +
   facet_grid(cols = vars(Domain), space = "free", scales = "free_x") +
-  # facet_grid(cols = vars(Phylum), space = "free", scales = "free_x") +
   theme_bw() +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1), axis.title = element_blank())
+
+## Genera
+GTDB_genus %>% 
+  ggplot(aes(x = Genus, y = n)) +
+  geom_bar(stat = "identity") +
+  facet_grid(cols = vars(Phylum), space = "free", scales = "free_x") +
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1), axis.title = element_blank())
+
 
 
 ##### COVERAGE & DETECTION #####
