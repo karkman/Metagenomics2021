@@ -166,8 +166,14 @@ anvi-gen-contigs-database --contigs-fasta Sample03_5000nt.fa \
 
 ### Run HMMs to identify single-copy core genes for Bacteria, Archaea and Eukarya, plus rRNAs
 
+First annotate the SCGs.
 ```bash
 anvi-run-hmms --contigs-db Sample03_5000nt_CONTIGS.db --num-threads 4
+```
+
+And then run taxonomic annotation based on those
+```bash
+anvi-run-scg-taxonomy -c Sample03_5000nt_CONTIGS.db -T 4
 ```
 
 After that's done, detach from the anvi'o screen with `Ctrl+a` `d`
