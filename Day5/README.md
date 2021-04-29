@@ -122,3 +122,81 @@ done
 Now let's get all these data into R to explore the MAGs taxonomic identity and functional potential.  
 First, download all **TXT** files **(NOT FASTA)** inside the `MAGs` folder to your computer.  
 Also grab the `gtdbtk.bac120.summary.tsv` and `gtdbtk.ar122.summary.tsv` files that are inside the `GTDB` folder.  
+
+Now let's combine these data into some custom analyses we can do to explore our MAGs.  
+We will do that in `R/RStudio`.
+First, let's load the packages we will need:
+
+```r
+library(tidyverse)
+library(patchwork)
+```
+
+And import the data:
+
+```r
+# Create metadata
+metadata <- tibble(Sample = c("Sample01", "Sample02", "Sample03", "Sample04"),
+                   Ecosystem = c("heathland", "fen", "fen", "heathland"))
+
+# Read bins summary
+summary <- bind_rows(read_delim("Sample01.bins_summary.txt", delim = "\t"),
+                     read_delim("Sample02.bins_summary.txt", delim = "\t"),
+                     read_delim("Sample03.bins_summary.txt", delim = "\t"),
+                     read_delim("Sample04.bins_summary.txt", delim = "\t"))
+
+# Make a list of MAGs
+MAGs <- summary %>%
+  filter(str_detect(bins, "_MAG_")) %>%
+  pull(bins)
+
+# Read bins coverage
+coverage <- bind_rows(read_delim("Sample01.mean_coverage.txt", delim = "\t"),
+                      read_delim("Sample02.mean_coverage.txt", delim = "\t"),
+                      read_delim("Sample03.mean_coverage.txt", delim = "\t"),
+                      read_delim("Sample04.mean_coverage.txt", delim = "\t"))
+
+# Read bins detection
+detection <- bind_rows(read_delim("Sample01.detection.txt", delim = "\t"),
+                       read_delim("Sample02.detection.txt", delim = "\t"),
+                       read_delim("Sample03.detection.txt", delim = "\t"),
+                       read_delim("Sample04.detection.txt", delim = "\t"))
+
+# Read GTDB taxonomy
+GTDB <- bind_rows(read_delim("gtdbtk.ar122.summary.tsv",  delim = "\t") %>% mutate(red_value = as.numeric(red_value)),
+                  read_delim("gtdbtk.bac120.summary.tsv", delim = "\t") %>% mutate(red_value = as.numeric(red_value))) %>%
+  rename(bins = user_genome) %>%
+  mutate(bins = str_remove(bins, "-contigs"))
+
+# Read annotation
+annotation <- bind_rows(read_delim("Sample01.gene_annotation.txt", delim = "\t") %>% mutate(Sample = "Sample01"),
+                        read_delim("Sample02.gene_annotation.txt", delim = "\t") %>% mutate(Sample = "Sample02"),
+                        read_delim("Sample03.gene_annotation.txt", delim = "\t") %>% mutate(Sample = "Sample03"),
+                        read_delim("Sample04.gene_annotation.txt", delim = "\t") %>% mutate(Sample = "Sample04")) %>%
+  rename(gene_function = `function`)
+
+# Read list of gene calls per split
+gene_calls <- bind_rows(read_delim("Sample01.genes_per_split.txt", delim = "|") %>% mutate(Sample = "Sample01"),
+                        read_delim("Sample02.genes_per_split.txt", delim = "|") %>% mutate(Sample = "Sample02"),
+                        read_delim("Sample03.genes_per_split.txt", delim = "|") %>% mutate(Sample = "Sample03"),
+                        read_delim("Sample04.genes_per_split.txt", delim = "|") %>% mutate(Sample = "Sample04"))
+
+# Read list of splits per bin
+splits <- bind_rows(read_delim("Sample01.splits_per_bin.txt", delim = "|") %>% mutate(Sample = "Sample01"),
+                    read_delim("Sample02.splits_per_bin.txt", delim = "|") %>% mutate(Sample = "Sample02"),
+                    read_delim("Sample03.splits_per_bin.txt", delim = "|") %>% mutate(Sample = "Sample03"),
+                    read_delim("Sample04.splits_per_bin.txt", delim = "|") %>% mutate(Sample = "Sample04"))
+```
+
+Now that all data is loaded into `R`, let's do some exploring.  
+By looking at the `summary` object, can you answer:
+
+- How many bins **AND** MAGs we have in total, and how many for each sample?
+- What is the mean completion, detection and length of the **MAGs**?
+- Can you make a nice bar/box/violin plot summarising these values?
+
+**ANSWERS HERE (COMING UP SOON)**
+
+```r
+
+```
