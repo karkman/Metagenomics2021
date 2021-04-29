@@ -81,14 +81,14 @@ GTDB %>%
   filter(bins %in% MAGs) %>% 
   select(classification) %>% 
   separate(classification, into = c("Domain", "Phylum", "Class", "Order", "Family", "Genus", "Species"), sep = ";") %>% 
-  # group_by(Domain, Phylum) %>%
-  group_by(Phylum, Genus) %>%
+  group_by(Domain, Phylum) %>%
+  # group_by(Phylum, Genus) %>%
   tally %>% 
-  # ggplot(aes(x = Phylum, y = n)) +
-  ggplot(aes(x = Genus, y = n)) +
+  ggplot(aes(x = Phylum, y = n)) +
+  # ggplot(aes(x = Genus, y = n)) +
   geom_bar(stat = "identity") +
-  # facet_grid(cols = vars(Domain), space = "free", scales = "free_x") +
-  facet_grid(cols = vars(Phylum), space = "free", scales = "free_x") +
+  facet_grid(cols = vars(Domain), space = "free", scales = "free_x") +
+  # facet_grid(cols = vars(Phylum), space = "free", scales = "free_x") +
   theme_bw() +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1), axis.title = element_blank())
 
@@ -149,7 +149,7 @@ coverage %>%
 ##### SEARCH ANNOTATIONS #####
 
 # Nitrous oxide reductase
-df <- annotation %>% 
+annotation %>% 
   filter(str_detect(accession, "COG3256") | str_detect(accession, "K00376")) %>% 
   left_join(gene_calls) %>% 
   left_join(splits) %>% 

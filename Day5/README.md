@@ -1,12 +1,12 @@
 # Day 5
 
-| Time      | Activity                               | Slides                                                  | Hands-on                                             |
-|-----------|----------------------------------------|---------------------------------------------------------|------------------------------------------------------|
-| Morning   | MAG annotation and downstream analyses | [Link here](MAG-annotation-and-downstream-analyses.pdf) | [Link here](#MAG-annotation-and-downstream-analyses) |
-| Afternoon | MAG annotation and downstream analyses |                                                         | [Link here](#MAG-annotation-and-downstream-analyses) |
-| Afternoon | Closing remarks and open discussion    |                                                         |                                                      |
+| Time      | Activity                               | Slides                                                  | Hands-on                                                    |
+|-----------|----------------------------------------|---------------------------------------------------------|-------------------------------------------------------------|
+| Morning   | MAG annotation and downstream analyses | [Link here](MAG-annotation-and-downstream-analyses.pdf) | [Link here](#MAG-annotation-and-downstream-analyses-part-1) |
+| Afternoon | MAG annotation and downstream analyses |                                                         | [Link here](#MAG-annotation-and-downstream-analyses-part-2) |
+| Afternoon | Closing remarks and open discussion    |                                                         |                                                             |
 
-## MAG annotation and downstream analyses
+## MAG annotation and downstream analyses (Part 1)
 First login to Puhti and go to your working directory:
 
 ```bash
@@ -14,10 +14,27 @@ cd /scratch/project_2001499/$USER
 ```
 
 Although you have probably binned some nice MAGs, we will work from now on with MAGs that Antti and Igor have binned.
-Let's copy these to your working directory:
+Let's copy the FASTA files to your working directory:
 
 ```bash
 cp -r ../COURSE_FILES/MAGs MAGs
+```
+
+Let's also take the summary file for each of the four samples:
+
+```bash
+for SAMPLE in Sample01 Sample02 Sample03 Sample04; do
+  cp BINNING_MEGAHIT/$SAMPLE/MAGsSummary/bins_summary.txt MAGs/$SAMPLE.bins_summary.txt
+done
+```
+
+And finally, let's also take a couple of files summarizing the abundance of the MAGs across the different samples:
+
+```bash
+for SAMPLE in Sample01 Sample02 Sample03 Sample04; do
+  cp BINNING_MEGAHIT/$SAMPLE/MAGsSummary/bins_across_samples/mean_coverage.txt MAGs/$SAMPLE.mean_coverage.txt
+  cp BINNING_MEGAHIT/$SAMPLE/MAGsSummary/bins_across_samples/detection.txt MAGs/$SAMPLE.detection.txt
+done
 ```
 
 ### Taxonomic assignment with GTDBtk
@@ -100,6 +117,8 @@ for SAMPLE in Sample01 Sample02 Sample03 Sample04; do
 done
 ```
 
+## MAG annotation and downstream analyses (Part 2)
+
 Now let's get all these data into R to explore the MAGs taxonomic identity and functional potential.  
-First, download all **TEXT** files (NOT FASTA) inside the `MAGs` folder to your computer.  
+First, download all **TXT** files **(NOT FASTA)** inside the `MAGs` folder to your computer.  
 Also grab the `gtdbtk.bac120.summary.tsv` and `gtdbtk.ar122.summary.tsv` files that are inside the `GTDB` folder.  
