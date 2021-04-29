@@ -115,7 +115,9 @@ anvi-refine -c CONTIGS.db -p PROFILE.db -C COLLECITON_NAME -b BIN_NAME -P PORT
 After that's done, we'll rename the bins to a new collection called `PreliminaryBins` and add a prefix to each bin.
 
 ```bash
-anvi-rename-bins -c CONTIGS.db -p PROFILE.db --collection-to-read PreCluster --collection-to-write PreliminaryBins --prefix Preliminary --report-file REPORT_PreliminaryBins
+anvi-rename-bins -c CONTIGS.db -p PROFILE.db --collection-to-read PreCluster \
+                  --collection-to-write PreliminaryBins --prefix Preliminary \
+                  --report-file REPORT_PreliminaryBins
 ```
 Then we can also make a summary of the bins we have in our new collection `PreliminaryBins`.
 
@@ -132,7 +134,8 @@ Name the new collection `Bins` and use prefix `Sample03`.
 Now we should have a collection of pretty good bins out of our data. The last step is to curate each bin to make sure it represent only one population. And finally after that we can call MAGs from our collection. We will call MAGs all bins that are more than 80 % complete and have less than 5 % redundancy.  
 
 ```bash
-anvi-rename-bins -c CONTIGS.db -p PROFILE.db --collection-to-read Bins --collection-to-write MAGs --prefix Sample03 --report-file REPORT_MAGs \
+anvi-rename-bins -c CONTIGS.db -p PROFILE.db --collection-to-read Bins \
+                  --collection-to-write MAGs --prefix Sample03 --report-file REPORT_MAGs \
                   --call-MAGs --min-completion-for-MAG 80 --max-redundancy-for-MAG 5
 ```
 
