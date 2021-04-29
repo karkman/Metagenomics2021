@@ -118,7 +118,6 @@ done
 ```
 
 ## MAG annotation and downstream analyses (Part 2)
-
 Now let's get all these data into R to explore the MAGs taxonomic identity and functional potential.  
 First, download all **TXT** files **(NOT FASTA)** inside the `MAGs` folder to your computer.  
 Also grab the `gtdbtk.bac120.summary.tsv` and `gtdbtk.ar122.summary.tsv` files that are inside the `GTDB` folder.  
@@ -188,6 +187,7 @@ splits <- bind_rows(read_delim("Sample01.splits_per_bin.txt", delim = "|") %>% m
                     read_delim("Sample04.splits_per_bin.txt", delim = "|") %>% mutate(Sample = "Sample04"))
 ```
 
+### Exercise 1
 Now that all data is loaded into `R`, let's do some exploring.  
 By looking at the `summary` object, can you answer:
 
@@ -201,6 +201,7 @@ By looking at the `summary` object, can you answer:
 
 ```
 
+### Exercise 2
 Now let's focus on the GTDB taxonomy, which is stored in the `GTDB` object:  
 
 - What are the **three** phyla with highest number of MAGs?
@@ -212,3 +213,5 @@ Now let's focus on the GTDB taxonomy, which is stored in the `GTDB` object:
 ```r
 
 ```
+
+### Exercise 3
