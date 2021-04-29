@@ -115,7 +115,7 @@ anvi-refine -c CONTIGS.db -p PROFILE.db -C COLLECITON_NAME -b BIN_NAME -P PORT
 After that's done, we'll rename the bins to a new collection called `PreliminaryBins` and add a prefix to each bin.
 
 ```bash
-anvi-rename-bins -c CONTIGS.db -p PROFILE.db --collection-to-read Precluster --collection-to-write PreliminaryBins --prefix Preliminary --report-file REPORT_PreliminaryBins
+anvi-rename-bins -c CONTIGS.db -p PROFILE.db --collection-to-read PreCluster --collection-to-write PreliminaryBins --prefix Preliminary --report-file REPORT_PreliminaryBins
 ```
 Then we can also make a summary of the bins we have in our new collection `PreliminaryBins`.
 
