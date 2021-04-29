@@ -51,7 +51,7 @@ Due to COVID-19 the doors of Biocenter 1 are closed. Please call the porter to o
 
 ### Friday
 [__30.4.2021 9-16__](Day5/)
-* Annotation of metagenome assembled genomes (MAGs)
+* MAG annotation and downstream analyses
 
 ## Target group
 This course is targeted at PhD and MSc students who are interested in using metagenomics for investigating microbial communities.
@@ -64,7 +64,7 @@ Inside the class room you can find  __eduroam__ . Instructions on how to connect
 
 ## Slack
 We will be using Slack on this course. The link has been sent to your email.
-We will try to have most of the questions in Slack. You are also free to help your peers in there. 
+We will try to have most of the questions in Slack. You are also free to help your peers in there.
 
 
 ## Organizers and Teachers
