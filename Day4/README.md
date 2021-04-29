@@ -62,6 +62,7 @@ Go to the folder and see what it contains.
 ```bash
 screen -r anvio
 module purge
+export PROJAPPL=/projappl/project_2001499
 module load bioconda/3
 source activate  anvio-7
 cp -r ../COURSE_FOLDER/ANVI-TUTORIAL .
