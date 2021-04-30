@@ -279,10 +279,45 @@ Now we might be interested in the distribution/abundance of our MAGs across the 
 - Detection is also an important metric, can you replicate the plot before but using the `detection` object instead?
 - Do these abundance patterns agree with what we have seen using the read-based approach?
 
-**SOLUTION BELOW (COMING UP SOON)**
+**SOLUTION BELOW**
 
 ```r
+# Most abundant MAG across all samples
+coverage_mean <- coverage %>%
+  gather(Sample, coverage, -bins) %>%
+  group_by(bins) %>%
+  summarise(mean = mean(coverage))
 
+coverage_mean %>%
+  arrange(desc(mean)) %>%
+  left_join(GTDB) %>%
+  select(bins, Domain, Phylum, Class, Order, Family, Genus)
+
+# Plot
+
+## Coverage
+coverage %>%
+  filter(bins %in% MAGs) %>%
+  gather(Sample, coverage, -bins) %>%
+  left_join(metadata) %>%
+  left_join(GTDB) %>%
+  ggplot(aes(x = bins, y = coverage, fill = Ecosystem)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  facet_grid(rows = vars(Sample), cols = vars(Domain, Phylum), scales = "free_x", space = "free") +
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5), axis.title = element_blank())
+
+## Detection
+detection %>%
+  filter(bins %in% MAGs) %>%
+  gather(Sample, detection, -bins) %>%
+  left_join(metadata) %>%
+  left_join(GTDB) %>%
+  ggplot(aes(x = bins, y = detection, fill = Ecosystem)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  facet_grid(rows = vars(Sample), cols = vars(Domain, Phylum), scales = "free_x", space = "free") +
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5), axis.title = element_blank())
 ```
 
 ### Exercise 4
