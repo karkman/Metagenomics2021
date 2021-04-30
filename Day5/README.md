@@ -351,5 +351,55 @@ Now, can you modify the commands above to search for other enzymes, e.g.:
 **SOLUTION BELOW (COMING UP SOON)**
 
 ```r
+# Nitrous oxide reductase
+NOS <- annotation %>%
+  filter(str_detect(accession, "K00376")) %>%
+  left_join(gene_calls) %>%
+  left_join(splits)
 
+NOS %>%
+  select(bins) %>%
+  mutate(MAG_or_BIN = ifelse(str_detect(bins, "Bin"), "bin", "MAG")) %>%
+  left_join(GTDB) %>%
+  group_by(MAG_or_BIN, Domain, Phylum) %>%
+  tally
+
+# Nitrogenase
+NIF <- annotation %>%
+  filter(str_detect(accession, "K02588")) %>%
+  left_join(gene_calls) %>%
+  left_join(splits)
+
+NIF %>%
+  select(bins) %>%
+  mutate(MAG_or_BIN = ifelse(str_detect(bins, "Bin"), "bin", "MAG")) %>%
+  left_join(GTDB) %>%
+  group_by(MAG_or_BIN, Domain, Phylum) %>%
+  tally
+
+# Methanogenesis
+MCR <- annotation %>%
+  filter(str_detect(accession, "K00399")) %>%
+  left_join(gene_calls) %>%
+  left_join(splits)
+
+MCR %>%
+  select(bins) %>%
+  mutate(MAG_or_BIN = ifelse(str_detect(bins, "Bin"), "bin", "MAG")) %>%
+  left_join(GTDB) %>%
+  group_by(MAG_or_BIN, Domain, Phylum) %>%
+  tally
+
+# Methane oxidation
+PMO <- annotation %>%
+  filter(str_detect(accession, "K10944")) %>%
+  left_join(gene_calls) %>%
+  left_join(splits)
+
+PMO %>%
+  select(bins) %>%
+  mutate(MAG_or_BIN = ifelse(str_detect(bins, "Bin"), "bin", "MAG")) %>%
+  left_join(GTDB) %>%
+  group_by(MAG_or_BIN, Domain, Phylum) %>%
+  tally
 ```
