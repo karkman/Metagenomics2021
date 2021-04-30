@@ -96,7 +96,7 @@ If you're not yet in the `sinteractive` session, connect to it, go to your worki
 
 ```bash
 for SAMPLE in Sample01 Sample02 Sample03 Sample04; do
-  anvi-export-functions --contigs-db BINNING_MEGAHIT/$SAMPLE/CONTIGS.db \
+  anvi-export-functions --contigs-db ANVIO/BINNING_MEGAHIT/$SAMPLE/CONTIGS.db \
                         --output-file MAGs/$SAMPLE.gene_annotation.txt
 done
 ```
@@ -108,12 +108,12 @@ I don't think there's a straightforward way to get this using `anvi'o` commands,
 for SAMPLE in Sample01 Sample02 Sample03 Sample04; do
   # Get list of gene calls per split
   printf '%s|%s|%s|%s|%s\n' splits gene_callers_id start stop percentage > MAGs/$SAMPLE.genes_per_split.txt
-  sqlite3 BINNING_MEGAHIT/$SAMPLE/CONTIGS.db 'SELECT * FROM genes_in_splits' >> MAGs/$SAMPLE.genes_per_split.txt
+  sqlite3 ANVIO/BINNING_MEGAHIT/$SAMPLE/CONTIGS.db 'SELECT * FROM genes_in_splits' >> MAGs/$SAMPLE.genes_per_split.txt
 
 
   # Get splits per bin
   printf '%s|%s|%s\n' collection splits bins > MAGs/$SAMPLE.splits_per_bin.txt
-  sqlite3 BINNING_MEGAHIT/$SAMPLE/MERGED_PROFILES/PROFILE.db 'SELECT * FROM collections_of_splits' | grep 'MAGs|' >> MAGs/$SAMPLE.splits_per_bin.txt
+  sqlite3 ANVIO/BINNING_MEGAHIT/$SAMPLE/MERGED_PROFILES/PROFILE.db 'SELECT * FROM collections_of_splits' | grep 'MAGs|' >> MAGs/$SAMPLE.splits_per_bin.txt
 done
 ```
 
