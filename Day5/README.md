@@ -24,7 +24,7 @@ Let's also take the summary file for each of the four samples:
 
 ```bash
 for SAMPLE in Sample01 Sample02 Sample03 Sample04; do
-  cp BINNING_MEGAHIT/$SAMPLE/MAGsSummary/bins_summary.txt MAGs/$SAMPLE.bins_summary.txt
+  cp ANVIO/BINNING_MEGAHIT/$SAMPLE/MAGsSummary/bins_summary.txt MAGs/$SAMPLE.bins_summary.txt
 done
 ```
 
@@ -32,8 +32,8 @@ And finally, let's also take a couple of files summarizing the abundance of the 
 
 ```bash
 for SAMPLE in Sample01 Sample02 Sample03 Sample04; do
-  cp BINNING_MEGAHIT/$SAMPLE/MAGsSummary/bins_across_samples/mean_coverage.txt MAGs/$SAMPLE.mean_coverage.txt
-  cp BINNING_MEGAHIT/$SAMPLE/MAGsSummary/bins_across_samples/detection.txt MAGs/$SAMPLE.detection.txt
+  cp ANVIO/BINNING_MEGAHIT/$SAMPLE/MAGsSummary/bins_across_samples/mean_coverage.txt MAGs/$SAMPLE.mean_coverage.txt
+  cp ANVIO/BINNING_MEGAHIT/$SAMPLE/MAGsSummary/bins_across_samples/detection.txt MAGs/$SAMPLE.detection.txt
 done
 ```
 
