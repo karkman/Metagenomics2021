@@ -193,10 +193,32 @@ By looking at the `summary` object, can you answer:
 - What is the mean completion, detection and length of the **MAGs**?
 - Can you make a nice bar/box/violin plot summarising these values?
 
-**SOLUTION BELOW (COMING UP SOON)**
+**SOLUTION BELOW**
 
 ```r
+# Number of bins/MAGs per sample
+summary %>%
+  filter(bins %in% MAGs) %>%
+  mutate(Sample = str_extract(bins, "Sample[0-9]+")) %>%
+  group_by(Sample) %>%
+  tally
 
+# MAG statistics
+summary_long <- summary %>%
+  filter(bins %in% MAGs) %>%
+  select(total_length, percent_completion, percent_redundancy) %>%
+  gather(parameter, value)
+
+## Summarise
+summary_long %>%
+  group_by(parameter) %>%
+  summarise(mean = mean(value))
+
+## Plot
+summary_long %>%
+  ggplot(aes(x = parameter, y = value)) +
+  geom_violin() +
+  facet_wrap(~parameter, scales = "free")
 ```
 
 ### Exercise 2
