@@ -228,10 +228,44 @@ Now let's focus on the GTDB taxonomy, which is stored in the `GTDB` object:
 - And what about genera?
 - Again, can you make a nice plot for this?
 
-**SOLUTION BELOW (COMING UP SOON)**
+**SOLUTION BELOW**
 
 ```r
+# Summarise
 
+## Phyla
+GTDB_phylum <- GTDB %>%
+  group_by(Domain, Phylum) %>%
+  tally
+
+GTDB_phylum %>%
+  arrange(desc(n))
+
+## Genera
+GTDB_genus <- GTDB %>%
+  group_by(Phylum, Genus) %>%
+  tally
+
+GTDB_genus %>%
+  arrange(desc(n))
+
+# Plot
+
+## Phyla
+GTDB_phylum %>%
+  ggplot(aes(x = Phylum, y = n)) +
+  geom_bar(stat = "identity") +
+  facet_grid(cols = vars(Domain), space = "free", scales = "free_x") +
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1), axis.title = element_blank())
+
+## Genera
+GTDB_genus %>%
+  ggplot(aes(x = Genus, y = n)) +
+  geom_bar(stat = "identity") +
+  facet_grid(cols = vars(Phylum), space = "free", scales = "free_x") +
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1), axis.title = element_blank())
 ```
 
 ### Exercise 3
